@@ -28,7 +28,8 @@
  * @{  
  */
 // -----------Lib Active list --------------------
-#define USING_STM32_HAL_LIB 			1
+#define USING_STM32_HAL_LIB 			0
+#define USING_STM32_STD_LIB				1
 // -----------------------------------------------
 // -----------BSP Module Active list -------------
 #define BSP_ADC_MODULE_ENABLE			0
@@ -50,6 +51,10 @@
 
 #if USING_STM32_HAL_LIB == 1
 	#include "stm32f4xx_hal.h"
+#endif
+
+#if USING_STM32_STD_LIB == 1
+	#include "stm32f4xx.h"
 #endif
 
 #if BSP_ADC_MODULE_ENABLE == 1

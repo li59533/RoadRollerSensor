@@ -14,7 +14,7 @@
 #define _OSAL_CPU_H_
 
 #include "stdint.h"
-#include "stm32f4xx_hal.h"
+#include "stm32f4xx.h"
 /**
  * @addtogroup    XXX 
  * @{ 

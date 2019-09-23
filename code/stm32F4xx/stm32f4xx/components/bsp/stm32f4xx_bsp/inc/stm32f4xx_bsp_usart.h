@@ -18,7 +18,7 @@
  * @{ 
  */
 #include "self_def.h"
-#include "stm32f4xx_hal.h"
+#include "stm32f4xx.h"
 /**
  * @addtogroup    stm32f4xx_bsp_usart_Modules 
  * @{  
@@ -33,10 +33,21 @@
 #define	BSP_USART2				1 
 
 
-#define BSP_USART1_TXBUF_SIZE 	300		
+#define BSP_USART1_TXBUF_SIZE 	20		
 #define BSP_USART1_RXBUF_SIZE	300
 #define BSP_USART2_TXBUF_SIZE	300
 #define BSP_USART2_RXBUF_SIZE	300
+
+#define BSP_USART1_TX_DMA_ACTIVE 	1
+#define BSP_USART1_RX_DMA_ACTIVE	1
+#if BSP_USART1_RX_DMA_ACTIVE == 1
+	#define BSP_USART1_IDEL_ACTIVE  1
+#else
+	#define BSP_USART1_IDEL_ACTIVE  0
+#endif
+
+
+
 /**
  * @}
  */
@@ -78,10 +89,7 @@ typedef struct
  * @defgroup      stm32f4xx_bsp_usart_Exported_Variables 
  * @{  
  */
-extern USART_HandleTypeDef husart;
-extern DMA_HandleTypeDef hdmatx;
-extern DMA_HandleTypeDef hdmarx;
-extern GPIO_InitTypeDef GPIO_InitStruct;
+
 
 /**
  * @}
@@ -92,6 +100,12 @@ extern GPIO_InitTypeDef GPIO_InitStruct;
  * @{  
  */
 void BSP_USART_Open(uint8_t BSP_USARTx, uint8_t *userparams);
+void BSP_USART_IRQHandler(uint8_t BSP_USARTx);
+void BSP_USART_WriteBytes_DMA(uint8_t BSP_USARTx,uint8_t* pBuf,uint16_t length);
+void BSP_USART1_TxDMA_IRQHandler(void);
+void BSP_USART_WriteBytes(uint8_t BSP_USARTx,uint8_t* pBuf,uint16_t length);
+	
+
 /**
  * @}
  */

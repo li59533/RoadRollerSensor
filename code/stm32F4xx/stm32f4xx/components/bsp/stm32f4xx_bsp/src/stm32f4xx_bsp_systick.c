@@ -99,13 +99,19 @@
  */
 void BSP_Systick_Init(void) // if using ths HAL ,please using the HAl_Init();
 {
-	HAL_Init();
+	/* SysTick end of count event each 1ms */
+	RCC_ClocksTypeDef RCC_Clocks;
+	RCC_GetClocksFreq(&RCC_Clocks);
+	SysTick_Config(RCC_Clocks.HCLK_Frequency / 1000);
+	
 }
 
 void BSP_Systick_Delayms(uint32_t delay) // block delay
 {
-	HAL_Delay(delay);
+
 }
+
+
 
 /**
  * @}

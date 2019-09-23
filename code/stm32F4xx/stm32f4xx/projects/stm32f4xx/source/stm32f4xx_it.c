@@ -189,7 +189,7 @@ void SysTick_Handler(void)
 	  OS_Timer_Update(1);
 	  OS_Clock_Update(1);
   /* USER CODE END SysTick_IRQn 0 */
-  HAL_IncTick();
+
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
@@ -210,19 +210,13 @@ void SysTick_Handler(void)
 void USART1_IRQHandler(void)
 {
 	DEBUG("Enter the USART1_IRQHandler\r\n");
-	HAL_USART_IRQHandler(&husart);
+	BSP_USART_IRQHandler( BSP_USART1);
 }
-
 
 void DMA2_Stream5_IRQHandler(void) // Usart1_Rx
 {
-  /* USER CODE BEGIN DMA2_Stream5_IRQn 0 */
+	DEBUG("Enter the DMA2_Stream5_IRQHandler\r\n");
 
-  /* USER CODE END DMA2_Stream5_IRQn 0 */
-  
-  /* USER CODE BEGIN DMA2_Stream5_IRQn 1 */
-
-  /* USER CODE END DMA2_Stream5_IRQn 1 */
 }
 
 /**
@@ -230,13 +224,9 @@ void DMA2_Stream5_IRQHandler(void) // Usart1_Rx
   */
 void DMA2_Stream7_IRQHandler(void) // Usart1_Tx
 {
-  /* USER CODE BEGIN DMA2_Stream7_IRQn 0 */
+	BSP_USART1_TxDMA_IRQHandler();
+	DEBUG("Enter the DMA2_Stream7_IRQHandler\r\n");
 
-  /* USER CODE END DMA2_Stream7_IRQn 0 */
-  
-  /* USER CODE BEGIN DMA2_Stream7_IRQn 1 */
-
-  /* USER CODE END DMA2_Stream7_IRQn 1 */
 }
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
