@@ -53,9 +53,11 @@
 .\objects\stm32f4xx_it.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
 .\objects\stm32f4xx_it.o: ..\..\..\components\bsp\stm32_bsp_conf.h
 .\objects\stm32f4xx_it.o: ..\..\..\components\bsp\stm32f4xx_bsp\stm32f4xx_bsp_conf.h
-.\objects\stm32f4xx_it.o: ..\..\..\components\bsp\stm32f4xx_bsp\inc\stm32f4xx_bsp_usart.h
+.\objects\stm32f4xx_it.o: ..\..\..\components\bsp\stm32f4xx_bsp\inc\stm32f4xx_bsp_adc.h
 .\objects\stm32f4xx_it.o: ..\source\self_def.h
 .\objects\stm32f4xx_it.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\stm32f4xx_it.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\stm32f4xx_it.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\stm32f4xx_it.o: ..\..\..\components\bsp\stm32f4xx_bsp\inc\stm32f4xx_bsp_spi.h
+.\objects\stm32f4xx_it.o: ..\..\..\components\bsp\stm32f4xx_bsp\inc\stm32f4xx_bsp_usart.h
 .\objects\stm32f4xx_it.o: ..\..\..\components\bsp\stm32f4xx_bsp\inc\stm32f4xx_bsp_systick.h

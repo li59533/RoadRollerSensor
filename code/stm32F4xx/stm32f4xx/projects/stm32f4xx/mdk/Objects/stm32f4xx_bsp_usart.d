@@ -36,12 +36,14 @@
 .\objects\stm32f4xx_bsp_usart.o: ..\..\..\..\compoents\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dac.h
 .\objects\stm32f4xx_bsp_usart.o: ..\..\..\..\compoents\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_dcmi.h
 .\objects\stm32f4xx_bsp_usart.o: ..\..\..\..\compoents\STM32F4xx_StdPeriph_Driver\inc\stm32f4xx_fsmc.h
-.\objects\stm32f4xx_bsp_usart.o: ..\..\..\components\bsp\stm32f4xx_bsp\inc\stm32f4xx_bsp_usart.h
+.\objects\stm32f4xx_bsp_usart.o: ..\..\..\components\bsp\stm32f4xx_bsp\inc\stm32f4xx_bsp_adc.h
 .\objects\stm32f4xx_bsp_usart.o: ..\source\self_def.h
 .\objects\stm32f4xx_bsp_usart.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\stm32f4xx_bsp_usart.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 .\objects\stm32f4xx_bsp_usart.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\stm32f4xx_bsp_usart.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\stm32f4xx_bsp_usart.o: ..\..\..\components\bsp\stm32f4xx_bsp\inc\stm32f4xx_bsp_spi.h
+.\objects\stm32f4xx_bsp_usart.o: ..\..\..\components\bsp\stm32f4xx_bsp\inc\stm32f4xx_bsp_usart.h
 .\objects\stm32f4xx_bsp_usart.o: ..\..\..\components\bsp\stm32f4xx_bsp\inc\stm32f4xx_bsp_systick.h
 .\objects\stm32f4xx_bsp_usart.o: ..\..\..\components\mdl\clog\clog.h
 .\objects\stm32f4xx_bsp_usart.o: ..\..\..\components\mdl\rttviewer\SEGGER_RTT.h

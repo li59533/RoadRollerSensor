@@ -689,10 +689,12 @@
 			<Folder Name="bsp">
 				<Folder Name="stm32f4xx_bsp">
 					<Folder Name="inc">
+						<F N="../../../components/bsp/stm32f4xx_bsp/inc/stm32f4xx_bsp_adc.h"/>
 						<F N="../../../components/bsp/stm32f4xx_bsp/inc/stm32f4xx_bsp_systick.h"/>
 						<F N="../../../components/bsp/stm32f4xx_bsp/inc/stm32f4xx_bsp_usart.h"/>
 					</Folder>
 					<Folder Name="src">
+						<F N="../../../components/bsp/stm32f4xx_bsp/src/stm32f4xx_bsp_adc.c"/>
 						<F N="../../../components/bsp/stm32f4xx_bsp/src/stm32f4xx_bsp_systick.c"/>
 						<F N="../../../components/bsp/stm32f4xx_bsp/src/stm32f4xx_bsp_usart.c"/>
 					</Folder>
@@ -764,6 +766,16 @@
 				</Folder>
 			</Folder>
 			<Folder Name="fml">
+				<Folder Name="ad7988_1">
+					<Folder Name="port">
+						<F N="../source/fml/ad7988_1/port/ad7988_port.c"/>
+						<F N="../source/fml/ad7988_1/port/ad7988_port.h"/>
+					</Folder>
+					<Folder Name="src">
+						<F N="../source/fml/ad7988_1/src/ad7988_core.c"/>
+						<F N="../source/fml/ad7988_1/src/ad7988_core.h"/>
+					</Folder>
+				</Folder>
 				<Folder Name="system">
 					<F N="../source/fml/system/system_init.c"/>
 					<F N="../source/fml/system/system_init.h"/>

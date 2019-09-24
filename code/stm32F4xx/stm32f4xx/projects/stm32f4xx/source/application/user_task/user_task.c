@@ -129,7 +129,7 @@ osal_event_t UserTask_Process(uint8_t taskid,osal_event_t events)
 		DEBUG("USER_TASK_LOOP_TEST_EVENT:%d\r\n",sec);
 		char buf_test[] = "hello world\r\n";
 		BSP_USART_WriteBytes_DMA(0,(uint8_t *)buf_test,sizeof(buf_test));
-		OS_Timer_Start(g_UserTask_Id, USER_TASK_LOOP_TEST_EVENT,10);
+		OS_Timer_Start(g_UserTask_Id, USER_TASK_LOOP_TEST_EVENT,10000);
 			
         return events ^ USER_TASK_LOOP_TEST_EVENT;
     }

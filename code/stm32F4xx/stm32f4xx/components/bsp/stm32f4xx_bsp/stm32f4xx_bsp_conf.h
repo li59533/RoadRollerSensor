@@ -32,7 +32,7 @@
 #define USING_STM32_STD_LIB				1
 // -----------------------------------------------
 // -----------BSP Module Active list -------------
-#define BSP_ADC_MODULE_ENABLE			0
+#define BSP_ADC_MODULE_ENABLE			1
 #define BSP_CAN_MODULE_ENABLE 			0
 #define BSP_DAC_MODULE_ENABLE			0
 #define BSP_DMA_MODULE_ENABLE			0
@@ -41,7 +41,7 @@
 #define BSP_GPIO_MODULE_ENABLE			0
 #define BSP_IIC_MODULE_ENABLE			0
 #define BSP_RTC_MODULE_ENABLE			0
-#define BSP_SPI_MODULE_ENABLE			0
+#define BSP_SPI_MODULE_ENABLE			1
 #define BSP_TIM_MODULE_ENABLE			0
 #define BSP_USART_MODULE_ENABLE			1
 #define BSP_WDG_MODULE_ENABLE			0

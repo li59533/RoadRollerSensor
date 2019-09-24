@@ -212,21 +212,23 @@ void USART1_IRQHandler(void)
 	DEBUG("Enter the USART1_IRQHandler\r\n");
 	BSP_USART_IRQHandler( BSP_USART1);
 }
-
+void DMA2_Stream0_IRQHandler(void) // ADC
+{
+	DEBUG("Enter the DMA2_Stream0_IRQHandler\r\n");
+	BSP_ADC1_DMA_IRQHandler();
+}
+void DMA2_Stream2_IRQHandler(void) // SPI1 Rx
+{
+	DEBUG("Enter the DMA2_Stream0_IRQHandler\r\n");
+	BSP_SPI1_DMA_IRQHandler();
+}
 void DMA2_Stream5_IRQHandler(void) // Usart1_Rx
 {
 	DEBUG("Enter the DMA2_Stream5_IRQHandler\r\n");
-
 }
-
-/**
-  * @brief This function handles DMA2 stream7 global interrupt.
-  */
 void DMA2_Stream7_IRQHandler(void) // Usart1_Tx
 {
 	BSP_USART1_TxDMA_IRQHandler();
-	DEBUG("Enter the DMA2_Stream7_IRQHandler\r\n");
-
 }
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

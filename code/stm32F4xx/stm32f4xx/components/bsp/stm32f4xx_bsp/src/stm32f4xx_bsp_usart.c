@@ -194,11 +194,11 @@ void BSP_USART_Open(uint8_t BSP_USARTx, uint8_t *userparams)
 				DMA_StructInit(&DMA_InitStruct);
 				DMA_InitStruct.DMA_BufferSize = BSP_USART1_RXBUF_SIZE;
 				DMA_InitStruct.DMA_Channel = DMA_Channel_4;
-				DMA_InitStruct.DMA_DIR = DMA_DIR_MemoryToPeripheral;
+				DMA_InitStruct.DMA_DIR = DMA_DIR_PeripheralToMemory;
 				DMA_InitStruct.DMA_Memory0BaseAddr = (uint32_t)USART1_Rx_Buf;
 				DMA_InitStruct.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
 				DMA_InitStruct.DMA_MemoryInc = DMA_MemoryInc_Enable;
-				DMA_InitStruct.DMA_Mode = DMA_Mode_Normal;
+				DMA_InitStruct.DMA_Mode = DMA_Mode_Circular;
 				DMA_InitStruct.DMA_PeripheralBaseAddr = (uint32_t) &USART1->DR;
 				DMA_InitStruct.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
 				DMA_InitStruct.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
@@ -282,6 +282,13 @@ void BSP_USART_WriteBytes_DMA(uint8_t BSP_USARTx,uint8_t* pbuf,uint16_t len)
 
 	
 }
+
+uint16_t BSP_USART_ReadBytes_DMA(uint8_t BSP_USARTx)
+{
+	return 0;
+}
+
+
 // this send way is very danger !!!!
 void BSP_USART_WriteBytes(uint8_t BSP_USARTx,uint8_t* pBuf,uint16_t length)
 {
@@ -373,6 +380,14 @@ void BSP_USART_IRQHandler(uint8_t BSP_USARTx)
 			}
 			if(USART_GetITStatus(USART1, USART_IT_IDLE) == SET)
 			{
+				USART_ReceiveData(USART1);
+				USART_GetITStatus(USART1, USART_IT_IDLE);
+				
+				//DEBUG("IDEL:%d\r\n",DMA_GetCurrDataCounter(DMA2_Stream5));
+				DMA_Cmd(DMA2_Stream5,DISABLE);
+				DMA2_Stream5->M0AR = (uint32_t)USART1_Rx_Buf;
+				DMA2_Stream5->NDTR = BSP_USART1_RXBUF_SIZE;
+				DMA_Cmd(DMA2_Stream5,ENABLE);
 				
 			}
 		}

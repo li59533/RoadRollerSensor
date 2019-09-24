@@ -56,5 +56,7 @@
 .\objects\user_task.o: ..\source\application\user_task\user_task.h
 .\objects\user_task.o: ..\..\..\components\bsp\stm32_bsp_conf.h
 .\objects\user_task.o: ..\..\..\components\bsp\stm32f4xx_bsp\stm32f4xx_bsp_conf.h
+.\objects\user_task.o: ..\..\..\components\bsp\stm32f4xx_bsp\inc\stm32f4xx_bsp_adc.h
+.\objects\user_task.o: ..\..\..\components\bsp\stm32f4xx_bsp\inc\stm32f4xx_bsp_spi.h
 .\objects\user_task.o: ..\..\..\components\bsp\stm32f4xx_bsp\inc\stm32f4xx_bsp_usart.h
 .\objects\user_task.o: ..\..\..\components\bsp\stm32f4xx_bsp\inc\stm32f4xx_bsp_systick.h

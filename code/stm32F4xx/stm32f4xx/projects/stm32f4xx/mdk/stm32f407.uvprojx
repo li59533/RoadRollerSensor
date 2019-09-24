@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F40XX</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Include;..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm;..\..\..\..\compoents\CMSIS\Include;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc\Legacy;..\..\..\..\compoents\Utilities;..\..\..\components\bsp\stm32l4xx_bsp\inc;..\..\..\components\bsp\stm32l4xx_bsp;..\..\..\components\bsp;..\..\..\components\mdl\clog;..\..\..\components\mdl\osal\ports;..\..\..\components\mdl\osal\src;..\..\..\components\mdl\rttviewer;..\source;..\source\application\hal_task;..\source\application\user_task;..\source\fml\system;..\..\..\components\bsp\stm32f4xx_bsp\inc;..\..\..\components\bsp\stm32f4xx_bsp\src;..\..\..\components\bsp\stm32f4xx_bsp;..\..\..\..\compoents\STM32F4xx_StdPeriph_Driver\inc</IncludePath>
+              <IncludePath>..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Include;..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm;..\..\..\..\compoents\CMSIS\Include;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc\Legacy;..\..\..\..\compoents\Utilities;..\..\..\components\bsp\stm32l4xx_bsp\inc;..\..\..\components\bsp\stm32l4xx_bsp;..\..\..\components\bsp;..\..\..\components\mdl\clog;..\..\..\components\mdl\osal\ports;..\..\..\components\mdl\osal\src;..\..\..\components\mdl\rttviewer;..\source;..\source\application\hal_task;..\source\application\user_task;..\source\fml\system;..\..\..\components\bsp\stm32f4xx_bsp\inc;..\..\..\components\bsp\stm32f4xx_bsp\src;..\..\..\components\bsp\stm32f4xx_bsp;..\..\..\..\compoents\STM32F4xx_StdPeriph_Driver\inc;..\..\..\components\mdl\MALLOC;..\source\fml\ad7988_1\port;..\source\fml\ad7988_1\src</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -427,6 +427,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\components\bsp\stm32f4xx_bsp\src\stm32f4xx_bsp_usart.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_bsp_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\bsp\stm32f4xx_bsp\src\stm32f4xx_bsp_adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_bsp_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\bsp\stm32f4xx_bsp\src\stm32f4xx_bsp_spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -441,6 +451,16 @@
               <FileName>system_param.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\source\fml\system\system_param.c</FilePath>
+            </File>
+            <File>
+              <FileName>ad7988_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\fml\ad7988_1\port\ad7988_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>ad7988_core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\fml\ad7988_1\src\ad7988_core.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -521,6 +541,11 @@
               <FileName>SEGGER_RTT_printf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\components\mdl\rttviewer\SEGGER_RTT_printf.c</FilePath>
+            </File>
+            <File>
+              <FileName>malloc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\mdl\MALLOC\malloc.c</FilePath>
             </File>
           </Files>
         </Group>
