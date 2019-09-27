@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F40XX</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Include;..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm;..\..\..\..\compoents\CMSIS\Include;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc\Legacy;..\..\..\..\compoents\Utilities;..\..\..\components\bsp\stm32l4xx_bsp\inc;..\..\..\components\bsp\stm32l4xx_bsp;..\..\..\components\bsp;..\..\..\components\mdl\clog;..\..\..\components\mdl\osal\ports;..\..\..\components\mdl\osal\src;..\..\..\components\mdl\rttviewer;..\source;..\source\application\hal_task;..\source\application\user_task;..\source\fml\system;..\..\..\components\bsp\stm32f4xx_bsp\inc;..\..\..\components\bsp\stm32f4xx_bsp\src;..\..\..\components\bsp\stm32f4xx_bsp;..\..\..\..\compoents\STM32F4xx_StdPeriph_Driver\inc;..\..\..\components\mdl\MALLOC;..\source\fml\ad7988_1\port;..\source\fml\ad7988_1\src</IncludePath>
+              <IncludePath>..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Include;..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm;..\..\..\..\compoents\CMSIS\Include;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc\Legacy;..\..\..\..\compoents\Utilities;..\..\..\components\bsp\stm32l4xx_bsp\inc;..\..\..\components\bsp\stm32l4xx_bsp;..\..\..\components\bsp;..\..\..\components\mdl\clog;..\..\..\components\mdl\osal\ports;..\..\..\components\mdl\osal\src;..\..\..\components\mdl\rttviewer;..\source;..\source\application\hal_task;..\source\application\user_task;..\source\fml\system;..\..\..\components\bsp\stm32f4xx_bsp\inc;..\..\..\components\bsp\stm32f4xx_bsp\src;..\..\..\components\bsp\stm32f4xx_bsp;..\..\..\..\compoents\STM32F4xx_StdPeriph_Driver\inc;..\..\..\components\mdl\MALLOC;..\source\fml\ad7988_1\port;..\source\fml\ad7988_1\src;..\source\application\vibrate_task;..\source\fml\ad7988_1;..\source\fml\temperatue_4_20mV;..\source\fml\protocol</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -396,6 +396,16 @@
               <FileName>user_task.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\source\application\user_task\user_task.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Vibrate_task</GroupName>
+          <Files>
+            <File>
+              <FileName>vibrate_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\application\vibrate_task\vibrate_task.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -476,6 +486,16 @@
               <FileName>ad7988_core.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\source\fml\ad7988_1\src\ad7988_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>t_4_20mv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\fml\temperatue_4_20mV\t_4_20mv.c</FilePath>
+            </File>
+            <File>
+              <FileName>lnprotocol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\fml\protocol\lnprotocol.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -17,7 +17,7 @@
  * @addtogroup    XXX 
  * @{ 
  */
-
+#include "self_def.h"
 /**
  * @addtogroup    ad7988_core_Modules 
  * @{  
@@ -27,6 +27,15 @@
  * @defgroup      ad7988_core_Exported_Macros 
  * @{  
  */
+#define AD7988_SAMPLE_RATE	2048
+#define AD7988_FFT_LENGTH	AD7988_SAMPLE_RATE    //FFT length
+
+typedef enum
+{
+	AD7988_Normal = 0,
+	AD7988_Err1	  = 1,
+	AD7988_Err2	  = 2,
+}AD7988_Status_e;
 
 /**
  * @}
@@ -63,6 +72,11 @@
  * @defgroup      ad7988_core_Exported_Functions 
  * @{  
  */
+
+void AD7988_ParamInit(void);
+void AD7988_CollectOriginalData(uint16_t *buf);
+void AD7988_Calc_Process(void)  ;
+void AD7988_Status_CheckProcess(void);
 
 /**
  * @}

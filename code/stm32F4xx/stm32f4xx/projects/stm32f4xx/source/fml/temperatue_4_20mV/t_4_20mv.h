@@ -1,6 +1,6 @@
 /**
  **************************************************************************************************
- * @file        ad7988_port.h
+ * @file        t_4_20mv.h
  * @author
  * @version    v0.1.0
  * @date        
@@ -10,8 +10,8 @@
  *
  **************************************************************************************************
  */
-#ifndef _AD7988_PORT_H_
-#define _AD7988_PORT_H_
+#ifndef _T_4_20MV_H_
+#define _T_4_20MV_H_
 
 /**
  * @addtogroup    XXX 
@@ -19,12 +19,12 @@
  */
 
 /**
- * @addtogroup    ad7988_port_Modules 
+ * @addtogroup    t_4_20mv_Modules 
  * @{  
  */
 
 /**
- * @defgroup      ad7988_port_Exported_Macros 
+ * @defgroup      t_4_20mv_Exported_Macros 
  * @{  
  */
 
@@ -33,7 +33,7 @@
  */
 
 /**
- * @defgroup      ad7988_port_Exported_Constants
+ * @defgroup      t_4_20mv_Exported_Constants
  * @{  
  */
 
@@ -42,7 +42,7 @@
  */
  
 /**
- * @defgroup      ad7988_port_Exported_Types 
+ * @defgroup      t_4_20mv_Exported_Types 
  * @{  
  */
 
@@ -51,7 +51,7 @@
  */
 
 /**
- * @defgroup      ad7988_port_Exported_Variables 
+ * @defgroup      t_4_20mv_Exported_Variables 
  * @{  
  */
 
@@ -60,10 +60,10 @@
  */
 
 /**
- * @defgroup      ad7988_port_Exported_Functions 
+ * @defgroup      t_4_20mv_Exported_Functions 
  * @{  
  */
-void AD7988_Init(void);
+void T_4_20mv_CalcProcess(void);
 /**
  * @}
  */

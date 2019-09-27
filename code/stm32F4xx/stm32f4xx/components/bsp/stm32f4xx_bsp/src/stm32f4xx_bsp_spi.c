@@ -11,7 +11,7 @@
  **************************************************************************************************
  */
 #include "stm32f4xx_bsp_conf.h"
-
+#include "ad7988_core.h"
 /**
  * @addtogroup    XXX 
  * @{  
@@ -93,7 +93,7 @@ static uint8_t bsp_spi_Rxbuf[BSP_SPI1_RXBUFSIZE] = { 0 };
  * @brief         
  * @{  
  */
-static void bsp_spi1Rx_func(uint8_t * buf,uint16_t len);
+static void bsp_spi1Rx_func(uint16_t *buf);
 /**
  * @}
  */
@@ -122,7 +122,7 @@ void BSP_SPI_Open(uint8_t BSP_SPIx, uint8_t *userparams)
 			// -------------GPIO Init----------------
 			GPIO_StructInit(&GPIO_InitStruct);		
 			GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AF;
-			GPIO_InitStruct.GPIO_Pin = GPIO_Pin_3 |GPIO_Pin_4;
+			GPIO_InitStruct.GPIO_Pin = GPIO_Pin_3 |GPIO_Pin_4|GPIO_Pin_5;
 			GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
 			GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
 			GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
@@ -130,6 +130,7 @@ void BSP_SPI_Open(uint8_t BSP_SPIx, uint8_t *userparams)
 			/* GPIO Alternate functions configuration function ****************************/
 			GPIO_PinAFConfig(GPIOB,GPIO_PinSource3, GPIO_AF_SPI1);			
 			GPIO_PinAFConfig(GPIOB,GPIO_PinSource4, GPIO_AF_SPI1);
+			GPIO_PinAFConfig(GPIOB,GPIO_PinSource5, GPIO_AF_SPI1);
 			// --------------------------------------
 			// -------------SPI Init ----------------
 			SPI_StructInit(&SPI_InitStruct);
@@ -205,33 +206,34 @@ void BSP_SPI_CS_Write(uint8_t BSP_SPIx,uint8_t value)
 {
 	
 }
-uint8_t  BSP_SPI_WriteByte(uint8_t BSP_SPIx,uint8_t data);
-uint8_t  BSP_SPI_ReadByte(uint8_t BSP_SPIx);
-uint16_t BSP_SPI_WriteBytes(uint8_t BSP_SPIx,uint8_t *pBuf,uint16_t length);
-uint16_t BSP_SPI_ReadBytes(uint8_t BSP_SPIx,uint8_t *pBuf,uint16_t length);
 
+
+//  ---- IRQ Handler----------------------
 void BSP_SPI1_DMA_IRQHandler(void)
 {
 	if(DMA_GetITStatus(DMA2_Stream2,DMA_IT_TCIF2) == SET)
 	{
-		bsp_spi1Rx_func(bsp_spi_Rxbuf,BSP_SPI1_RXBUFSIZE);
+		uint8_t temp = 0;
+		temp = bsp_spi_Rxbuf[0];
+		bsp_spi_Rxbuf[0] = bsp_spi_Rxbuf[1];
+		bsp_spi_Rxbuf[1] = temp;
+		bsp_spi1Rx_func((uint16_t *)bsp_spi_Rxbuf);
 		DMA_ClearITPendingBit(DMA2_Stream2, DMA_IT_TCIF2);	
 	}
 }
+// ---------------------------------------
 
-static void bsp_spi1Rx_func(uint8_t * buf,uint16_t len)
+static void bsp_spi1Rx_func(uint16_t *buf)
 {
-	/*
-	FFT_bufferIn[current_read_buffer][ad_position++] = *ADC_data;
-	if(ad_position>=SAMPLE_RATE){
-		ad_position = 0;
-		have_data = 1;
-		current_read_buffer = !current_read_buffer;
-	}
-	*/
+	AD7988_CollectOriginalData(buf);
 }
 
-
+// --------some func is not come true-------
+uint8_t  BSP_SPI_WriteByte(uint8_t BSP_SPIx,uint8_t data);
+uint8_t  BSP_SPI_ReadByte(uint8_t BSP_SPIx);
+uint16_t BSP_SPI_WriteBytes(uint8_t BSP_SPIx,uint8_t *pBuf,uint16_t length);
+uint16_t BSP_SPI_ReadBytes(uint8_t BSP_SPIx,uint8_t *pBuf,uint16_t length);
+// -----------------------------------------
 /**
  * @}
  */

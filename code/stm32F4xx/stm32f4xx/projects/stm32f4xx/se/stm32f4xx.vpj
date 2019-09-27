@@ -766,6 +766,10 @@
 					<F N="../source/application/user_task/user_task.c"/>
 					<F N="../source/application/user_task/user_task.h"/>
 				</Folder>
+				<Folder Name="vibrate_task">
+					<F N="../source/application/vibrate_task/vibrate_task.c"/>
+					<F N="../source/application/vibrate_task/vibrate_task.h"/>
+				</Folder>
 			</Folder>
 			<Folder Name="fml">
 				<Folder Name="ad7988_1">
@@ -777,12 +781,21 @@
 						<F N="../source/fml/ad7988_1/src/ad7988_core.c"/>
 						<F N="../source/fml/ad7988_1/src/ad7988_core.h"/>
 					</Folder>
+					<F N="../source/fml/ad7988_1/ad7988.h"/>
+				</Folder>
+				<Folder Name="protocol">
+					<F N="../source/fml/protocol/lnprotocol.c"/>
+					<F N="../source/fml/protocol/lnprotocol.h"/>
 				</Folder>
 				<Folder Name="system">
 					<F N="../source/fml/system/system_init.c"/>
 					<F N="../source/fml/system/system_init.h"/>
 					<F N="../source/fml/system/system_param.c"/>
 					<F N="../source/fml/system/system_param.h"/>
+				</Folder>
+				<Folder Name="temperatue_4_20mV">
+					<F N="../source/fml/temperatue_4_20mV/t_4_20mv.c"/>
+					<F N="../source/fml/temperatue_4_20mV/t_4_20mv.h"/>
 				</Folder>
 			</Folder>
 			<F N="../source/main.c"/>
