@@ -230,5 +230,12 @@ void DMA2_Stream7_IRQHandler(void) // Usart1_Tx
 {
 	BSP_USART1_TxDMA_IRQHandler();
 }
+
+void EXTI9_5_IRQHandler(void)
+{
+	
+}
+
+
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

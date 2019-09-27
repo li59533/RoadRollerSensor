@@ -126,8 +126,7 @@ int8_t BSP_ADC_Open(uint8_t BSP_ADCx, uint8_t *userparams)
 			GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
 			GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
 			GPIO_Init(GPIOB,&GPIO_InitStruct);		
-			// --------DMA Channel Init--------
-							
+			// --------DMA Channel Init--------			
 			DMA_StructInit(&DMA_InitStruct);
 			DMA_InitStruct.DMA_BufferSize = BSP_ADC_REGISTER_BUFSIZE * BSP_ADC_COUNT;
 			DMA_InitStruct.DMA_Channel = DMA_Channel_0;

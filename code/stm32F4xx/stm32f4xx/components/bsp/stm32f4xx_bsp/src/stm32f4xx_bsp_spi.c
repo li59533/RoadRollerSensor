@@ -175,7 +175,10 @@ void BSP_SPI_Open(uint8_t BSP_SPIx, uint8_t *userparams)
 			DMA_InitStruct.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
 			DMA_InitStruct.DMA_Priority = DMA_Priority_VeryHigh;
 			DMA_Init( DMA2_Stream2,&DMA_InitStruct);
-			SPI_I2S_DMACmd(SPI1, SPI_I2S_DMAReq_Rx, ENABLE);	
+			SPI_I2S_DMACmd(SPI1, SPI_I2S_DMAReq_Rx, ENABLE);
+
+			DMA_Cmd(DMA2_Stream3, ENABLE);
+			DMA_Cmd(DMA2_Stream2, ENABLE);
 			// -------- IT conf------------------------
 			
 			NVIC_InitStruct.NVIC_IRQChannel = DMA2_Stream2_IRQn;
@@ -184,7 +187,7 @@ void BSP_SPI_Open(uint8_t BSP_SPIx, uint8_t *userparams)
 			NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
 			NVIC_Init(&NVIC_InitStruct);
 			
-			DMA_ClearITPendingBit(DMA2_Stream2,DMA_IT_TCIF0);
+			DMA_ClearITPendingBit(DMA2_Stream2,DMA_IT_TCIF2);
 			DMA_ITConfig(DMA2_Stream2, DMA_IT_TC,  ENABLE);
 			// ----------------------------------------
 		}
@@ -215,7 +218,6 @@ void BSP_SPI1_DMA_IRQHandler(void)
 		DMA_ClearITPendingBit(DMA2_Stream2, DMA_IT_TCIF2);	
 	}
 }
-
 
 static void bsp_spi1Rx_func(uint8_t * buf,uint16_t len)
 {

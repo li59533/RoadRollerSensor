@@ -28,7 +28,7 @@
  * @{  
  */
 #define HAL_TASK_TIMEOUT_EVENT      0x0001
-
+#define HAL_TASK_LED_BLINK_EVENT	0x0002
 /**
  * @}
  */

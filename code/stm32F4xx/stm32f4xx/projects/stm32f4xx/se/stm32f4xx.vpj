@@ -715,6 +715,8 @@
 				</Folder>
 				<F N="../../../components/bsp/bsp_init.c"/>
 				<F N="../../../components/bsp/bsp_init.h"/>
+				<F N="../../../components/bsp/bsp_led.c"/>
+				<F N="../../../components/bsp/bsp_led.h"/>
 				<F N="../../../components/bsp/stm32_bsp_conf.h"/>
 			</Folder>
 			<Folder Name="mdl">

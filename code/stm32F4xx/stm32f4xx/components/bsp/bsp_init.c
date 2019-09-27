@@ -15,6 +15,7 @@
 #include "main.h"
 #include "clog.h"
 #include "malloc.h"
+#include "bsp_led.h"
 /**
  * @addtogroup    XXX 
  * @{  
@@ -113,9 +114,10 @@ void BSP_Init(void)
 {
 	DEBUG("BSP_Init Start\r\n");
 	BSP_USART_Open(BSP_USART1,0);
-	BSP_ADC_Open(BSP_ADC1,0);
-	my_mem_init(SRAMIN);		//初始化内部内存池 
-	my_mem_init(SRAMCCM);		//初始化CCM内存池
+	//BSP_ADC_Open(BSP_ADC1,0);
+	BSP_LED_Init();
+	my_mem_init(SRAMIN);		//init internal ram 
+	my_mem_init(SRAMCCM);		//init ccm ram
 	
 	DEBUG("BSP_Init Complete\r\n");
 }

@@ -437,6 +437,21 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\components\bsp\stm32f4xx_bsp\src\stm32f4xx_bsp_spi.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_bsp_iic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\bsp\stm32f4xx_bsp\src\stm32f4xx_bsp_iic.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_bsp_exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\bsp\stm32f4xx_bsp\src\stm32f4xx_bsp_exti.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\bsp\bsp_led.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
