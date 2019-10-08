@@ -64,6 +64,7 @@
  * @{  
  */
 void T_4_20mv_CalcProcess(void);
+float T_4_20mv_GetTemperatureValue(void);
 /**
  * @}
  */

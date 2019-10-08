@@ -28,9 +28,10 @@
  * @defgroup      stm32f4xx_bsp_usart_Exported_Macros 
  * @{  
  */
-#define BSP_UART_COUNT			1
+#define BSP_UART_COUNT			2
 #define BSP_USART1				0
-#define	BSP_USART2				1 
+//#define	BSP_USART2				1
+#define BSP_USART6				1
 
 
 #define BSP_USART1_TXBUF_SIZE 	20		
@@ -38,13 +39,29 @@
 #define BSP_USART2_TXBUF_SIZE	300
 #define BSP_USART2_RXBUF_SIZE	300
 
+#define BSP_USART6_TXBUF_SIZE	300
+#define BSP_USART6_RXBUF_SIZE	300
+
+
 #define BSP_USART1_TX_DMA_ACTIVE 	1
 #define BSP_USART1_RX_DMA_ACTIVE	1
+
 #if BSP_USART1_RX_DMA_ACTIVE == 1
 	#define BSP_USART1_IDEL_ACTIVE  1
 #else
 	#define BSP_USART1_IDEL_ACTIVE  0
 #endif
+
+
+#define BSP_USART6_TX_DMA_ACTIVE 	1
+#define BSP_USART6_RX_DMA_ACTIVE	1
+
+#if BSP_USART6_RX_DMA_ACTIVE == 1
+	#define BSP_USART6_IDEL_ACTIVE  1
+#else
+	#define BSP_USART6_IDEL_ACTIVE  0
+#endif
+
 
 
 
@@ -105,6 +122,9 @@ void BSP_USART_WriteBytes_DMA(uint8_t BSP_USARTx,uint8_t* pBuf,uint16_t length);
 void BSP_USART1_TxDMA_IRQHandler(void);
 void BSP_USART_WriteBytes(uint8_t BSP_USARTx,uint8_t* pBuf,uint16_t length);
 	
+void BSP_USART6_TxDMA_IRQHandler(void);
+
+
 
 /**
  * @}

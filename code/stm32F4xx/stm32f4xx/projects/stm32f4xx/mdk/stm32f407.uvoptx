@@ -147,38 +147,6 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>231</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\..\..\components\bsp\stm32f4xx_bsp\src\stm32f4xx_bsp_adc.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>181</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\..\..\components\bsp\stm32f4xx_bsp\src\stm32f4xx_bsp_adc.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>2</Number>
-          <Type>0</Type>
           <LineNumber>388</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>134220174</Address>
@@ -191,38 +159,6 @@
           <Filename>..\..\..\components\bsp\stm32f4xx_bsp\src\stm32f4xx_bsp_usart.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\stm32f407\../../../components/bsp/stm32f4xx_bsp/src/stm32f4xx_bsp_usart.c\388</Expression>
-        </Bp>
-        <Bp>
-          <Number>3</Number>
-          <Type>0</Type>
-          <LineNumber>184</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134219642</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\..\..\components\bsp\stm32f4xx_bsp\src\stm32f4xx_bsp_adc.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\stm32f407\../../../components/bsp/stm32f4xx_bsp/src/stm32f4xx_bsp_adc.c\184</Expression>
-        </Bp>
-        <Bp>
-          <Number>4</Number>
-          <Type>0</Type>
-          <LineNumber>234</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134219304</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\..\..\components\bsp\stm32f4xx_bsp\src\stm32f4xx_bsp_adc.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\stm32f407\../../../components/bsp/stm32f4xx_bsp/src/stm32f4xx_bsp_adc.c\234</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>

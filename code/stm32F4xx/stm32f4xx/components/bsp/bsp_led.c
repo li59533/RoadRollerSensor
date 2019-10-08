@@ -49,12 +49,12 @@ typedef struct
 const LED_IO_Typedef LED_IO[BSP_LEDCOUNT]=
 {
     {
-        {RCC_AHB1Periph_GPIOB,GPIOB,GPIO_Pin_9,GPIO_Mode_OUT,GPIO_Speed_100MHz,GPIO_OType_PP,GPIO_PuPd_DOWN},
+        {RCC_AHB1Periph_GPIOE,GPIOE,GPIO_Pin_7,GPIO_Mode_OUT,GPIO_Speed_100MHz,GPIO_OType_PP,GPIO_PuPd_DOWN},
         .OnLevel = Bit_SET,
         .OffLevel = Bit_RESET,
     },
     {
-        {RCC_AHB1Periph_GPIOC,GPIOC,GPIO_Pin_13,GPIO_Mode_OUT,GPIO_Speed_100MHz,GPIO_OType_PP,GPIO_PuPd_DOWN},
+        {RCC_AHB1Periph_GPIOE,GPIOE,GPIO_Pin_8,GPIO_Mode_OUT,GPIO_Speed_100MHz,GPIO_OType_PP,GPIO_PuPd_DOWN},
         .OnLevel = Bit_SET,
         .OffLevel = Bit_RESET,
     },
