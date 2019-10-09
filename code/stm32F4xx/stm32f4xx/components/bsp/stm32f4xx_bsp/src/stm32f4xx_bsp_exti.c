@@ -155,6 +155,9 @@ void BSP_EXTI_5_9_Handler(void)
 {
 	if( EXTI_GetITStatus(EXTI_Line6) == SET)
 	{
+		uint16_t spi_test = 0;
+		//BSP_SPI_Start(BSP_SPI1);
+		//spi_test = SPI1_ReadWriteByte(0);
 		EXTI_ClearITPendingBit(EXTI_Line6);
 	}
 }

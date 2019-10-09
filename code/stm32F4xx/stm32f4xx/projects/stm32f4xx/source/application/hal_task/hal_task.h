@@ -17,7 +17,7 @@
  * @addtogroup    XXX 
  * @{ 
  */
-
+#include "osal.h"
 /**
  * @addtogroup    hal_task_Modules 
  * @{  
@@ -29,6 +29,7 @@
  */
 #define HAL_TASK_TIMEOUT_EVENT      0x0001
 #define HAL_TASK_LED_BLINK_EVENT	0x0002
+#define HAL_TASK_ADC_CALC_EVENT		0x0004
 /**
  * @}
  */
@@ -66,6 +67,9 @@ extern uint8_t g_HalTask_Id;
  */
 void HalTask_Init(uint8_t taskId);
 osal_event_t HalTask_Process(uint8_t taskid,osal_event_t events);
+void HalTask_Send_Event(osal_event_t events);
+void HalTask_Clear_Event(osal_event_t events);
+
 /**
  * @}
  */

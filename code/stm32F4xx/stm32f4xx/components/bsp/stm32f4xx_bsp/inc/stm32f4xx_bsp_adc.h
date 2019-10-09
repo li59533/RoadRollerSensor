@@ -30,7 +30,7 @@
 #define BSP_ADC1		0
 #define BSP_ADC2		1
 
-#define BSP_ADC_COUNT 	1
+#define BSP_ADC_COUNT 	2
 /**
  * @}
  */
@@ -78,7 +78,7 @@ uint16_t BSP_ADC_GetRegisterValue(uint8_t BSP_ADCx);
 uint16_t BSP_ADC_GetVolmvValue(uint8_t BSP_ADCx);
 
 void BSP_ADC1_DMA_IRQHandler(void);
-
+void BSP_ADC1_Calc_Process(void);
 /**
  * @}
  */

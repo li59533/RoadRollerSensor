@@ -19,6 +19,8 @@
  * @{  
  */
 #include "bsp_led.h"
+#include "stm32_bsp_conf.h"
+#include "user_task.h"
 /**
  * @addtogroup    hal_task_Modules 
  * @{  
@@ -102,20 +104,36 @@ uint8_t g_HalTask_Id = 0;
 void HalTask_Init(uint8_t taskId)
 {
     g_HalTask_Id = taskId;
-    
+	BSP_LED_Open(BSP_LED_POWER);
 }
 
 osal_event_t HalTask_Process(uint8_t taskid,osal_event_t events)
 {
-
 	if (events & HAL_TASK_LED_BLINK_EVENT)
     {			
 		BSP_LED_Update();
         return events ^ HAL_TASK_LED_BLINK_EVENT;
     }
-	
+	if (events & HAL_TASK_ADC_CALC_EVENT)
+    {			
+		BSP_ADC1_Calc_Process();
+		UserTask_Send_Event(USER_TASK_T420MV_CALC_EVENT);
+        return events ^ HAL_TASK_ADC_CALC_EVENT;
+    }
     return 0;
 }
+
+void HalTask_Send_Event(osal_event_t events)
+{
+    OS_Events_Set(g_HalTask_Id,events);
+}
+
+void HalTask_Clear_Event(osal_event_t events)
+{
+
+}
+
+
 /**
  * @}
  */

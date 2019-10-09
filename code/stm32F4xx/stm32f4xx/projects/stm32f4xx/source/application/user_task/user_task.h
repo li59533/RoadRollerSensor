@@ -30,6 +30,7 @@
 
 #define USER_TASK_LOOP_EVENT            0x0001
 #define USER_TASK_T420MV_CALC_EVENT		0x0002
+#define USER_TASK_T420MV_START_EVENT	0x0004
 /**
  * @}
  */

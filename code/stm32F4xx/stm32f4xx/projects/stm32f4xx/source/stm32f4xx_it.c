@@ -236,10 +236,14 @@ void DMA2_Stream6_IRQHandler(void) // Usart1_Tx
 	BSP_USART6_TxDMA_IRQHandler();
 }
 
+void SPI1_IRQHandler(void)
+{
+	BSP_SPI1_IRQHandler();
+}
 
 void EXTI9_5_IRQHandler(void)
 {
-	
+	BSP_EXTI_5_9_Handler();
 }
 
 

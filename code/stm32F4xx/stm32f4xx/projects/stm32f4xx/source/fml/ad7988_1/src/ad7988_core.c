@@ -21,8 +21,8 @@
 #include "stm32_bsp_conf.h"
 #include "bsp_led.h"
 #include "clog.h"
-//#include "arm_math.h"
-
+#include "arm_math.h"
+#include "arm_const_structs.h"
 /**
  * @addtogroup    ad7988_core_Modules 
  * @{  

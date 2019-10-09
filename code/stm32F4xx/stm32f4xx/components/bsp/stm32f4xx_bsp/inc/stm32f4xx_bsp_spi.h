@@ -70,9 +70,11 @@
 void BSP_SPI_Open(uint8_t BSP_SPIx, uint8_t *userparams);
 
 
-
+void BSP_SPI_Start(uint8_t BSP_SPIx);
 
 void BSP_SPI1_DMA_IRQHandler(void);
+void BSP_SPI1_IRQHandler(void);
+uint16_t SPI1_ReadWriteByte(uint16_t TxData);
 
 /**
  * @}

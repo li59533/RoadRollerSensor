@@ -14,16 +14,16 @@
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>STM32F407VGTx</Device>
+          <Device>STM32F407VETx</Device>
           <Vendor>STMicroelectronics</Vendor>
           <PackID>Keil.STM32F4xx_DFP.2.13.0</PackID>
           <PackURL>http://www.keil.com/pack</PackURL>
-          <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x10000000,0x00010000) IROM(0x08000000,0x00100000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ELITTLE</Cpu>
+          <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x10000000,0x00010000) IROM(0x08000000,0x00080000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0STM32F4xx_1024 -FS08000000 -FL0100000 -FP0($$Device:STM32F407VGTx$CMSIS\Flash\STM32F4xx_1024.FLM))</FlashDriverDll>
+          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0STM32F4xx_512 -FS08000000 -FL080000 -FP0($$Device:STM32F407VETx$CMSIS\Flash\STM32F4xx_512.FLM))</FlashDriverDll>
           <DeviceId>0</DeviceId>
-          <RegisterFile>$$Device:STM32F407VGTx$Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h</RegisterFile>
+          <RegisterFile>$$Device:STM32F407VETx$Drivers\CMSIS\Device\ST\STM32F4xx\Include\stm32f4xx.h</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -33,7 +33,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile>$$Device:STM32F407VGTx$CMSIS\SVD\STM32F40x.svd</SFDFile>
+          <SFDFile>$$Device:STM32F407VETx$CMSIS\SVD\STM32F40x.svd</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
@@ -138,7 +138,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -250,7 +250,7 @@
               <IROM>
                 <Type>1</Type>
                 <StartAddress>0x8000000</StartAddress>
-                <Size>0x100000</Size>
+                <Size>0x80000</Size>
               </IROM>
               <XRAM>
                 <Type>0</Type>
@@ -275,7 +275,7 @@
               <OCR_RVCT4>
                 <Type>1</Type>
                 <StartAddress>0x8000000</StartAddress>
-                <Size>0x100000</Size>
+                <Size>0x80000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -336,9 +336,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_STDPERIPH_DRIVER,STM32F40XX</Define>
+              <Define>USE_STDPERIPH_DRIVER,STM32F40XX,ARM_MATH_CM4,__CC_ARM,__FPU_PRESENT = 1,__TARGET_FPU_VFP</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Include;..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm;..\..\..\..\compoents\CMSIS\Include;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc\Legacy;..\..\..\..\compoents\Utilities;..\..\..\components\bsp\stm32l4xx_bsp\inc;..\..\..\components\bsp\stm32l4xx_bsp;..\..\..\components\bsp;..\..\..\components\mdl\clog;..\..\..\components\mdl\osal\ports;..\..\..\components\mdl\osal\src;..\..\..\components\mdl\rttviewer;..\source;..\source\application\hal_task;..\source\application\user_task;..\source\fml\system;..\..\..\components\bsp\stm32f4xx_bsp\inc;..\..\..\components\bsp\stm32f4xx_bsp\src;..\..\..\components\bsp\stm32f4xx_bsp;..\..\..\..\compoents\STM32F4xx_StdPeriph_Driver\inc;..\..\..\components\mdl\MALLOC;..\source\fml\ad7988_1\port;..\source\fml\ad7988_1\src;..\source\application\vibrate_task;..\source\fml\ad7988_1;..\source\fml\temperatue_4_20mV;..\source\fml\protocol</IncludePath>
+              <IncludePath>..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Include;..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm;..\..\..\..\compoents\CMSIS\Include;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc\Legacy;..\..\..\..\compoents\Utilities;..\..\..\components\bsp\stm32l4xx_bsp\inc;..\..\..\components\bsp\stm32l4xx_bsp;..\..\..\components\bsp;..\..\..\components\mdl\clog;..\..\..\components\mdl\osal\ports;..\..\..\components\mdl\osal\src;..\..\..\components\mdl\rttviewer;..\source;..\source\application\hal_task;..\source\application\user_task;..\source\fml\system;..\..\..\components\bsp\stm32f4xx_bsp\inc;..\..\..\components\bsp\stm32f4xx_bsp\src;..\..\..\components\bsp\stm32f4xx_bsp;..\..\..\..\compoents\STM32F4xx_StdPeriph_Driver\inc;..\..\..\components\mdl\MALLOC;..\source\fml\ad7988_1\port;..\source\fml\ad7988_1\src;..\source\application\vibrate_task;..\source\fml\ad7988_1;..\source\fml\temperatue_4_20mV;..\source\fml\protocol;..\..\..\..\compoents\CMSIS\DSP_Lib\Source\ComplexMathFunctions;..\..\..\..\compoents\CMSIS\DSP_Lib\Source\ControllerFunctions</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -461,6 +461,11 @@
               <FileName>bsp_led.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\components\bsp\bsp_led.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_bsp_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\bsp\stm32f4xx_bsp\src\stm32f4xx_bsp_tim.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -766,6 +771,11 @@
               <FileName>startup_stm32f407xx.s</FileName>
               <FileType>2</FileType>
               <FilePath>..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f407xx.s</FilePath>
+            </File>
+            <File>
+              <FileName>arm_cortexM4lf_math.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\..\..\..\compoents\CMSIS\DSP_Lib\ARM\arm_cortexM4lf_math.lib</FilePath>
             </File>
           </Files>
         </Group>

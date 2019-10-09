@@ -99,7 +99,9 @@
  */
 void AD7988_Init(void)
 {
+	BSP_EXTI_Open(BSP_EXTI_1,0);
 	BSP_SPI_Open(BSP_SPI1,0);
+	BSP_Tim_Open(BSP_TIM1,0);
 }
 /**
  * @}

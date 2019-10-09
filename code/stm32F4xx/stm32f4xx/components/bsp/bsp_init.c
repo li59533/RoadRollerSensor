@@ -114,7 +114,7 @@ void BSP_Init(void)
 {
 	DEBUG("BSP_Init Start\r\n");
 	BSP_USART_Open(BSP_USART1,0);
-	//BSP_ADC_Open(BSP_ADC1,0);
+	BSP_ADC_Open(BSP_ADC1,0);
 	BSP_LED_Init();
 	my_mem_init(SRAMIN);		//init internal ram 
 	DEBUG("BSP_Init Complete\r\n");

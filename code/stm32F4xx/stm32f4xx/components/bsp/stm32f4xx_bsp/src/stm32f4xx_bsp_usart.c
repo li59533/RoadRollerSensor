@@ -156,6 +156,8 @@ void BSP_USART_Open(uint8_t BSP_USARTx, uint8_t *userparams)
 	NVIC_InitTypeDef NVIC_InitStruct = { 0 };
 	DMA_InitTypeDef DMA_InitStruct = { 0 };
 	
+	bsp_usart_485en_init(); // init 485 EN pin GPIO 
+	
 	switch(BSP_USARTx)
 	{
 		case BSP_USART1:
