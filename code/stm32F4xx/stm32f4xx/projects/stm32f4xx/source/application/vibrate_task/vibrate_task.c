@@ -109,8 +109,9 @@ osal_event_t VibrateTask_Process(uint8_t taskid,osal_event_t events)
     if (events & VIBRATE_TASK_INIT_EVENT)
     {
 		DEBUG("AD7988 Init\r\n");
-		AD7988_Init();
 		AD7988_ParamInit();
+		AD7988_Init();
+		
         return events ^ VIBRATE_TASK_INIT_EVENT;
     }	
 	if (events & VIBRATE_TASK_CALC_EVENT)

@@ -26,6 +26,7 @@
 #include "osal.h"
 #include "clog.h"
 #include "stm32_bsp_conf.h"
+#include "bsp_led.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -186,10 +187,11 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-	  OS_Timer_Update(1);
-	  OS_Clock_Update(1);
+	OS_Timer_Update(1);
+	OS_Clock_Update(1);
+	BSP_SYSTICK_IncTick();
   /* USER CODE END SysTick_IRQn 0 */
-
+	
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
@@ -209,30 +211,37 @@ void SysTick_Handler(void)
 
 void USART1_IRQHandler(void)
 {
-	DEBUG("Enter the USART1_IRQHandler\r\n");
+	//DEBUG("Enter the USART1_IRQHandler\r\n");
 	BSP_USART_IRQHandler( BSP_USART1);
+}
+void USART6_IRQHandler(void)
+{
+	//DEBUG("Enter the USART6_IRQHandler\r\n");
+	BSP_USART_IRQHandler( BSP_USART6);
 }
 void DMA2_Stream0_IRQHandler(void) // ADC
 {
-	DEBUG("Enter the DMA2_Stream0_IRQHandler\r\n");
+	//DEBUG("Enter the DMA2_ADC_IRQHandler\r\n");
 	BSP_ADC1_DMA_IRQHandler();
 }
 void DMA2_Stream2_IRQHandler(void) // SPI1 Rx
 {
-	DEBUG("Enter the DMA2_Stream0_IRQHandler\r\n");
+	//DEBUG("Enter the DMA2_SPI_IRQHandler\r\n");
 	BSP_SPI1_DMA_IRQHandler();
 }
 void DMA2_Stream5_IRQHandler(void) // Usart1_Rx
 {
-	DEBUG("Enter the DMA2_Stream5_IRQHandler\r\n");
+	DEBUG("Enter the DMA2_Uart1R_IRQHandler\r\n");
 }
 void DMA2_Stream7_IRQHandler(void) // Usart1_Tx
 {
+	//DEBUG("Enter the DMA2_Uart1T_IRQHandler\r\n");
 	BSP_USART1_TxDMA_IRQHandler();
 }
 
 void DMA2_Stream6_IRQHandler(void) // Usart1_Tx
 {
+	//DEBUG("Enter the DMA2_Uart2T_IRQHandler\r\n");
 	BSP_USART6_TxDMA_IRQHandler();
 }
 

@@ -87,7 +87,7 @@
  * @brief         
  * @{  
  */
-
+static uint32_t s_Systick_Ticks = 0;
 /**
  * @}
  */
@@ -106,11 +106,25 @@ void BSP_Systick_Init(void) // if using ths HAL ,please using the HAl_Init();
 	
 }
 
-void BSP_Systick_Delayms(uint32_t delay) // block delay
+void BSP_SYSTICK_IncTick(void)
 {
-
+    s_Systick_Ticks++;
 }
 
+uint32_t BSP_SYSTICK_GetTick(void)
+{
+    return s_Systick_Ticks;
+}
+
+
+void BSP_Systick_Delayms(uint32_t ticks) // block delay
+{
+    uint32_t tickstart = 0;
+    tickstart = BSP_SYSTICK_GetTick();
+    while ((BSP_SYSTICK_GetTick() - tickstart) < ticks) 
+    {
+    }
+}
 
 
 /**

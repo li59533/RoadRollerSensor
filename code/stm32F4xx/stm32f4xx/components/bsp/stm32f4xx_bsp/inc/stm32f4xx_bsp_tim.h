@@ -66,7 +66,8 @@
  * @{  
  */
 void BSP_Tim_Open(uint8_t BSP_TIMx,uint8_t *userparam);
-
+void BSP_Tim_Stop(uint8_t BSP_TIMx);
+void BSP_Tim_Start(uint8_t BSP_TIMx);
 /**
  * @}
  */

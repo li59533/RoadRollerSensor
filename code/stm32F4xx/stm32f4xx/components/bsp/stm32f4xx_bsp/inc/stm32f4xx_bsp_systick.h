@@ -17,7 +17,7 @@
  * @addtogroup    XXX 
  * @{ 
  */
-
+#include "self_def.h"
 /**
  * @addtogroup    stm32f4xx_bsp_systick_Modules 
  * @{  
@@ -64,7 +64,9 @@
  * @{  
  */
 void BSP_Systick_Init(void); // if using ths HAL ,please using the HAl_Init();
-void BSP_Systick_Delayms(uint32_t delay); // block delay
+void BSP_SYSTICK_IncTick(void);
+uint32_t BSP_SYSTICK_GetTick(void);
+void BSP_Systick_Delayms(uint32_t ticks); // block delay
 
 
 /**

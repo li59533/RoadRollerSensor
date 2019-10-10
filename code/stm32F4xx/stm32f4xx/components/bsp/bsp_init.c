@@ -111,12 +111,15 @@ void Board_Init(void)
 	
 }
 void BSP_Init(void)
-{
+{	
+	//my_mem_init(SRAMIN);		//init internal ram 
+	//my_mem_init(SRAMCCM);		//init ccm
 	DEBUG("BSP_Init Start\r\n");
 	BSP_USART_Open(BSP_USART1,0);
+	BSP_USART_Open(BSP_USART6,0);
 	BSP_ADC_Open(BSP_ADC1,0);
 	BSP_LED_Init();
-	my_mem_init(SRAMIN);		//init internal ram 
+
 	DEBUG("BSP_Init Complete\r\n");
 }
 

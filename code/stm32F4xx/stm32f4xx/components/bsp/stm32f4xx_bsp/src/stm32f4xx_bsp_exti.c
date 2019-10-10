@@ -158,6 +158,7 @@ void BSP_EXTI_5_9_Handler(void)
 		uint16_t spi_test = 0;
 		//BSP_SPI_Start(BSP_SPI1);
 		//spi_test = SPI1_ReadWriteByte(0);
+		SPI_I2S_SendData(SPI1, 0);
 		EXTI_ClearITPendingBit(EXTI_Line6);
 	}
 }

@@ -259,8 +259,10 @@ void BSP_SPI1_IRQHandler(void)
 {
 	if(SPI_I2S_GetITStatus(SPI1, SPI_I2S_IT_RXNE) == SET)
 	{
-		DEBUG("ENTER SPI IRQ\r\n");
+		static uint16_t test_count = 0;
+		
 		bsp_spi_RxTemp = SPI_I2S_ReceiveData(SPI1);
+		//DEBUG("ENTER SPI IRQ %X\r\n",bsp_spi_RxTemp);
 		bsp_spi1Rx_func(&bsp_spi_RxTemp);
 		SPI_I2S_ClearITPendingBit(SPI1,SPI_I2S_IT_RXNE);
 	}

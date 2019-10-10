@@ -30,11 +30,11 @@
  */
 #define BSP_UART_COUNT			2
 #define BSP_USART1				0
-//#define	BSP_USART2				1
+//#define	BSP_USART2			1
 #define BSP_USART6				1
 
 
-#define BSP_USART1_TXBUF_SIZE 	20		
+#define BSP_USART1_TXBUF_SIZE 	300	
 #define BSP_USART1_RXBUF_SIZE	300
 #define BSP_USART2_TXBUF_SIZE	300
 #define BSP_USART2_RXBUF_SIZE	300
@@ -124,7 +124,7 @@ void BSP_USART_WriteBytes(uint8_t BSP_USARTx,uint8_t* pBuf,uint16_t length);
 	
 void BSP_USART6_TxDMA_IRQHandler(void);
 
-
+void Test_UART_DMASEND(void);
 
 /**
  * @}

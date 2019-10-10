@@ -22,6 +22,7 @@
  */
 #include "bsp_led.h"
 #include "t_4_20mv.h"
+#include "transfor_makepackage.h"
 /**
  * @addtogroup    user_task_Modules 
  * @{  
@@ -105,9 +106,7 @@ uint8_t g_UserTask_Id = 0;
 void UserTask_Init(uint8_t taskId)
 {
     g_UserTask_Id = taskId;
-    //UserTask_Send_Event(USER_TASK_LOOP_EVENT);	
-	//BSP_LED_Blink(BSP_LED1, 0 , 10, 500);
-	//BSP_LED_Blink(BSP_LED2, 0 , 50, 500);
+    UserTask_Send_Event(USER_TASK_LOOP_EVENT);	
 	BSP_ADC_Start( 0 );
 }
 
@@ -127,6 +126,8 @@ osal_event_t UserTask_Process(uint8_t taskid,osal_event_t events)
 	if (events & USER_TASK_T420MV_CALC_EVENT)
     {			
 		T_4_20mv_CalcProcess();
+
+		
 		OS_Timer_Start(g_UserTask_Id, USER_TASK_T420MV_START_EVENT,500);	
         return events ^ USER_TASK_T420MV_CALC_EVENT;
     }

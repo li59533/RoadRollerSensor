@@ -21,6 +21,7 @@
 #include "bsp_led.h"
 #include "stm32_bsp_conf.h"
 #include "user_task.h"
+#include "vibrate_task.h"
 /**
  * @addtogroup    hal_task_Modules 
  * @{  
@@ -118,6 +119,7 @@ osal_event_t HalTask_Process(uint8_t taskid,osal_event_t events)
     {			
 		BSP_ADC1_Calc_Process();
 		UserTask_Send_Event(USER_TASK_T420MV_CALC_EVENT);
+		VibrateTask_Send_Event(VIBRATE_TASK_STATUS_CHECK_EVENT);
         return events ^ HAL_TASK_ADC_CALC_EVENT;
     }
     return 0;

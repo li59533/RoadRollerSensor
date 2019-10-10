@@ -121,12 +121,12 @@ void BSP_Tim_Open(uint8_t BSP_TIMx,uint8_t *userparam)
 
 			TIM_TimeBaseStructure.TIM_Prescaler=83;  //定时器分频  1000000/SAMPLE_RATE,84
 			TIM_TimeBaseStructure.TIM_CounterMode=TIM_CounterMode_Up; //向上计数模式
-			TIM_TimeBaseStructure.TIM_Period=480;   //自动重装载值
+			TIM_TimeBaseStructure.TIM_Period=487;   //自动重装载值
 			TIM_TimeBaseStructure.TIM_ClockDivision=TIM_CKD_DIV1; 
 			TIM_TimeBaseInit(TIM3,&TIM_TimeBaseStructure);//初始化定时器3
 
 			//初始化TIM3 Channel2 PWM模式	 
-			TIM_OCInitStructure.TIM_Pulse = 240;	
+			TIM_OCInitStructure.TIM_Pulse = 244;	
 			TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1; //选择定时器模式:TIM脉冲宽度调制模式1
 			TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable; //比较输出使能
 			TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_Low; //输出极性:TIM输出比较极性低
@@ -135,7 +135,7 @@ void BSP_Tim_Open(uint8_t BSP_TIMx,uint8_t *userparam)
 			TIM_OC2PreloadConfig(TIM3, TIM_OCPreload_Enable);  //使能TIM3在CCR2上的预装载寄存器
 
 			TIM_ARRPreloadConfig(TIM3,ENABLE);//ARPE使能 
-
+			TIM_CtrlPWMOutputs(TIM3,  ENABLE);
 			TIM_Cmd(TIM3, ENABLE);  //使能TIM3
 		}
 		break;
@@ -143,6 +143,30 @@ void BSP_Tim_Open(uint8_t BSP_TIMx,uint8_t *userparam)
 	}
 }
 
+void BSP_Tim_Stop(uint8_t BSP_TIMx)
+{
+	switch(BSP_TIMx)
+	{
+		case BSP_TIM1:
+		{
+			TIM_Cmd(TIM3, DISABLE);  //使能TIM3
+		}
+		break;
+		default:break;
+	}
+}
+void BSP_Tim_Start(uint8_t BSP_TIMx)
+{
+	switch(BSP_TIMx)
+	{
+		case BSP_TIM1:
+		{
+			TIM_Cmd(TIM3, ENABLE);  //使能TIM3
+		}
+		break;
+		default:break;
+	}
+}
 /**
  * @}
  */

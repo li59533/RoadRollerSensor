@@ -184,6 +184,7 @@ void BSP_USART_Open(uint8_t BSP_USARTx, uint8_t *userparams)
 			USART_InitStruct.USART_BaudRate = 115200;
 			USART_Init(USART1, &USART_InitStruct);
 			// ---------DMA Init -------------------
+			
 			if(BSP_USART1_TX_DMA_ACTIVE)
 			{
 				RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2,ENABLE); //DMA Clock open
@@ -203,14 +204,14 @@ void BSP_USART_Open(uint8_t BSP_USARTx, uint8_t *userparams)
 				DMA_Init( DMA2_Stream7,&DMA_InitStruct);
 				// ---------OPEN IT-----------
 				NVIC_InitStruct.NVIC_IRQChannel = DMA2_Stream7_IRQn;
-				NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 2;
-				NVIC_InitStruct.NVIC_IRQChannelSubPriority = 2;
+				NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0;
+				NVIC_InitStruct.NVIC_IRQChannelSubPriority = 1;
 				NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
 				NVIC_Init(&NVIC_InitStruct);
 				DMA_ITConfig(DMA2_Stream7, DMA_IT_TC,  ENABLE);
 				// ---------------------------
 				
-				//DMA_Cmd(DMA2_Stream7,ENABLE);
+				DMA_Cmd(DMA2_Stream7,DISABLE);
 				
 				USART_DMACmd(USART1, USART_DMAReq_Tx, ENABLE);
 			}
@@ -240,7 +241,7 @@ void BSP_USART_Open(uint8_t BSP_USARTx, uint8_t *userparams)
 			
 			
 			// ---------OPEN IT---------------------
-			USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
+			//USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
 			
 			if(BSP_USART1_IDEL_ACTIVE)
 			{
@@ -248,8 +249,8 @@ void BSP_USART_Open(uint8_t BSP_USARTx, uint8_t *userparams)
 			}
 			// -------Init the NVIC-----------------
 			NVIC_InitStruct.NVIC_IRQChannel = USART1_IRQn;
-			NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 2;
-			NVIC_InitStruct.NVIC_IRQChannelSubPriority = 2;
+			NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0;
+			NVIC_InitStruct.NVIC_IRQChannelSubPriority = 1;
 			NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
 			NVIC_Init(&NVIC_InitStruct);
 			// ------USART Start -------
@@ -258,7 +259,7 @@ void BSP_USART_Open(uint8_t BSP_USARTx, uint8_t *userparams)
 		break;
 		case BSP_USART6:
 		{
-			// ----CLK ENABLE----------
+		// ----CLK ENABLE----------
 			RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC,ENABLE);
 			//RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2,ENABLE);
 			RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART6,ENABLE);
@@ -270,16 +271,17 @@ void BSP_USART_Open(uint8_t BSP_USARTx, uint8_t *userparams)
 			GPIO_InitStruct.GPIO_Pin = GPIO_Pin_6 |GPIO_Pin_7;
 			GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
 			GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
-			GPIO_Init(GPIOA,&GPIO_InitStruct);		
+			GPIO_Init(GPIOC,&GPIO_InitStruct);		
 			/* GPIO Alternate functions configuration function ****************************/
-			GPIO_PinAFConfig(GPIOA,GPIO_PinSource6, GPIO_AF_USART1);			
-			GPIO_PinAFConfig(GPIOA,GPIO_PinSource7, GPIO_AF_USART1);	
+			GPIO_PinAFConfig(GPIOC,GPIO_PinSource6, GPIO_AF_USART6);			
+			GPIO_PinAFConfig(GPIOC,GPIO_PinSource7, GPIO_AF_USART6);	
 			// ------------------------
 			/* Initialization and Configuration functions *********************************/
 			USART_StructInit(&USART_InitStruct);
 			USART_InitStruct.USART_BaudRate = 115200;
 			USART_Init(USART6, &USART_InitStruct);
 			// ---------DMA Init -------------------
+			
 			if(BSP_USART6_TX_DMA_ACTIVE)
 			{
 				RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2,ENABLE); //DMA Clock open
@@ -299,20 +301,22 @@ void BSP_USART_Open(uint8_t BSP_USARTx, uint8_t *userparams)
 				DMA_Init( DMA2_Stream6,&DMA_InitStruct);
 				// ---------OPEN IT-----------
 				NVIC_InitStruct.NVIC_IRQChannel = DMA2_Stream6_IRQn;
-				NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 2;
-				NVIC_InitStruct.NVIC_IRQChannelSubPriority = 2;
+				NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0;
+				NVIC_InitStruct.NVIC_IRQChannelSubPriority = 1;
 				NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
 				NVIC_Init(&NVIC_InitStruct);
 				DMA_ITConfig(DMA2_Stream6, DMA_IT_TC,  ENABLE);
 				// ---------------------------
-			
+				
+				DMA_Cmd(DMA2_Stream6,DISABLE);
+				
 				USART_DMACmd(USART6, USART_DMAReq_Tx, ENABLE);
 			}
 			if(BSP_USART6_RX_DMA_ACTIVE)
 			{
 				RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2,ENABLE); //DMA Clock open
 				DMA_StructInit(&DMA_InitStruct);
-				DMA_InitStruct.DMA_BufferSize = BSP_USART1_RXBUF_SIZE;
+				DMA_InitStruct.DMA_BufferSize = BSP_USART6_RXBUF_SIZE;
 				DMA_InitStruct.DMA_Channel = DMA_Channel_5;
 				DMA_InitStruct.DMA_DIR = DMA_DIR_PeripheralToMemory;
 				DMA_InitStruct.DMA_Memory0BaseAddr = (uint32_t)USART6_Rx_Buf;
@@ -334,34 +338,20 @@ void BSP_USART_Open(uint8_t BSP_USARTx, uint8_t *userparams)
 			
 			
 			// ---------OPEN IT---------------------
-			USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
-			USART_ITConfig(USART6, USART_IT_RXNE, ENABLE);
-			
-			if(BSP_USART1_IDEL_ACTIVE)
-			{
-				USART_ITConfig(USART1, USART_IT_IDLE, ENABLE);
-			}
-			// -------Init the NVIC-----------------
-			NVIC_InitStruct.NVIC_IRQChannel = USART1_IRQn;
-			NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 2;
-			NVIC_InitStruct.NVIC_IRQChannelSubPriority = 2;
-			NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
-			NVIC_Init(&NVIC_InitStruct);
+			//USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
 			
 			if(BSP_USART6_IDEL_ACTIVE)
 			{
-				USART_ITConfig(USART1, USART_IT_IDLE, ENABLE);
+				USART_ITConfig(USART6, USART_IT_IDLE, ENABLE);
 			}
 			// -------Init the NVIC-----------------
 			NVIC_InitStruct.NVIC_IRQChannel = USART6_IRQn;
-			NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 2;
-			NVIC_InitStruct.NVIC_IRQChannelSubPriority = 2;
+			NVIC_InitStruct.NVIC_IRQChannelPreemptionPriority = 0;
+			NVIC_InitStruct.NVIC_IRQChannelSubPriority = 1;
 			NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
 			NVIC_Init(&NVIC_InitStruct);
-			
 			// ------USART Start -------
-			USART_Cmd(USART1,ENABLE);			
-			
+			USART_Cmd(USART6,ENABLE);
 		}
 		break;
 		default:break;
@@ -388,11 +378,11 @@ static void bsp_usart_485en_init(void)  // init the 485 EN pin
 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_Init(GPIOC,&GPIO_InitStruct);	
 	
-	GPIO_SetBits( GPIOA, GPIO_Pin_11);	
-	GPIO_SetBits( GPIOC, GPIO_Pin_8);	
+	GPIO_ResetBits( GPIOA, GPIO_Pin_11);	
+	GPIO_ResetBits( GPIOC, GPIO_Pin_8);	
 }
 
-static void bsp_usart_485en_T(uint8_t BSP_USARTx)
+static void bsp_usart_485en_R(uint8_t BSP_USARTx)
 {
 	switch(BSP_USARTx)
 	{
@@ -402,7 +392,7 @@ static void bsp_usart_485en_T(uint8_t BSP_USARTx)
 	}
 }
 
-static void bsp_usart_485en_R(uint8_t BSP_USARTx)
+static void bsp_usart_485en_T(uint8_t BSP_USARTx)
 {
 	switch(BSP_USARTx)
 	{
@@ -418,6 +408,7 @@ void BSP_USART_Close(uint8_t BSP_USARTx)
 	
 }
 
+
 void BSP_USART_WriteBytes_DMA(uint8_t BSP_USARTx,uint8_t* pbuf,uint16_t len)
 {
 	switch(BSP_USARTx)
@@ -431,13 +422,13 @@ void BSP_USART_WriteBytes_DMA(uint8_t BSP_USARTx,uint8_t* pbuf,uint16_t len)
 				bsp_usart_485en_T(BSP_USART1);				
 				if(STM32F4xxUSART_Instance[BSP_USART1].TxBuf.In < STM32F4xxUSART_Instance[BSP_USART1].TxBuf.Out)
 				{
-					DMA2_Stream7->NDTR = STM32F4xxUSART_Instance[BSP_USART1].TxBuf.Size - STM32F4xxUSART_Instance[BSP_USART1].TxBuf.Out;
-					
+					DMA2_Stream7->NDTR = STM32F4xxUSART_Instance[BSP_USART1].TxBuf.Size - STM32F4xxUSART_Instance[BSP_USART1].TxBuf.Out;					
 				}
 				else
 				{
 					DMA2_Stream7->NDTR = STM32F4xxUSART_Instance[BSP_USART1].TxBuf.In - STM32F4xxUSART_Instance[BSP_USART1].TxBuf.Out;
 				}
+				
 				STM32F4xxUSART_Instance[BSP_USART1].TxCount = DMA2_Stream7->NDTR;
 				DMA2_Stream7->M0AR = (uint32_t)(STM32F4xxUSART_Instance[BSP_USART1].TxBuf.pData + STM32F4xxUSART_Instance[BSP_USART1].TxBuf.Out);
 				DMA_Cmd(DMA2_Stream7,ENABLE);	
@@ -448,6 +439,7 @@ void BSP_USART_WriteBytes_DMA(uint8_t BSP_USARTx,uint8_t* pbuf,uint16_t len)
 		break;
 		case BSP_USART6:
 		{
+			
 			bsp_usartTx_enqueue(BSP_USART6,pbuf,len);
 			if(bsp_getusartTx_count(BSP_USART6) > 0)
 			{
@@ -463,10 +455,10 @@ void BSP_USART_WriteBytes_DMA(uint8_t BSP_USARTx,uint8_t* pbuf,uint16_t len)
 					DMA2_Stream6->NDTR = STM32F4xxUSART_Instance[BSP_USART6].TxBuf.In - STM32F4xxUSART_Instance[BSP_USART6].TxBuf.Out;
 				}
 				STM32F4xxUSART_Instance[BSP_USART6].TxCount = DMA2_Stream6->NDTR;
-				DMA2_Stream6->M0AR = (uint32_t)(STM32F4xxUSART_Instance[BSP_USART6].TxBuf.pData + STM32F4xxUSART_Instance[BSP_USART6].TxBuf.Out);
-				DMA_Cmd(DMA2_Stream6,ENABLE);	
+				DMA2_Stream6->M0AR = (uint32_t)(STM32F4xxUSART_Instance[BSP_USART6].TxBuf.pData + STM32F4xxUSART_Instance[BSP_USART6].TxBuf.Out);	
 				DMA_ClearITPendingBit(DMA2_Stream6, DMA_IT_TCIF6);
 				DMA_ITConfig(DMA2_Stream6, DMA_IT_TC,  ENABLE);
+				DMA_Cmd(DMA2_Stream6,ENABLE);	
 			}			
 		}
 		break;
@@ -544,6 +536,7 @@ void BSP_USART1_TxDMA_IRQHandler(void)
 	if(DMA_GetITStatus(DMA2_Stream7, DMA_IT_TCIF7) == SET)
 	{
 		DMA_ClearITPendingBit(DMA2_Stream7, DMA_IT_TCIF7);
+		
 		if(DMA_GetCurrDataCounter(DMA2_Stream7) == 0)
 		{
 			if(STM32F4xxUSART_Instance[BSP_USART1].TxBuf.Count > STM32F4xxUSART_Instance[BSP_USART1].TxCount)
@@ -576,9 +569,10 @@ void BSP_USART1_TxDMA_IRQHandler(void)
 			}
 			else
 			{
-				bsp_usart_485en_R(BSP_USART1);
+				USART_ITConfig(USART1, USART_IT_TC, ENABLE);
 			}
 		}
+		
 	}
 }
 
@@ -587,6 +581,7 @@ void BSP_USART6_TxDMA_IRQHandler(void)
 	if(DMA_GetITStatus(DMA2_Stream6, DMA_IT_TCIF6) == SET)
 	{
 		DMA_ClearITPendingBit(DMA2_Stream6, DMA_IT_TCIF6);
+		
 		if(DMA_GetCurrDataCounter(DMA2_Stream6) == 0)
 		{
 			if(STM32F4xxUSART_Instance[BSP_USART6].TxBuf.Count > STM32F4xxUSART_Instance[BSP_USART6].TxCount)
@@ -618,9 +613,12 @@ void BSP_USART6_TxDMA_IRQHandler(void)
 			}
 			else
 			{
-				bsp_usart_485en_R(BSP_USART6);
+				USART_ITConfig(USART6, USART_IT_TC, ENABLE);
 			}			
 		}
+		
+		
+		
 	}
 }
 
@@ -636,6 +634,18 @@ void BSP_USART_IRQHandler(uint8_t BSP_USARTx)
 			{
 				USART_ClearITPendingBit(USART1,USART_IT_RXNE);
 			}
+			if(USART_GetITStatus(USART1, USART_IT_TC) == SET)
+			{
+				
+				USART_ClearITPendingBit(USART1,USART_IT_TC);
+				if(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == SET)
+				{
+					bsp_usart_485en_R(BSP_USART1);
+					USART_ITConfig(USART1, USART_IT_TC, DISABLE);
+				}
+				
+				
+			}			
 			if(USART_GetITStatus(USART1, USART_IT_IDLE) == SET)
 			{
 				USART_ReceiveData(USART1);
@@ -655,8 +665,21 @@ void BSP_USART_IRQHandler(uint8_t BSP_USARTx)
 			{
 				USART_ClearITPendingBit(USART6,USART_IT_RXNE);
 			}
+			if(USART_GetITStatus(USART6, USART_IT_TC) == SET)
+			{
+				
+				USART_ClearITPendingBit(USART6,USART_IT_TC);
+				if(USART_GetFlagStatus(USART6, USART_FLAG_TXE) == SET)
+				{
+					bsp_usart_485en_R(BSP_USART6);
+					USART_ITConfig(USART6, USART_IT_TC, DISABLE);
+				}
+				
+				
+			}
 			if(USART_GetITStatus(USART6, USART_IT_IDLE) == SET)
 			{
+				
 				USART_ReceiveData(USART6);
 				USART_GetITStatus(USART6, USART_IT_IDLE);
 				//DEBUG("IDEL:%d\r\n",DMA_GetCurrDataCounter(DMA2_Stream5));

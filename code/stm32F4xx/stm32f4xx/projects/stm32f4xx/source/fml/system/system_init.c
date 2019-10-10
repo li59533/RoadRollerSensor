@@ -14,7 +14,7 @@
 #include "system_param.h"
 #include "system_init.h"
 #include "bsp_init.h"
-
+#include "stm32_bsp_conf.h"
 /**
  * @addtogroup    XXX 
  * @{  
@@ -106,7 +106,9 @@ void System_Load()
 {
 	BSP_Init();
     /* init param module,read and apply params */
-    
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA , ENABLE);
+    GPIO_PinAFConfig(GPIOA,  GPIO_PinSource14, GPIO_AF_SWJ);
+	GPIO_PinAFConfig(GPIOA,  GPIO_PinSource13, GPIO_AF_SWJ);
 }
 /**
  * @}
