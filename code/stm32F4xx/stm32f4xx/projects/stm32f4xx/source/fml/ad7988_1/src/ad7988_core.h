@@ -27,7 +27,13 @@
  * @defgroup      ad7988_core_Exported_Macros 
  * @{  
  */
+// ------AD7988-1 USER CONF PARAM--- 
 #define AD7988_SAMPLE_RATE	2048
+#define AD7988_SAMPLE_LEN	2048
+#define AD7988_GRAVITY		9810.5f
+#define AD7988_FRQ_MIN		5
+#define AD7988_FRQ_MAX		200
+// ---------------------------------
 #define AD7988_FFT_LENGTH	AD7988_SAMPLE_RATE    //FFT length
 
 typedef enum

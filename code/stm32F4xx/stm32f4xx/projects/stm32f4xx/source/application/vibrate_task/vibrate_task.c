@@ -123,7 +123,7 @@ osal_event_t VibrateTask_Process(uint8_t taskid,osal_event_t events)
 	
 	if (events & VIBRATE_TASK_STATUS_CHECK_EVENT)
     {
-		DEBUG("AD7988 Check status\r\n");
+		//DEBUG("AD7988 Check status\r\n");
 		AD7988_Status_CheckProcess();
         return events ^ VIBRATE_TASK_STATUS_CHECK_EVENT;
     }	

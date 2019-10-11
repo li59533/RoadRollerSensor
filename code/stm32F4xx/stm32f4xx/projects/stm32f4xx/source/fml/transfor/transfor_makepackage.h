@@ -52,7 +52,7 @@ typedef struct
 	uint8_t head;
 	uint8_t cmd;
 	uint16_t length;
-	float acc_pfak;
+	float acc_peak;
 	float base_frequency;
 	float harmonic_peak_0_5;
 	float harmonic_peak_1;
@@ -76,7 +76,7 @@ typedef struct
 
 typedef struct
 {
-	float acc_pfak;
+	float acc_peak;
 	float base_frequency;
 	float harmonic_peak_0_5;
 	float harmonic_peak_1;

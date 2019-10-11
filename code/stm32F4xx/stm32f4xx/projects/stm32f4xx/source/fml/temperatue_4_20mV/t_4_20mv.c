@@ -109,16 +109,11 @@ static T_4_20mvValue_t t_4_20mvValue = { 0 };
  */
 void T_4_20mv_CalcProcess(void)   // 600mV -> 0C , 3000mV -> 500C   so the K = 0.208333 , B = -125 .
 {
-	char c_test[30] = { 0 };
 	t_4_20mvValue.adcmv = BSP_ADC_GetVolmvValue(BSP_ADC1);
-	
-	DEBUG("T_420mV Calc:%d\r\n",t_4_20mvValue.adcmv);
-	
 	if(t_4_20mvValue.adcmv >= 600 && t_4_20mvValue.adcmv <= 3000 )
 	{
 		t_4_20mvValue.tvalue = t_4_20mvValue.adcmv * 0.208333f - 125;
-		snprintf(c_test,30,"%f",t_4_20mvValue.tvalue);
-		DEBUG("T_420 T:%s\r\n",c_test);	
+
 		BSP_LED_Open(BSP_LED_TEMPERATURE);
 	}
 	else

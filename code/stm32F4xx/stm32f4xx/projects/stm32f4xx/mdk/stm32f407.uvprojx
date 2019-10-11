@@ -467,6 +467,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\components\bsp\stm32f4xx_bsp\src\stm32f4xx_bsp_tim.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_fft_integral.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\bsp\bsp_fft_integral.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

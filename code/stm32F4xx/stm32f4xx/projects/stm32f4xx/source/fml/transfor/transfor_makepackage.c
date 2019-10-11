@@ -109,7 +109,7 @@ uint8_t * Transfor_MakePackage(uint16_t * len, Trans485_datavalue_t * data)
 	buf_ptr->head = LNPROTOCOL_HEAD;
 	buf_ptr->cmd = TAG_UPDATA;
 	buf_ptr->length = sizeof(Trans485_datavalue_t) ;
-	buf_ptr->acc_pfak = data->acc_pfak;
+	buf_ptr->acc_peak = data->acc_peak;
 	buf_ptr->base_frequency = data->base_frequency;
 	buf_ptr->harmonic_peak_0_5 = data->harmonic_peak_0_5;
 	buf_ptr->harmonic_peak_1 = data->harmonic_peak_1;
