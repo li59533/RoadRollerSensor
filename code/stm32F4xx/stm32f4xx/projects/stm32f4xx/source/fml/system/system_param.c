@@ -7,23 +7,18 @@
  * @brief
  **************************************************************************************************
  * @attention
- *              存储原理:
- *              CDB_Inflash_Param_Init调用一次会自动分配一个扇区保存参数，同时要指定实际存储数据大小，
- *              SystemParam_xxx操作只提供了一个handle id参数，在对应的函数内部会根据ID读写相关的配置变量，如
- *              果需要新增参数存储在不同的扇区，需要多次调用CDB_Inflash_Param_Init，同时handle id务必要不同，
- *              并在SystemParam_xxx中增加对应的handle id操作。
- *              实际使用时，每个handle id都有一个全局的参数结构体变量，读取时，保存的参数会更新该变量。保存时
- *              直接修改该变量的值，然后调用对应handle id的保存函数即可。
+ *              
  **************************************************************************************************
  */
 #include "self_def.h"
 #include "system_param.h"
-
+#include "stm32_bsp_conf.h"
 /**
  * @addtogroup    XXX 
  * @{  
  */
-
+#include "clog.h"
+#include "crc.h"
 /**
  * @addtogroup    system_param_Modules 
  * @{  
@@ -107,9 +102,26 @@ SystemParam_Config_t g_SystemParam_Config;
  * @brief         
  * @{  
  */
-void SystemParam_Init()
+ 
+ 
+ 
+void SystemParam_Init(void)
 {
-    
+	uint8_t flash_testbuf[10] = { 0 };
+	BSP_Flash_ReadBytes(SYS_PARAM_SAVE_FLASH_FIRSTHEAD, sizeof(g_SystemParam_Config) , (uint8_t *)&g_SystemParam_Config);
+	if(CRC16_Modbus((uint8_t *)&g_SystemParam_Config,sizeof(g_SystemParam_Config)) == 0) // Same Save
+	{
+		DEBUG("SYS Param Read OK\r\n");
+	}
+	else
+	{
+		g_SystemParam_Config.AD7988_VolACC_p = 0.5f;
+		g_SystemParam_Config.crc = CRC16_Modbus((uint8_t*)&g_SystemParam_Config, sizeof(g_SystemParam_Config) - sizeof(g_SystemParam_Config.crc));
+		BSP_Flash_WriteBytes(SYS_PARAM_SAVE_FLASH_FIRSTHEAD,(uint8_t *)&g_SystemParam_Config,sizeof(g_SystemParam_Config));
+	}
+	char test_buf[30] = { 0 };
+	snprintf(test_buf,30,"%f",g_SystemParam_Config.AD7988_VolACC_p);
+	DEBUG("SYS AD7988_VolACC_p:%s \r\n",test_buf);	
 }
 
 int16_t SystemParam_Read(uint8_t handle)
@@ -130,14 +142,9 @@ int16_t SystemParam_Read(uint8_t handle)
 
 void SystemParam_Save(uint8_t handle)
 {
-    switch (handle)
-    {
-        case SYSTEMPARAM_CONFIG:
-        {
-            
-            break;
-        }
-    }
+	g_SystemParam_Config.crc = CRC16_Modbus((uint8_t*)&g_SystemParam_Config, sizeof(g_SystemParam_Config) - sizeof(g_SystemParam_Config.crc));
+	BSP_Flash_WriteBytes(SYS_PARAM_SAVE_FLASH_FIRSTHEAD,(uint8_t *)&g_SystemParam_Config,sizeof(g_SystemParam_Config));
+	DEBUG("Sys save\r\n");
 }
 
 void SystemParam_Reset(uint8_t handle)

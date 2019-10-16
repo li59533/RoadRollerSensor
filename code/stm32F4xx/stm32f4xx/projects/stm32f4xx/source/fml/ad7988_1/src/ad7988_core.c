@@ -109,6 +109,7 @@ static uint8_t ad7988_valueIndex = 0;
 static float ad7988_intrgralValue_space[AD7988_SAMPLE_LEN] = { 0 };
 static uint16_t ad7988_fftbuf[2][AD7988_FFT_LENGTH] = { 0 };
 
+
 void AD7988_ParamInit(void)
 {
 	//ad7988_fft_inputbuf = (float *)mymalloc(SRAMCCM,AD7988_FFT_LENGTH*sizeof(float) );
@@ -143,51 +144,57 @@ void AD7988_Calc_Process(void)
 	Trans485_datavalue_t trans485data = { 0 };
 	fft_instance_t fft_instance = { 0 };
 	uint16_t *pread;
+	int16_t * real_signal;
+	uint32_t ad7988_sum = 0;
+	uint16_t ad7988_average = 0;
 	pread = ad7988_fftbuf[ad7988_valueIndex];
 	// ----------Stop Sample----------------------
 	BSP_Tim_Stop(BSP_TIM1);
 	// -------------------------------------------
+	// ---------- remove 2.5ref -------------------
+	for( i = 0; i < AD7988_SAMPLE_LEN ; i ++)
+	{
+		ad7988_sum += pread[i];
+	}
+	ad7988_average = (uint16_t )(ad7988_sum / AD7988_SAMPLE_LEN);
+	
+	real_signal = (int16_t *)pread ;
+	for( i = 0 ; i < AD7988_SAMPLE_LEN ; i++)
+	{
+		real_signal[i] = pread[i] - ad7988_average;
+	}
+	
 	// ---------- fft calc------------------------
 
 	BSP_FFT_IntegInit(AD7988_SAMPLE_LEN,AD7988_SAMPLE_RATE,AD7988_GRAVITY,AD7988_FRQ_MIN,AD7988_FRQ_MAX); // integral conf	
 
-	BSP_FFT_Calc(pread, &fft_instance);
-	
+	BSP_FFT_Calc(real_signal, &fft_instance);
 	trans485data.base_frequency = fft_instance.base_freq;
-	trans485data.acc_peak = fft_instance.tim_domain_peak;
+	trans485data.acc_peak = fft_instance.tim_domain_peak ;//* 0.0763f - 2500.0f;
 	
-	trans485data.harmonic_peak_0_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 0.5,fft_instance.fft_pbuf);
-	trans485data.harmonic_peak_1 = BSP_GetHarmonicPeak(trans485data.base_frequency, 1,fft_instance.fft_pbuf);
-	trans485data.harmonic_peak_1_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 1.5,fft_instance.fft_pbuf);
-	trans485data.harmonic_peak_2 = BSP_GetHarmonicPeak(trans485data.base_frequency, 2,fft_instance.fft_pbuf);
-	trans485data.harmonic_peak_2_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 2.5,fft_instance.fft_pbuf);
-	trans485data.harmonic_peak_3 = BSP_GetHarmonicPeak(trans485data.base_frequency, 3,fft_instance.fft_pbuf);
-	trans485data.harmonic_peak_4 = BSP_GetHarmonicPeak(trans485data.base_frequency, 4,fft_instance.fft_pbuf);
-	trans485data.harmonic_peak_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 5,fft_instance.fft_pbuf);
-	trans485data.harmonic_peak_6 = BSP_GetHarmonicPeak(trans485data.base_frequency, 6,fft_instance.fft_pbuf);
+	trans485data.harmonic_peak_0_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 0.5,fft_instance.mag_pbuf);
+	trans485data.harmonic_peak_1 = BSP_GetHarmonicPeak(trans485data.base_frequency, 1,fft_instance.mag_pbuf);
+	trans485data.harmonic_peak_1_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 1.5,fft_instance.mag_pbuf);
+	trans485data.harmonic_peak_2 = BSP_GetHarmonicPeak(trans485data.base_frequency, 2,fft_instance.mag_pbuf);
+	trans485data.harmonic_peak_2_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 2.5,fft_instance.mag_pbuf);
+	trans485data.harmonic_peak_3 = BSP_GetHarmonicPeak(trans485data.base_frequency, 3,fft_instance.mag_pbuf);
+	trans485data.harmonic_peak_4 = BSP_GetHarmonicPeak(trans485data.base_frequency, 4,fft_instance.mag_pbuf);
+	trans485data.harmonic_peak_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 5,fft_instance.mag_pbuf);
+	trans485data.harmonic_peak_6 = BSP_GetHarmonicPeak(trans485data.base_frequency, 6,fft_instance.mag_pbuf);
 	
 	
 	// -----------Get max speed -----------------------
 	BSP_FrqDomain_Integral(1,fft_instance.fft_pbuf, ad7988_intrgralValue_space);
 	trans485data.speed_peak = 0;
-	for(i = 0;i < AD7988_SAMPLE_LEN; i ++)
-	{
-		if(trans485data.speed_peak < ad7988_intrgralValue_space[i])
-		{
-			trans485data.speed_peak = ad7988_intrgralValue_space[i];
-		}
-	}
+	
+	uint32_t temp_1 = 0;
+	arm_max_f32( ad7988_intrgralValue_space,2048,&trans485data.speed_peak,&temp_1);
 	// --------------------------------------------
 	// ----------Get max displacement------------------
 	BSP_FrqDomain_Integral(2,fft_instance.fft_pbuf, ad7988_intrgralValue_space);
 	trans485data.offset_peak = 0;
-	for(i = 0;i < AD7988_SAMPLE_LEN; i ++)
-	{
-		if(trans485data.offset_peak < ad7988_intrgralValue_space[i])
-		{
-			trans485data.offset_peak = ad7988_intrgralValue_space[i];
-		}
-	}
+	arm_max_f32( ad7988_intrgralValue_space,2048,&trans485data.offset_peak,&temp_1);
+
 	// ---------------------------------------------
 	
 	// ---------------- Transfor ----------
@@ -207,15 +214,15 @@ void AD7988_Calc_Process(void)
 	snprintf(rtt_buf,40,"%f",trans485data.temperature);
 	DEBUG("temperature:%s\r\n",rtt_buf);	
 		snprintf(rtt_buf,40,"%f",trans485data.harmonic_peak_0_5);
-	DEBUG("harmonic_peak_0_5:%s\r\n",rtt_buf);	
+	DEBUG("harmonic_peak_0_5 :%s\r\n",rtt_buf);	
 		snprintf(rtt_buf,40,"%f",trans485data.harmonic_peak_1);
-	DEBUG("harmonic_peak_1:%s\r\n",rtt_buf);	
+	DEBUG("harmonic_peak_1   :%s\r\n",rtt_buf);	
 		snprintf(rtt_buf,40,"%f",trans485data.harmonic_peak_1_5);
-	DEBUG("harmonic_peak_1.5:%s\r\n",rtt_buf);	
+	DEBUG("harmonic_peak_1.5 :%s\r\n",rtt_buf);	
 		snprintf(rtt_buf,40,"%f",trans485data.harmonic_peak_2);
-	DEBUG("harmonic_peak_2:%s\r\n",rtt_buf);	
+	DEBUG("harmonic_peak_2   :%s\r\n",rtt_buf);	
 		snprintf(rtt_buf,40,"%f",trans485data.harmonic_peak_2_5);
-	DEBUG("harmonic_peak_2_5:%s\r\n",rtt_buf);	
+	DEBUG("harmonic_peak_2_5 :%s\r\n",rtt_buf);	
 		 // --------------	
 	buf_ptr = Transfor_MakePackage(&len,&trans485data);
 	Transfor_Send(buf_ptr,len);	

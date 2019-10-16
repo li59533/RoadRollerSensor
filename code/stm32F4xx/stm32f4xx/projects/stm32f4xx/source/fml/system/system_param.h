@@ -27,7 +27,13 @@
  * @defgroup      system_param_Exported_Macros 
  * @{  
  */
+#define SYS_PARAM_SAVE_FLASH_FIRSTHEAD   		0x080C0000
+#define SYS_PARAM_SAVE_FLASH_SECONDHEAD			0X080E0000
+
 #define SYSTEMPARAM_CONFIG     0
+
+
+
 /**
  * @}
  */
@@ -48,7 +54,7 @@
 #pragma pack(1)
 typedef struct
 {
-    uint8_t reserve;
+	float AD7988_VolACC_p;
     uint16_t crc;           /*!< 所有的参数结构体必须按字节对其。且最后一个必须包
                                  含一个uint16_t类型的数据，该数据用于内部存储时的
                                  crc校验和存储，用户在保存参数时不用关心该值数值。*/

@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F40XX,ARM_MATH_CM4,__CC_ARM,__FPU_PRESENT = 1,__TARGET_FPU_VFP</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Include;..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm;..\..\..\..\compoents\CMSIS\Include;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc\Legacy;..\..\..\..\compoents\Utilities;..\..\..\components\bsp\stm32l4xx_bsp\inc;..\..\..\components\bsp\stm32l4xx_bsp;..\..\..\components\bsp;..\..\..\components\mdl\clog;..\..\..\components\mdl\osal\ports;..\..\..\components\mdl\osal\src;..\..\..\components\mdl\rttviewer;..\source;..\source\application\hal_task;..\source\application\user_task;..\source\fml\system;..\..\..\components\bsp\stm32f4xx_bsp\inc;..\..\..\components\bsp\stm32f4xx_bsp\src;..\..\..\components\bsp\stm32f4xx_bsp;..\..\..\..\compoents\STM32F4xx_StdPeriph_Driver\inc;..\..\..\components\mdl\MALLOC;..\source\fml\ad7988_1\port;..\source\fml\ad7988_1\src;..\source\application\vibrate_task;..\source\fml\ad7988_1;..\source\fml\temperatue_4_20mV;..\source\fml\protocol;..\..\..\..\compoents\CMSIS\DSP_Lib\Source\ComplexMathFunctions;..\..\..\..\compoents\CMSIS\DSP_Lib\Source\ControllerFunctions;..\source\fml\transfor</IncludePath>
+              <IncludePath>..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Include;..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm;..\..\..\..\compoents\CMSIS\Include;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc\Legacy;..\..\..\..\compoents\Utilities;..\..\..\components\bsp\stm32l4xx_bsp\inc;..\..\..\components\bsp\stm32l4xx_bsp;..\..\..\components\bsp;..\..\..\components\mdl\clog;..\..\..\components\mdl\osal\ports;..\..\..\components\mdl\osal\src;..\..\..\components\mdl\rttviewer;..\source;..\source\application\hal_task;..\source\application\user_task;..\source\fml\system;..\..\..\components\bsp\stm32f4xx_bsp\inc;..\..\..\components\bsp\stm32f4xx_bsp\src;..\..\..\components\bsp\stm32f4xx_bsp;..\..\..\..\compoents\STM32F4xx_StdPeriph_Driver\inc;..\..\..\components\mdl\MALLOC;..\source\fml\ad7988_1\port;..\source\fml\ad7988_1\src;..\source\application\vibrate_task;..\source\fml\ad7988_1;..\source\fml\temperatue_4_20mV;..\source\fml\protocol;..\..\..\..\compoents\CMSIS\DSP_Lib\Source\ComplexMathFunctions;..\..\..\..\compoents\CMSIS\DSP_Lib\Source\ControllerFunctions;..\source\fml\transfor;..\source\fml\conf</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -472,6 +472,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\components\bsp\bsp_fft_integral.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_bsp_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\bsp\stm32f4xx_bsp\src\stm32f4xx_bsp_flash.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -511,6 +516,11 @@
               <FileName>transfor_makepackage.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\source\fml\transfor\transfor_makepackage.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_conf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\fml\conf\app_conf.c</FilePath>
             </File>
           </Files>
         </Group>

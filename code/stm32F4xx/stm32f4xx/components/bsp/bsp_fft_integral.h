@@ -44,7 +44,7 @@
 #define DATA_LEN				2048				//数据长度，初始化时作为参数传入，2的幂次最佳
 
 #define SMPLE_FRQ				2048				//采样频率
-#define GRAVITY					9810.5				//单位变化系数（最后积分结果乘上该系数，根据重力加速度得到）
+#define GRAVITY					1   //9810.5				//单位变化系数（最后积分结果乘上该系数，根据重力加速度得到）
 #define FRQ_MIN					5					//高通滤波截止频率
 #define FRQ_MAX					200					//低通滤波截止频率（应小于采样频率）
 // -------------------------
@@ -77,7 +77,7 @@ typedef struct dou_integ
 	float	 	gravity;							//单位变换系数
 	float		w_vec[DATA_LEN * 2];				//频率向量
 	float 		fft_buf[DATA_LEN * 2];				//用于存储fft计算过程中的临时数组
-	
+	float 		mag_buf[DATA_LEN];
 	arm_cfft_instance_f32 S;						//用于fft计算的结构体
 	
 }dou_integ_t;
@@ -86,6 +86,7 @@ typedef struct dou_integ
 typedef struct 
 {
 	float * fft_pbuf;
+	float * mag_pbuf;
 	uint16_t tim_domain_peak;
 	uint16_t base_freq;
 }fft_instance_t;
@@ -109,7 +110,7 @@ typedef struct
  * @{  
  */
  
-int8_t BSP_FFT_Calc(uint16_t *inputbuf,fft_instance_t * fft_instance);
+int8_t BSP_FFT_Calc(int16_t *inputbuf,fft_instance_t * fft_instance);
 
 int BSP_FFT_IntegInit(uint16_t len,uint32_t sample_freq,float gravity,uint32_t freq_min,uint32_t freq_max);
 
@@ -118,7 +119,7 @@ int BSP_FrqDomain_Integral(uint8_t integral_time,float  * fft_buf, float* output
 
 float BSP_GetHarmonicPeak(uint16_t base_freq , float harmonic,float * fft_buf);
 
-
+int8_t BSP_FFT_Mag_Calc(float * inputbuf, float * outputbuf, uint16_t bufsize);
 /**
  * @}
  */

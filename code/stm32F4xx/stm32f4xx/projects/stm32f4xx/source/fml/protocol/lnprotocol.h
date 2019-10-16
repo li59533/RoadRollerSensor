@@ -31,11 +31,6 @@
 
 #define LNPROTOCOL_FOOT			0X7E
 
-typedef enum 
-{
-	TAG_UPDATA	= 0x42,
-}LN_Protocol_Tag_e;
-
 
 /**
  * @}
@@ -54,6 +49,31 @@ typedef enum
  * @defgroup      lnprotocol_Exported_Types 
  * @{  
  */
+typedef enum 
+{
+	TAG_UPDATA	= 0x42,
+	TAG_7988MVTOACC_P = 0x44,
+}LN_Protocol_Tag_e;
+
+
+typedef enum
+{
+	CMD_CONF = 1,
+	
+}LN_Protocol_Cmd_e;
+
+
+typedef struct
+{
+	uint8_t tag;
+	uint8_t len;
+	union
+	{
+		
+	}
+	uint8_t value
+}
+	
 
 /**
  * @}

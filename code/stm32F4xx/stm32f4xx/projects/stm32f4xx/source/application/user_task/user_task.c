@@ -123,6 +123,11 @@ osal_event_t UserTask_Process(uint8_t taskid,osal_event_t events)
 		BSP_ADC_Start( 0 );
         return events ^ USER_TASK_T420MV_START_EVENT;
     }	
+
+	if (events & USER_TASK_CONF_EVENT)
+    {			
+        return events ^ USER_TASK_CONF_EVENT;
+    }	
 	if (events & USER_TASK_T420MV_CALC_EVENT)
     {			
 		T_4_20mv_CalcProcess();

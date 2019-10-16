@@ -17,6 +17,7 @@
  * @{  
  */
 #include "clog.h"
+#include "app_conf.h"
 /**
  * @addtogroup    stm32f4xx_bsp_usart_Modules 
  * @{  
@@ -454,6 +455,7 @@ void BSP_USART_WriteBytes_DMA(uint8_t BSP_USARTx,uint8_t* pbuf,uint16_t len)
 				{
 					DMA2_Stream6->NDTR = STM32F4xxUSART_Instance[BSP_USART6].TxBuf.In - STM32F4xxUSART_Instance[BSP_USART6].TxBuf.Out;
 				}
+				DEBUG("UART SEND LEN :%d\r\n",DMA2_Stream6->NDTR);
 				STM32F4xxUSART_Instance[BSP_USART6].TxCount = DMA2_Stream6->NDTR;
 				DMA2_Stream6->M0AR = (uint32_t)(STM32F4xxUSART_Instance[BSP_USART6].TxBuf.pData + STM32F4xxUSART_Instance[BSP_USART6].TxBuf.Out);	
 				DMA_ClearITPendingBit(DMA2_Stream6, DMA_IT_TCIF6);
@@ -607,6 +609,7 @@ void BSP_USART6_TxDMA_IRQHandler(void)
 				{
 					DMA2_Stream6->NDTR = STM32F4xxUSART_Instance[BSP_USART6].TxBuf.In - STM32F4xxUSART_Instance[BSP_USART6].TxBuf.Out;
 				}
+				DEBUG("UART SEND LEN :%d\r\n",DMA2_Stream6->NDTR);
 				STM32F4xxUSART_Instance[BSP_USART6].TxCount = DMA2_Stream6->NDTR;
 				DMA2_Stream6->M0AR = (uint32_t)(STM32F4xxUSART_Instance[BSP_USART6].TxBuf.pData + STM32F4xxUSART_Instance[BSP_USART6].TxBuf.Out);
 				DMA_Cmd(DMA2_Stream6,ENABLE);	
@@ -652,6 +655,11 @@ void BSP_USART_IRQHandler(uint8_t BSP_USARTx)
 				USART_GetITStatus(USART1, USART_IT_IDLE);
 				
 				//DEBUG("IDEL:%d\r\n",DMA_GetCurrDataCounter(DMA2_Stream5));
+				
+				STM32F4xxUSART_Instance[BSP_USART1].RxBuf.Count += BSP_USART1_RXBUF_SIZE - DMA2_Stream5->NDTR;
+				
+				
+				
 				DMA_Cmd(DMA2_Stream5,DISABLE);
 				DMA2_Stream5->M0AR = (uint32_t)USART1_Rx_Buf;
 				DMA2_Stream5->NDTR = BSP_USART1_RXBUF_SIZE;
@@ -684,6 +692,9 @@ void BSP_USART_IRQHandler(uint8_t BSP_USARTx)
 				USART_GetITStatus(USART6, USART_IT_IDLE);
 				//DEBUG("IDEL:%d\r\n",DMA_GetCurrDataCounter(DMA2_Stream5));
 				DMA_Cmd(DMA2_Stream1,DISABLE);
+				App_RevBufToQueue(USART6_Rx_Buf,BSP_USART6_RXBUF_SIZE - DMA2_Stream1->NDTR);
+
+				
 				DMA2_Stream1->M0AR = (uint32_t)USART6_Rx_Buf;
 				DMA2_Stream1->NDTR = BSP_USART6_RXBUF_SIZE;
 				DMA_Cmd(DMA2_Stream1,ENABLE);

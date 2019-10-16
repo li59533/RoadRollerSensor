@@ -104,7 +104,10 @@
 
 void System_Load()
 {
+	SystemParam_Init();
 	BSP_Init();
+	
+	
     /* init param module,read and apply params */
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA , ENABLE);
     GPIO_PinAFConfig(GPIOA,  GPIO_PinSource14, GPIO_AF_SWJ);
