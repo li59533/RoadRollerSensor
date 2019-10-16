@@ -23,6 +23,7 @@
 #include "bsp_led.h"
 #include "t_4_20mv.h"
 #include "transfor_makepackage.h"
+#include "app_conf.h"
 /**
  * @addtogroup    user_task_Modules 
  * @{  
@@ -126,6 +127,8 @@ osal_event_t UserTask_Process(uint8_t taskid,osal_event_t events)
 
 	if (events & USER_TASK_CONF_EVENT)
     {			
+		
+		App_RevProcess();
         return events ^ USER_TASK_CONF_EVENT;
     }	
 	if (events & USER_TASK_T420MV_CALC_EVENT)

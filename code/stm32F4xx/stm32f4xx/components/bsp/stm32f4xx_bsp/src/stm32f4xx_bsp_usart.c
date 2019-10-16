@@ -693,8 +693,8 @@ void BSP_USART_IRQHandler(uint8_t BSP_USARTx)
 				//DEBUG("IDEL:%d\r\n",DMA_GetCurrDataCounter(DMA2_Stream5));
 				DMA_Cmd(DMA2_Stream1,DISABLE);
 				App_RevBufToQueue(USART6_Rx_Buf,BSP_USART6_RXBUF_SIZE - DMA2_Stream1->NDTR);
-
 				
+				DEBUG("USART 6 REV len :%d\r\n",BSP_USART6_RXBUF_SIZE - DMA2_Stream1->NDTR);
 				DMA2_Stream1->M0AR = (uint32_t)USART6_Rx_Buf;
 				DMA2_Stream1->NDTR = BSP_USART6_RXBUF_SIZE;
 				DMA_Cmd(DMA2_Stream1,ENABLE);

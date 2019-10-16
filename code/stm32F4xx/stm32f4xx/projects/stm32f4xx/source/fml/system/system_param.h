@@ -81,7 +81,7 @@ void SystemParam_Init(void);
 
 int16_t SystemParam_Read(uint8_t handle);
 
-void SystemParam_Save(uint8_t handle);
+void SystemParam_Save(void);
 
 void SystemParam_Reset(uint8_t handle);
 

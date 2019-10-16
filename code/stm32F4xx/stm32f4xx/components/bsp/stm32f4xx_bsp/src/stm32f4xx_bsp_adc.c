@@ -236,7 +236,6 @@ void BSP_ADC1_Calc_Process(void)
 {
 	uint16_t i = 0;
 	uint32_t sum[BSP_ADC_COUNT] = {0};
-	uint32_t average_reg = 0;
 	for(i = 0; i < BSP_ADC_REGISTER_BUFSIZE;i ++)
 	{
 		sum[BSP_ADC1] += bsp_adc_register_buf[i][BSP_ADC1];

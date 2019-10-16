@@ -18,6 +18,7 @@
  * @addtogroup    XXX 
  * @{  
  */
+#include "system_param.h"
 
 /**
  * @addtogroup    app_conf_Modules 
@@ -129,7 +130,6 @@ void App_RevBufToQueue(uint8_t *buf,uint16_t len)
 	App_ConfQueue.count ++;
 	App_ConfQueue.in ++;
 	App_ConfQueue.in %= App_ConfQueue.size;
-	
 	UserTask_Send_Event(USER_TASK_CONF_EVENT);
 }
 
@@ -137,7 +137,9 @@ void App_RevProcess(void)
 {
 	if(App_ConfQueue.count > 0)
 	{
-		app_lnprotocol_process(App_ConfQueue.value[App_ConfQueue.out].buf,App_ConfQueue.value[App_ConfQueue.out].len  );
+		DEBUG("App_Rev Something len : %d\r\n",App_ConfQueue.value[App_ConfQueue.out].len  );
+		
+		app_lnprotocol_process(App_ConfQueue.value[App_ConfQueue.out].buf , App_ConfQueue.value[App_ConfQueue.out].len  );
 		App_ConfQueue.out ++;
 		App_ConfQueue.out %= App_ConfQueue.size;
 		App_ConfQueue.count -- ;
@@ -160,10 +162,26 @@ static void app_lnprotocol_process(uint8_t *buf,uint16_t len)
 			{
 				if(LNprotocol_AddChecksum(buf,len - 1) == buf[len -1])
 				{
-					app_lnswitch_cmd(&ln_protocolintance->cmd,len - sizeof(ln_protocolintance_t) + 1);
+					app_lnswitch_cmd(&ln_protocolintance->cmd,len - sizeof(ln_protocolintance) - 1);
+				}
+				else
+				{
+					DEBUG("APP_Rev Check sum is err");
 				}
 			}
+			else
+			{
+				DEBUG("APP_Rev Foot is err\r\n");
+			}
 		}
+		else
+		{
+			DEBUG("APP_Rev Len is err\r\n");
+		}
+	}
+	else
+	{
+		DEBUG("APP_Rev Head is err\r\n");
 	}
 }
 
@@ -171,6 +189,8 @@ static void app_lnswitch_cmd(uint8_t * buf,uint16_t len)
 {
 	uint8_t cmd = 0;
 	cmd = buf[0];
+	DEBUG("APP_REV CMD is %X\r\n",cmd);
+	
 	switch(cmd)
 	{
 		case CMD_CONF:app_conf_process(buf + 1, len -1 );break;
@@ -181,6 +201,66 @@ static void app_lnswitch_cmd(uint8_t * buf,uint16_t len)
 static void app_conf_process(uint8_t *payload,uint16_t len)
 {
 	uint8_t * payload_ptr = 0;
+	LN_Tlv_t * tlv_buf = 0;
+	uint8_t result = CONF_SUCCESS;
+	
+	
+	payload_ptr = payload;
+	DEBUG("APP_Rev Payload LEN is %d\r\n",len);
+	while(1)
+	{
+		tlv_buf = (LN_Tlv_t *) payload_ptr;
+		DEBUG("APP_Rev Tag is %X\r\n",tlv_buf->Tag);
+		switch(tlv_buf->Tag)
+		{
+			case TAG_7988MVTOACC_P:
+			{
+				float float_temp = 0.0f;
+				
+				memcpy(&float_temp,tlv_buf->Value.Array ,tlv_buf->Len);
+				
+				
+				char test_buf[30];
+				snprintf(test_buf,30,"%f",float_temp);
+				
+				DEBUG("float_temp:%s\r\n",test_buf);
+				if((float_temp < 10.0)&&(float_temp > 0.0))
+				{
+					memcpy(&g_SystemParam_Config.AD7988_VolACC_p,tlv_buf->Value.Array,tlv_buf->Len);
+				}
+				else
+				{
+					result = CONF_ERROR;
+					DEBUG("APP_Conf AD7988_VolACC_p is False\r\n");
+				}
+				
+			}
+			break;
+			default:
+			{
+				result = CONF_ERROR;
+				DEBUG("APP_Conf Tag is miss\r\n");
+			}
+			break;
+		}
+		
+		payload_ptr = payload_ptr + tlv_buf->Len + 2 ;
+		
+		if((payload_ptr - payload)>= len)
+		{
+			break;
+		}
+	}
+
+	if(result == CONF_ERROR)
+	{
+		DEBUG("APP_Conf is Err\r\n");
+	}
+	else
+	{
+		DEBUG("APP_Conf is SUCCESS then save\r\n");
+		SystemParam_Save();
+	}
 	
 }
 

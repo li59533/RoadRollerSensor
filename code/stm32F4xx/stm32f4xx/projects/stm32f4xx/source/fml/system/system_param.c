@@ -107,7 +107,6 @@ SystemParam_Config_t g_SystemParam_Config;
  
 void SystemParam_Init(void)
 {
-	uint8_t flash_testbuf[10] = { 0 };
 	BSP_Flash_ReadBytes(SYS_PARAM_SAVE_FLASH_FIRSTHEAD, sizeof(g_SystemParam_Config) , (uint8_t *)&g_SystemParam_Config);
 	if(CRC16_Modbus((uint8_t *)&g_SystemParam_Config,sizeof(g_SystemParam_Config)) == 0) // Same Save
 	{
@@ -140,7 +139,7 @@ int16_t SystemParam_Read(uint8_t handle)
     return 0;
 }
 
-void SystemParam_Save(uint8_t handle)
+void SystemParam_Save(void)
 {
 	g_SystemParam_Config.crc = CRC16_Modbus((uint8_t*)&g_SystemParam_Config, sizeof(g_SystemParam_Config) - sizeof(g_SystemParam_Config.crc));
 	BSP_Flash_WriteBytes(SYS_PARAM_SAVE_FLASH_FIRSTHEAD,(uint8_t *)&g_SystemParam_Config,sizeof(g_SystemParam_Config));
@@ -154,7 +153,7 @@ void SystemParam_Reset(uint8_t handle)
         case SYSTEMPARAM_CONFIG:
         {
             g_SystemParam_Config = SystemParam_Config_Default;
-            SystemParam_Save(handle);
+            SystemParam_Save();
             break;
         }
     }

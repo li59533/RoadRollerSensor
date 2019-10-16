@@ -168,11 +168,11 @@ int8_t BSP_FFT_Mag_Calc(float * inputbuf, float * outputbuf, uint16_t bufsize)
 }
 
 
-int8_t BSP_FFT_Calc(int16_t *inputbuf,fft_instance_t * fft_instance)
+int8_t BSP_FFT_Calc(float *inputbuf,fft_instance_t * fft_instance)
 {
 	uint16_t i =0 ;
 	float peak_max = 0.0f;
-	float peak_calc_temp = 0.0f;
+	//float peak_calc_temp = 0.0f;
 	//-------------- make fft array and get acc_peak------------
 	
 	fft_instance->tim_domain_peak = 0;

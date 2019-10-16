@@ -24,6 +24,7 @@
 #include "transfor_makepackage.h"
 #include "t_4_20mv.h"
 #include "bsp_fft_integral.h"
+#include "system_param.h"
 /**
  * @addtogroup    ad7988_core_Modules 
  * @{  
@@ -135,7 +136,7 @@ void AD7988_CollectOriginalData(uint16_t *buf) // this add fftbuf, when the fftb
 	}
 }
 
-
+static float ad7988_float_accbuf[AD7988_SAMPLE_LEN];
 void AD7988_Calc_Process(void)  
 {
 	uint16_t i = 0;
@@ -147,11 +148,15 @@ void AD7988_Calc_Process(void)
 	int16_t * real_signal;
 	uint32_t ad7988_sum = 0;
 	uint16_t ad7988_average = 0;
+	float mvtoacc_p = 1.0f;
+	
+	
 	pread = ad7988_fftbuf[ad7988_valueIndex];
+	mvtoacc_p = g_SystemParam_Config.AD7988_VolACC_p;
 	// ----------Stop Sample----------------------
 	BSP_Tim_Stop(BSP_TIM1);
 	// -------------------------------------------
-	// ---------- remove 2.5ref -------------------
+	// ---------- remove 2.5V ref -------------------
 	for( i = 0; i < AD7988_SAMPLE_LEN ; i ++)
 	{
 		ad7988_sum += pread[i];
@@ -163,12 +168,17 @@ void AD7988_Calc_Process(void)
 	{
 		real_signal[i] = pread[i] - ad7988_average;
 	}
+	for(i = 0; i < AD7988_SAMPLE_LEN ; i ++)
+	{
+		ad7988_float_accbuf[i] = (float)(real_signal[i] * mvtoacc_p);
+	}
+	
 	
 	// ---------- fft calc------------------------
 
 	BSP_FFT_IntegInit(AD7988_SAMPLE_LEN,AD7988_SAMPLE_RATE,AD7988_GRAVITY,AD7988_FRQ_MIN,AD7988_FRQ_MAX); // integral conf	
 
-	BSP_FFT_Calc(real_signal, &fft_instance);
+	BSP_FFT_Calc(ad7988_float_accbuf, &fft_instance);
 	trans485data.base_frequency = fft_instance.base_freq;
 	trans485data.acc_peak = fft_instance.tim_domain_peak ;//* 0.0763f - 2500.0f;
 	

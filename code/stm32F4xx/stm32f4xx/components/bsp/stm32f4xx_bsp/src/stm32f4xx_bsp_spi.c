@@ -71,7 +71,7 @@
 #define BYTES_PER_CHANNEL		2	
 #define BSP_SPI1_TXBUFSIZE	 	ADC_CHANNALS*BYTES_PER_CHANNEL
 #define BSP_SPI1_RXBUFSIZE 		ADC_CHANNALS*BYTES_PER_CHANNEL
-static uint8_t bsp_spi_Txbuf[BSP_SPI1_TXBUFSIZE] = { 0 };
+//static uint8_t bsp_spi_Txbuf[BSP_SPI1_TXBUFSIZE] = { 0 };
 static uint8_t bsp_spi_Rxbuf[BSP_SPI1_RXBUFSIZE] = { 0 }; 
 
 
@@ -112,7 +112,6 @@ void BSP_SPI_Open(uint8_t BSP_SPIx, uint8_t *userparams)
 {
 	GPIO_InitTypeDef GPIO_InitStruct = { 0 }; 
 	NVIC_InitTypeDef NVIC_InitStruct = { 0 };
-	DMA_InitTypeDef DMA_InitStruct = { 0 };
 	SPI_InitTypeDef SPI_InitStruct = { 0 };
 	switch(BSP_SPIx)
 	{
@@ -258,9 +257,7 @@ void BSP_SPI1_DMA_IRQHandler(void)
 void BSP_SPI1_IRQHandler(void)
 {
 	if(SPI_I2S_GetITStatus(SPI1, SPI_I2S_IT_RXNE) == SET)
-	{
-		static uint16_t test_count = 0;
-		
+	{		
 		bsp_spi_RxTemp = SPI_I2S_ReceiveData(SPI1);
 		//DEBUG("ENTER SPI IRQ %X\r\n",bsp_spi_RxTemp);
 		bsp_spi1Rx_func(&bsp_spi_RxTemp);

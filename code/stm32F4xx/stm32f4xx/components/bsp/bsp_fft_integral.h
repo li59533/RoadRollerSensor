@@ -110,7 +110,7 @@ typedef struct
  * @{  
  */
  
-int8_t BSP_FFT_Calc(int16_t *inputbuf,fft_instance_t * fft_instance);
+int8_t BSP_FFT_Calc(float *inputbuf,fft_instance_t * fft_instance);
 
 int BSP_FFT_IntegInit(uint16_t len,uint32_t sample_freq,float gravity,uint32_t freq_min,uint32_t freq_max);
 
