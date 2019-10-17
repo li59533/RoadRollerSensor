@@ -3,22 +3,19 @@
  * @file        version.c
  * @author
  * @version
- * @date        5/28/2016
+ * @date        
  * @brief
  **************************************************************************************************
  * @attention
  *
  **************************************************************************************************
  */
-#include "stdint.h"
-#include "stdio.h"
-#include "version.h"
 
 /**
  * @addtogroup    XXX 
  * @{  
  */
-
+#include "version.h"
 /**
  * @addtogroup    version_Modules 
  * @{  
@@ -35,7 +32,7 @@
  */
 
 /**
- * @defgroup      version_Macros_Defines 
+ * @defgroup       version_Macros_Defines 
  * @brief         
  * @{  
  */
@@ -55,7 +52,7 @@
  */
 
 /**
- * @defgroup      version_Private_Types
+ * @defgroup       version_Private_Types
  * @brief         
  * @{  
  */
@@ -69,7 +66,7 @@
  * @brief         
  * @{  
  */
-
+static char version_buf[30] = {0};
 /**
  * @}
  */
@@ -79,16 +76,7 @@
  * @brief         
  * @{  
  */
-const Version g_Version =
-{
-    .PublicMajor = PUBLIC_VERSION_MAJOR,
-    .PublicMinor = PUBLIC_VERSION_MINOR,
-    .PublicRevison = PUBLIC_VERSION_REVISION,
-    .PublicBuild = PUBLIC_VERSION_BUILD,
-    .PrivateMajor = PRIVATE_VERSION_MAJOR,
-    .PrivateMinor = PRIVATE_VERSION_MINOR,
-    .PrivateRevison = PRIVATE_VERSION_REVISION,
-};
+
 /**
  * @}
  */
@@ -108,21 +96,17 @@ const Version g_Version =
  * @brief         
  * @{  
  */
-
-
-void Version_PublicToString(char* str)
+uint32_t Version_Get_Bin(void)
 {
-    sprintf(str,"%d.%d.%d",g_Version.PublicMajor,g_Version.PublicMinor,g_Version.PublicRevison);
+	uint32_t version = 0;
+	version = VERSION_MAJOR * 256 * 256 | VERSION_MINOR * 256 | VERSION_LITE;
+	return version;
 }
 
-void Version_PrivateToString(char* str)
+char * Version_Get_Str(void)
 {
-    sprintf(str,"%d.%d.%d",g_Version.PrivateMajor,g_Version.PrivateMinor,g_Version.PrivateRevison);
-}
-
-uint16_t Version_GetPrivateStamp(void)
-{
-    return (uint16_t)((PRIVATE_VERSION_MAJOR<<12) | (PRIVATE_VERSION_MINOR<<6) | (PRIVATE_VERSION_REVISION));
+	snprintf(version_buf,30,"%d.%d.%d",VERSION_MAJOR,VERSION_MINOR,VERSION_LITE);
+	return version_buf;
 }
 
 

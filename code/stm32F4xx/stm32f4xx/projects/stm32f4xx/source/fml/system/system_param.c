@@ -114,7 +114,7 @@ void SystemParam_Init(void)
 	}
 	else
 	{
-		g_SystemParam_Config.AD7988_VolACC_p = 0.5f;
+		g_SystemParam_Config.AD7988_VolACC_p = 500.0f;
 		g_SystemParam_Config.crc = CRC16_Modbus((uint8_t*)&g_SystemParam_Config, sizeof(g_SystemParam_Config) - sizeof(g_SystemParam_Config.crc));
 		BSP_Flash_WriteBytes(SYS_PARAM_SAVE_FLASH_FIRSTHEAD,(uint8_t *)&g_SystemParam_Config,sizeof(g_SystemParam_Config));
 	}

@@ -19,6 +19,8 @@
  * @{  
  */
 #include "system_param.h"
+#include "transfor_makepackage.h"
+#include "version.h"
 
 /**
  * @addtogroup    app_conf_Modules 
@@ -40,7 +42,7 @@
  * @brief         
  * @{  
  */
-
+#define APP_CONF_DATASPACE_LEN 		100
 /**
  * @}
  */
@@ -61,17 +63,7 @@
  * @{  
  */
   
-#pragma pack(1)
-typedef struct
-{
-	uint8_t head;
-	uint16_t len;
-	uint8_t cmd;
-	uint8_t *payload;
-	uint8_t foot;
-	uint8_t sum;
-}ln_protocolintance_t;
-#pragma pack()
+
 
 
 /**
@@ -89,6 +81,9 @@ App_ConfQueue_t App_ConfQueue = {
 	.count = 0,
 	.size = 3,
 };
+
+
+static uint8_t  app_conf_dataspace[] = { 0 };
 /**
  * @}
  */
@@ -109,8 +104,10 @@ App_ConfQueue_t App_ConfQueue = {
  * @{  
  */
 static void app_lnprotocol_process(uint8_t *buf,uint16_t len);
-static void app_conf_process(uint8_t *payload,uint16_t len);
+static void app_getconfreq_process(uint8_t *payload,uint16_t len);
+static void app_setconfreq_process(uint8_t *payload,uint16_t len);
 static void app_lnswitch_cmd(uint8_t * buf,uint16_t len);
+static void app_getversionreq_process(uint8_t *payload,uint16_t len);
 /**
  * @}
  */
@@ -150,6 +147,9 @@ void App_RevProcess(void)
 	}
 }
 // head len cmd tlv foot sum
+/*
+
+*/
 
 static void app_lnprotocol_process(uint8_t *buf,uint16_t len)
 {
@@ -193,13 +193,16 @@ static void app_lnswitch_cmd(uint8_t * buf,uint16_t len)
 	
 	switch(cmd)
 	{
-		case CMD_CONF:app_conf_process(buf + 1, len -1 );break;
+		case CMD_SetConf_Req:app_setconfreq_process(buf + 1, len -1 );break;
+		case CMD_GetConf_Req:app_getconfreq_process(buf + 1, len -1 ) ;break;
+		case CMD_GetVersion_Req: app_getversionreq_process(buf + 1, len -1 );break;
 		default:break;
 	}
 }
 
-static void app_conf_process(uint8_t *payload,uint16_t len)
+static void app_setconfreq_process(uint8_t *payload,uint16_t len)
 {
+
 	uint8_t * payload_ptr = 0;
 	LN_Tlv_t * tlv_buf = 0;
 	uint8_t result = CONF_SUCCESS;
@@ -218,13 +221,13 @@ static void app_conf_process(uint8_t *payload,uint16_t len)
 				float float_temp = 0.0f;
 				
 				memcpy(&float_temp,tlv_buf->Value.Array ,tlv_buf->Len);
-				
-				
+				// ---------DEBUG-------------------
 				char test_buf[30];
 				snprintf(test_buf,30,"%f",float_temp);
-				
 				DEBUG("float_temp:%s\r\n",test_buf);
-				if((float_temp < 10.0)&&(float_temp > 0.0))
+				// ---------------------------------
+				
+				if((float_temp <= 1000.0f)&&(float_temp > 0.0f))
 				{
 					memcpy(&g_SystemParam_Config.AD7988_VolACC_p,tlv_buf->Value.Array,tlv_buf->Len);
 				}
@@ -264,9 +267,61 @@ static void app_conf_process(uint8_t *payload,uint16_t len)
 	
 }
 
+// head len cmd tlv foot sum
 
+static void app_getconfreq_process(uint8_t *payload,uint16_t len)
+{
+	
+	ln_protocolintance_t *ln_protocolintance = (ln_protocolintance_t * )app_conf_dataspace;
+	LN_Tlv_t tlv_value = { 0 };
+	uint8_t  * payload_ptr = 0;
+	float float_temp = 0.0;
+	
+	ln_protocolintance->head = LNPROTOCOL_HEAD;
+	//ln_protocolintance->len = sizeof(ln_protocolintance_t);
+	ln_protocolintance->inf = 0x00;
+	ln_protocolintance->cmd = CMD_GetConf_Resp;
+	
+	payload_ptr = &ln_protocolintance->cmd + 1;
+	// ------- mvToAcc_p---------------
+	tlv_value.Tag = TAG_7988MVTOACC_P;
+	tlv_value.Len = 4;
+	float_temp = g_SystemParam_Config.AD7988_VolACC_p;
+	memcpy(tlv_value.Value.Array, &float_temp , 4);
+	payload_ptr += LN_AddTlv(payload_ptr, &tlv_value);
+	// --------------------------------
+	ln_protocolintance->len = (payload_ptr - &ln_protocolintance->head) + 1;
+	*payload_ptr = LNPROTOCOL_FOOT;
+	*(payload_ptr + 1) =  LNprotocol_AddChecksum((uint8_t * )&ln_protocolintance,ln_protocolintance->len - 1);
+	
+	Transfor_Send(app_conf_dataspace,ln_protocolintance->len);
+	
+}
 
-
+static void app_getversionreq_process(uint8_t *payload,uint16_t len)
+{
+	ln_protocolintance_t *ln_protocolintance = (ln_protocolintance_t * )app_conf_dataspace;
+	uint8_t  * payload_ptr = 0;
+	uint32_t version = 0 ;
+	
+	version = Version_Get_Bin();
+	
+	ln_protocolintance->head = LNPROTOCOL_HEAD;
+	//ln_protocolintance->len = sizeof(ln_protocolintance_t);
+	ln_protocolintance->inf = 0x00;
+	ln_protocolintance->cmd = CMD_GetVersion_Resp;
+	
+	payload_ptr = &ln_protocolintance->cmd + 1;
+	// -------version---------------
+	memcpy(payload_ptr,&version,4);
+	payload_ptr += 4;
+	// --------------------------------
+	ln_protocolintance->len = (payload_ptr - &ln_protocolintance->head) + 1;
+	*payload_ptr = LNPROTOCOL_FOOT;
+	*(payload_ptr + 1) =  LNprotocol_AddChecksum((uint8_t * )&ln_protocolintance,ln_protocolintance->len - 1);
+	
+	Transfor_Send(app_conf_dataspace,ln_protocolintance->len);
+}
 
 
 /**

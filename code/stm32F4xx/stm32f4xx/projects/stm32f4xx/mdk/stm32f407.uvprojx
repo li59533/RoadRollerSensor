@@ -49,10 +49,10 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\Objects\</OutputDirectory>
-          <OutputName>stm32f407</OutputName>
+          <OutputName>YLJ</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>0</CreateHexFile>
+          <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\Listings\</ListingPath>
@@ -210,7 +210,7 @@
             <Ra2Chk>0</Ra2Chk>
             <Ra3Chk>0</Ra3Chk>
             <Im1Chk>1</Im1Chk>
-            <Im2Chk>0</Im2Chk>
+            <Im2Chk>1</Im2Chk>
             <OnChipMemories>
               <Ocm1>
                 <Type>0</Type>
@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F40XX,ARM_MATH_CM4,__CC_ARM,__FPU_PRESENT = 1,__TARGET_FPU_VFP</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Include;..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm;..\..\..\..\compoents\CMSIS\Include;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc\Legacy;..\..\..\..\compoents\Utilities;..\..\..\components\bsp\stm32l4xx_bsp\inc;..\..\..\components\bsp\stm32l4xx_bsp;..\..\..\components\bsp;..\..\..\components\mdl\clog;..\..\..\components\mdl\osal\ports;..\..\..\components\mdl\osal\src;..\..\..\components\mdl\rttviewer;..\source;..\source\application\hal_task;..\source\application\user_task;..\source\fml\system;..\..\..\components\bsp\stm32f4xx_bsp\inc;..\..\..\components\bsp\stm32f4xx_bsp\src;..\..\..\components\bsp\stm32f4xx_bsp;..\..\..\..\compoents\STM32F4xx_StdPeriph_Driver\inc;..\..\..\components\mdl\MALLOC;..\source\fml\ad7988_1\port;..\source\fml\ad7988_1\src;..\source\application\vibrate_task;..\source\fml\ad7988_1;..\source\fml\temperatue_4_20mV;..\source\fml\protocol;..\..\..\..\compoents\CMSIS\DSP_Lib\Source\ComplexMathFunctions;..\..\..\..\compoents\CMSIS\DSP_Lib\Source\ControllerFunctions;..\source\fml\transfor;..\source\fml\conf</IncludePath>
+              <IncludePath>..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Include;..\..\..\..\compoents\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm;..\..\..\..\compoents\CMSIS\Include;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc;..\..\..\..\compoents\STM32F4xx_HAL_Driver\Inc\Legacy;..\..\..\..\compoents\Utilities;..\..\..\components\bsp\stm32l4xx_bsp\inc;..\..\..\components\bsp\stm32l4xx_bsp;..\..\..\components\bsp;..\..\..\components\mdl\clog;..\..\..\components\mdl\osal\ports;..\..\..\components\mdl\osal\src;..\..\..\components\mdl\rttviewer;..\source;..\source\application\hal_task;..\source\application\user_task;..\source\fml\system;..\..\..\components\bsp\stm32f4xx_bsp\inc;..\..\..\components\bsp\stm32f4xx_bsp\src;..\..\..\components\bsp\stm32f4xx_bsp;..\..\..\..\compoents\STM32F4xx_StdPeriph_Driver\inc;..\..\..\components\mdl\MALLOC;..\source\fml\ad7988_1\port;..\source\fml\ad7988_1\src;..\source\application\vibrate_task;..\source\fml\ad7988_1;..\source\fml\temperatue_4_20mV;..\source\fml\protocol;..\..\..\..\compoents\CMSIS\DSP_Lib\Source\ComplexMathFunctions;..\..\..\..\compoents\CMSIS\DSP_Lib\Source\ControllerFunctions;..\source\fml\transfor;..\source\fml\conf;..\..\..\components\mdl\version</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -498,14 +498,14 @@
               <FilePath>..\source\fml\ad7988_1\port\ad7988_port.c</FilePath>
             </File>
             <File>
-              <FileName>ad7988_core.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\source\fml\ad7988_1\src\ad7988_core.c</FilePath>
-            </File>
-            <File>
               <FileName>t_4_20mv.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\source\fml\temperatue_4_20mV\t_4_20mv.c</FilePath>
+            </File>
+            <File>
+              <FileName>ad7988_core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\fml\ad7988_1\src\ad7988_core.c</FilePath>
             </File>
             <File>
               <FileName>lnprotocol.c</FileName>
@@ -531,11 +531,6 @@
               <FileName>crc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\compoents\Utilities\crc.c</FilePath>
-            </File>
-            <File>
-              <FileName>version.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\compoents\Utilities\version.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -606,6 +601,62 @@
               <FileName>malloc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\components\mdl\MALLOC\malloc.c</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>2</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <uC99>2</uC99>
+                    <uGnu>2</uGnu>
+                    <useXO>2</useXO>
+                    <v6Lang>0</v6Lang>
+                    <v6LangP>0</v6LangP>
+                    <vShortEn>2</vShortEn>
+                    <vShortWch>2</vShortWch>
+                    <v6Lto>2</v6Lto>
+                    <v6WtE>2</v6WtE>
+                    <v6Rtti>2</v6Rtti>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+            <File>
+              <FileName>version.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\mdl\version\version.c</FilePath>
             </File>
           </Files>
         </Group>

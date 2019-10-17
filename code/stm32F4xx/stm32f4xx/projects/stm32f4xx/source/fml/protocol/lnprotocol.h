@@ -64,8 +64,13 @@ typedef enum
 
 typedef enum
 {
-	CMD_CONF = 0x01,
+	CMD_SetConf_Req = 0x01,
+	CMD_SetConf_Resp = 0x02,
+	CMD_GetConf_Req = 0x03,
+	CMD_GetConf_Resp = 0x04,
 	
+	CMD_GetVersion_Req = 0x80,
+	CMD_GetVersion_Resp = 0x81,
 }LN_Protocol_Cmd_e;
 
 
@@ -83,6 +88,20 @@ typedef struct
 		uint8_t Array[20];
 	}Value;
 }LN_Tlv_t;
+
+
+typedef struct
+{
+	uint8_t head;
+	uint16_t len;
+	uint16_t inf;
+	uint8_t cmd;
+	uint8_t *payload;
+	uint8_t foot;
+	uint8_t sum;
+}ln_protocolintance_t;
+
+
 #pragma pack()
 
 /**
@@ -111,6 +130,8 @@ uint8_t * LNprotocol_AddFoot(uint8_t * targetspace_ptr);
 void LNprotocol_Addlen(uint8_t *buf, uint16_t len);
 
 uint8_t LNprotocol_AddChecksum(uint8_t * buf,uint16_t len);
+
+uint8_t LN_AddTlv(uint8_t * disaddr,LN_Tlv_t * tlv_value);
 
 /**
  * @}

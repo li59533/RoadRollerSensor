@@ -104,7 +104,7 @@ static uint8_t transfor_package_space[TRANSFOR_PACKAGE_SPACE_LEN] = { 0 };
 uint8_t * Transfor_MakePackage(uint16_t * len, Trans485_datavalue_t * data)
 {
 	uint8_t i = 0;
-	
+	memset(transfor_package_space,0,TRANSFOR_PACKAGE_SPACE_LEN);
 	Trans485_dataform_t * buf_ptr = (Trans485_dataform_t *)transfor_package_space;
 	buf_ptr->head = LNPROTOCOL_HEAD;
 	buf_ptr->cmd = TAG_UPDATA;
@@ -126,7 +126,7 @@ uint8_t * Transfor_MakePackage(uint16_t * len, Trans485_datavalue_t * data)
 	buf_ptr->power = data->power;
 	
 	buf_ptr->sum_check = 0;
-	for(i = 0; i <( &buf_ptr->sum_check - &buf_ptr->head); i ++)
+	for(i = 1; i <( sizeof(Trans485_datavalue_t) + 3); i ++)
 	{
 		buf_ptr->sum_check += *((uint8_t *)buf_ptr + i);
 	}

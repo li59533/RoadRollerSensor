@@ -18,6 +18,7 @@
  * @{  
  */
 #include "clog.h"
+#include "stm32_bsp_conf.h"
 /**
  * @addtogroup    bsp_fft_integral_Modules 
  * @{  
@@ -177,9 +178,18 @@ int8_t BSP_FFT_Calc(float *inputbuf,fft_instance_t * fft_instance)
 	
 	fft_instance->tim_domain_peak = 0;
 	for(i=0; i<integ.fft_len; i++)	//  make fft array
-	{									
+	{			
+		/*
+		// -------DEBUG-----------------
+		char debug_buf[30] ;
+		snprintf(debug_buf,30,"%f",inputbuf[i]);
+		DEBUG("%d %s\r\n",i,debug_buf);
+		BSP_Systick_Delayms(3);
+		// -----------------------------
+		*/
+		
 		integ.fft_buf[2*i]   = inputbuf[i];		//real part
-		//integ.fft_buf[2*i] = arm_sin_f32(2*3.1415926f*80*i/2048);
+		//integ.fft_buf[2*i] = arm_sin_f32(2*3.1415926f*160*i/4096);
 		integ.fft_buf[2*i+1] = 0;				//imaginary part
 		
 		if(fft_instance->tim_domain_peak <  inputbuf[i])   // get the acc peak
@@ -240,6 +250,9 @@ int BSP_FrqDomain_Integral(uint8_t integral_time,float  * fft_buf, float* output
 	}
 	
 	if(integral_time== 2){
+		
+		integ.high_pass = round(integ.frq_min/df) *2;						//高通频率截止点
+		integ.low_pass  = round(integ.frq_max/df);  						//低通频率截止点
 		for(int i=0; i<integ.fft_len; i++){								//进行积分频域变换和相位变换，放在一起做了
 			fft_buf_temp[2*i  ] = -fft_buf_temp[2*i  ];					//频域变换即fft数组中的实部和虚部都除以w_vec的圆频率变换向量
 			fft_buf_temp[2*i+1] = -fft_buf_temp[2*i+1];					//2次积分相位变换为旋转180度，即实部虚部都加一个负号
@@ -248,6 +261,9 @@ int BSP_FrqDomain_Integral(uint8_t integral_time,float  * fft_buf, float* output
 	}
 	else{
 		float temp;
+		integ.high_pass = round(integ.frq_min/df);						//高通频率截止点
+		integ.low_pass  = round(integ.frq_max/df);  						//低通频率截止点
+		
 		for(int i=0; i<integ.fft_len; i++){		
 			temp = -fft_buf_temp[2*i];									//1次积分相位变换为逆时针旋转90度
 			fft_buf_temp[2*i  ] = fft_buf_temp[2*i+1];					//实部等于虚部，虚部等于负实部
@@ -289,7 +305,7 @@ float BSP_GetHarmonicPeak(uint16_t base_freq , float harmonic,float * mag_buf)
 	uint16_t index = 0;
 	index = (uint16_t ) (base_freq * harmonic);
 	
-	return mag_buf[index] / 1024;
+	return mag_buf[index] / (DATA_LEN/2) ;
 
 
 }

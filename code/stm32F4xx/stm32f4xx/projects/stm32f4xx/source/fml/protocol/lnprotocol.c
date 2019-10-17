@@ -133,6 +133,18 @@ uint8_t LNprotocol_AddChecksum(uint8_t * buf,uint16_t len)
 	}
 	return checksum;
 }
+
+
+
+uint8_t LN_AddTlv(uint8_t * disaddr,LN_Tlv_t * tlv_value)
+{
+	disaddr[0] = tlv_value->Tag;
+	disaddr[1] = tlv_value->Len;
+	memcpy(&disaddr[2],tlv_value->Value.Array,tlv_value->Len);
+	return tlv_value->Len + 2;
+}
+
+
 /**
  * @}
  */

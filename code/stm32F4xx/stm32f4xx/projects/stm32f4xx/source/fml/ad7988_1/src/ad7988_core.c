@@ -109,7 +109,7 @@ static uint8_t ad7988_valueIndex = 0;
  */
 static float ad7988_intrgralValue_space[AD7988_SAMPLE_LEN] = { 0 };
 static uint16_t ad7988_fftbuf[2][AD7988_FFT_LENGTH] = { 0 };
-
+static float ad7988_float_accbuf[AD7988_SAMPLE_LEN];
 
 void AD7988_ParamInit(void)
 {
@@ -129,6 +129,8 @@ void AD7988_CollectOriginalData(uint16_t *buf) // this add fftbuf, when the fftb
 	ad7988_fftbuf[current_read_buffer][ad_position ++] = *buf;
 	if(ad_position >= AD7988_SAMPLE_RATE)
 	{
+		// ----------Stop Sample----------------------
+		BSP_Tim_Stop(BSP_TIM1);
 		ad_position = 0;
 		ad7988_valueIndex = current_read_buffer;
 		current_read_buffer = !current_read_buffer;
@@ -136,7 +138,13 @@ void AD7988_CollectOriginalData(uint16_t *buf) // this add fftbuf, when the fftb
 	}
 }
 
-static float ad7988_float_accbuf[AD7988_SAMPLE_LEN];
+static void ad7988_clear_originalspace(void)
+{
+	
+}
+
+
+
 void AD7988_Calc_Process(void)  
 {
 	uint16_t i = 0;
@@ -152,11 +160,14 @@ void AD7988_Calc_Process(void)
 	
 	
 	pread = ad7988_fftbuf[ad7988_valueIndex];
-	mvtoacc_p = g_SystemParam_Config.AD7988_VolACC_p;
-	// ----------Stop Sample----------------------
-	BSP_Tim_Stop(BSP_TIM1);
+
+	if((g_SystemParam_Config.AD7988_VolACC_p <= 1000.0f)&&(g_SystemParam_Config.AD7988_VolACC_p > 0.0f))
+	{
+		mvtoacc_p = (float)(1.0f / g_SystemParam_Config.AD7988_VolACC_p);
+	}
+	//mvtoacc_p = 0.02f;
 	// -------------------------------------------
-	// ---------- remove 2.5V ref -------------------
+	// ---------- remove 2.5V ref  , get real acc value -------------------
 	for( i = 0; i < AD7988_SAMPLE_LEN ; i ++)
 	{
 		ad7988_sum += pread[i];
@@ -170,7 +181,7 @@ void AD7988_Calc_Process(void)
 	}
 	for(i = 0; i < AD7988_SAMPLE_LEN ; i ++)
 	{
-		ad7988_float_accbuf[i] = (float)(real_signal[i] * mvtoacc_p);
+		ad7988_float_accbuf[i] = (float)(real_signal[i] * 0.0763f * mvtoacc_p);//the real acc value 
 	}
 	
 	
@@ -198,12 +209,12 @@ void AD7988_Calc_Process(void)
 	trans485data.speed_peak = 0;
 	
 	uint32_t temp_1 = 0;
-	arm_max_f32( ad7988_intrgralValue_space,2048,&trans485data.speed_peak,&temp_1);
+	arm_max_f32( ad7988_intrgralValue_space + 1024,2048,&trans485data.speed_peak,&temp_1);
 	// --------------------------------------------
 	// ----------Get max displacement------------------
 	BSP_FrqDomain_Integral(2,fft_instance.fft_pbuf, ad7988_intrgralValue_space);
 	trans485data.offset_peak = 0;
-	arm_max_f32( ad7988_intrgralValue_space,2048,&trans485data.offset_peak,&temp_1);
+	arm_max_f32( ad7988_intrgralValue_space + 1024,2048,&trans485data.offset_peak,&temp_1);
 
 	// ---------------------------------------------
 	

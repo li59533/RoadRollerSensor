@@ -41,9 +41,9 @@
  */
  
 // ----User conf param-----
-#define DATA_LEN				2048				//数据长度，初始化时作为参数传入，2的幂次最佳
+#define DATA_LEN				4096				//数据长度，初始化时作为参数传入，2的幂次最佳
 
-#define SMPLE_FRQ				2048				//采样频率
+#define SMPLE_FRQ				4096				//采样频率
 #define GRAVITY					1   //9810.5				//单位变化系数（最后积分结果乘上该系数，根据重力加速度得到）
 #define FRQ_MIN					5					//高通滤波截止频率
 #define FRQ_MAX					200					//低通滤波截止频率（应小于采样频率）
@@ -87,7 +87,7 @@ typedef struct
 {
 	float * fft_pbuf;
 	float * mag_pbuf;
-	uint16_t tim_domain_peak;
+	float tim_domain_peak;
 	uint16_t base_freq;
 }fft_instance_t;
 
