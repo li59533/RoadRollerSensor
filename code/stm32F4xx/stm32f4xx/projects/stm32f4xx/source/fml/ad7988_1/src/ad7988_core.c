@@ -181,7 +181,7 @@ void AD7988_Calc_Process(void)
 	}
 	for(i = 0; i < AD7988_SAMPLE_LEN ; i ++)
 	{
-		ad7988_float_accbuf[i] = (float)(real_signal[i] * 0.0763f * mvtoacc_p);//the real acc value 
+		ad7988_float_accbuf[i] = (float)(real_signal[i] * 0.0763f * mvtoacc_p)   *   (0.5f - 0.5f * arm_cos_f32(2.0f * 3.14159265f * i / AD7988_SAMPLE_LEN));//the real acc value  add hanni windows
 	}
 	
 	
@@ -193,15 +193,15 @@ void AD7988_Calc_Process(void)
 	trans485data.base_frequency = fft_instance.base_freq;
 	trans485data.acc_peak = fft_instance.tim_domain_peak ;//* 0.0763f - 2500.0f;
 	
-	trans485data.harmonic_peak_0_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 0.5,fft_instance.mag_pbuf);
-	trans485data.harmonic_peak_1 = BSP_GetHarmonicPeak(trans485data.base_frequency, 1,fft_instance.mag_pbuf);
-	trans485data.harmonic_peak_1_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 1.5,fft_instance.mag_pbuf);
-	trans485data.harmonic_peak_2 = BSP_GetHarmonicPeak(trans485data.base_frequency, 2,fft_instance.mag_pbuf);
-	trans485data.harmonic_peak_2_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 2.5,fft_instance.mag_pbuf);
-	trans485data.harmonic_peak_3 = BSP_GetHarmonicPeak(trans485data.base_frequency, 3,fft_instance.mag_pbuf);
-	trans485data.harmonic_peak_4 = BSP_GetHarmonicPeak(trans485data.base_frequency, 4,fft_instance.mag_pbuf);
-	trans485data.harmonic_peak_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 5,fft_instance.mag_pbuf);
-	trans485data.harmonic_peak_6 = BSP_GetHarmonicPeak(trans485data.base_frequency, 6,fft_instance.mag_pbuf);
+	trans485data.harmonic_peak_0_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 0.5,fft_instance.mag_pbuf) * 2; // *2 is add the hannin windows
+	trans485data.harmonic_peak_1 = BSP_GetHarmonicPeak(trans485data.base_frequency, 1,fft_instance.mag_pbuf) * 2;
+	trans485data.harmonic_peak_1_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 1.5,fft_instance.mag_pbuf) * 2;
+	trans485data.harmonic_peak_2 = BSP_GetHarmonicPeak(trans485data.base_frequency, 2,fft_instance.mag_pbuf) * 2;
+	trans485data.harmonic_peak_2_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 2.5,fft_instance.mag_pbuf) * 2;
+	trans485data.harmonic_peak_3 = BSP_GetHarmonicPeak(trans485data.base_frequency, 3,fft_instance.mag_pbuf) * 2;
+	trans485data.harmonic_peak_4 = BSP_GetHarmonicPeak(trans485data.base_frequency, 4,fft_instance.mag_pbuf) * 2;
+	trans485data.harmonic_peak_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 5,fft_instance.mag_pbuf) * 2;
+	trans485data.harmonic_peak_6 = BSP_GetHarmonicPeak(trans485data.base_frequency, 6,fft_instance.mag_pbuf) * 2;
 	
 	
 	// -----------Get max speed -----------------------
@@ -210,18 +210,44 @@ void AD7988_Calc_Process(void)
 	
 	uint32_t temp_1 = 0;
 	arm_max_f32( ad7988_intrgralValue_space + 1024,2048,&trans485data.speed_peak,&temp_1);
+	trans485data.speed_peak = trans485data.speed_peak * 9.8f;
 	// --------------------------------------------
 	// ----------Get max displacement------------------
 	BSP_FrqDomain_Integral(2,fft_instance.fft_pbuf, ad7988_intrgralValue_space);
 	trans485data.offset_peak = 0;
 	arm_max_f32( ad7988_intrgralValue_space + 1024,2048,&trans485data.offset_peak,&temp_1);
+	trans485data.offset_peak = trans485data.offset_peak * 9.8f;
 
 	// ---------------------------------------------
+	
+	// -------------- check trans485data.base_frequency----------
+	if(trans485data.base_frequency >= 1000)
+	{
+		trans485data.acc_peak = 0;
+		trans485data.base_frequency = 0;
+		trans485data.harmonic_peak_0_5 = 0;
+		trans485data.harmonic_peak_1 = 0;
+		trans485data.harmonic_peak_1_5 = 0;
+		trans485data.harmonic_peak_2 = 0;
+		trans485data.harmonic_peak_2_5 = 0;
+		trans485data.harmonic_peak_3 = 0;
+		trans485data.harmonic_peak_4 = 0;
+		trans485data.harmonic_peak_5 = 0;
+		trans485data.harmonic_peak_6 = 0;
+		trans485data.offset_peak = 0;
+		trans485data.speed_peak = 0;
+		
+	}
+	
+	// ----------------------------------------------------------
+	
 	
 	// ---------------- Transfor ----------
 	
 	trans485data.power = 11;
 	trans485data.temperature = T_4_20mv_GetTemperatureValue(); 
+	
+	
 	      // ----DEBUG----
 	char rtt_buf[40] = { 0 };
 	snprintf(rtt_buf,40,"%f",trans485data.acc_peak);
@@ -244,6 +270,8 @@ void AD7988_Calc_Process(void)
 	DEBUG("harmonic_peak_2   :%s\r\n",rtt_buf);	
 		snprintf(rtt_buf,40,"%f",trans485data.harmonic_peak_2_5);
 	DEBUG("harmonic_peak_2_5 :%s\r\n",rtt_buf);	
+	
+	
 		 // --------------	
 	buf_ptr = Transfor_MakePackage(&len,&trans485data);
 	Transfor_Send(buf_ptr,len);	
