@@ -4,3 +4,5 @@ code/stm32F4xx/stm32f4xx/projects/stm32f4xx/mdk/JLinkLog.txt
 code/stm32F4xx/stm32f4xx/projects/stm32f4xx/mdk/Listings/stm32f407.map
 code/stm32F4xx/stm32f4xx/projects/stm32f4xx/mdk/Objects/ad7988_core.crf
 code/stm32F4xx/stm32f4xx/projects/stm32f4xx/se/stm32f4xx.vpwhist
+code/stm32F4xx/stm32f4xx/projects/stm32f4xx/mdk/stm32f407.uvoptx
+code/stm32F4xx/stm32f4xx/projects/stm32f4xx/mdk/stm32f407.uvprojx

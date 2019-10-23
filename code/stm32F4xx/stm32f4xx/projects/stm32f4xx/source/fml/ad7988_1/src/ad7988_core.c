@@ -193,24 +193,26 @@ void AD7988_Calc_Process(void)
 	trans485data.base_frequency = fft_instance.base_freq;
 	trans485data.acc_peak = fft_instance.tim_domain_peak ;//* 0.0763f - 2500.0f;
 	
-	trans485data.harmonic_peak_0_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 0.5,fft_instance.mag_pbuf) * 2; // *2 is add the hannin windows
-	trans485data.harmonic_peak_1 = BSP_GetHarmonicPeak(trans485data.base_frequency, 1,fft_instance.mag_pbuf) * 2;
-	trans485data.harmonic_peak_1_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 1.5,fft_instance.mag_pbuf) * 2;
-	trans485data.harmonic_peak_2 = BSP_GetHarmonicPeak(trans485data.base_frequency, 2,fft_instance.mag_pbuf) * 2;
-	trans485data.harmonic_peak_2_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 2.5,fft_instance.mag_pbuf) * 2;
-	trans485data.harmonic_peak_3 = BSP_GetHarmonicPeak(trans485data.base_frequency, 3,fft_instance.mag_pbuf) * 2;
-	trans485data.harmonic_peak_4 = BSP_GetHarmonicPeak(trans485data.base_frequency, 4,fft_instance.mag_pbuf) * 2;
-	trans485data.harmonic_peak_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 5,fft_instance.mag_pbuf) * 2;
-	trans485data.harmonic_peak_6 = BSP_GetHarmonicPeak(trans485data.base_frequency, 6,fft_instance.mag_pbuf) * 2;
+	trans485data.harmonic_peak_0_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 0.5,fft_instance.mag_pbuf) ; 
+	trans485data.harmonic_peak_1 = BSP_GetHarmonicPeak(trans485data.base_frequency, 1,fft_instance.mag_pbuf) ;
+	trans485data.harmonic_peak_1_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 1.5,fft_instance.mag_pbuf) ;
+	trans485data.harmonic_peak_2 = BSP_GetHarmonicPeak(trans485data.base_frequency, 2,fft_instance.mag_pbuf) ;
+	trans485data.harmonic_peak_2_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 2.5,fft_instance.mag_pbuf) ;
+	trans485data.harmonic_peak_3 = BSP_GetHarmonicPeak(trans485data.base_frequency, 3,fft_instance.mag_pbuf) ;
+	trans485data.harmonic_peak_4 = BSP_GetHarmonicPeak(trans485data.base_frequency, 4,fft_instance.mag_pbuf) ;
+	trans485data.harmonic_peak_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 5,fft_instance.mag_pbuf) ;
+	trans485data.harmonic_peak_6 = BSP_GetHarmonicPeak(trans485data.base_frequency, 6,fft_instance.mag_pbuf) ;
 	
 	
 	// -----------Get max speed -----------------------
-	BSP_FrqDomain_Integral(1,fft_instance.fft_pbuf, ad7988_intrgralValue_space);
+	//BSP_FrqDomain_Integral(1,fft_instance.fft_pbuf, ad7988_intrgralValue_space);
 	trans485data.speed_peak = 0;
 	
 	uint32_t temp_1 = 0;
-	arm_max_f32( ad7988_intrgralValue_space + 1024,2048,&trans485data.speed_peak,&temp_1);
-	trans485data.speed_peak = trans485data.speed_peak * 9.8f;
+	//arm_max_f32( ad7988_intrgralValue_space + 1024,2048,&trans485data.speed_peak,&temp_1);
+	trans485data.speed_peak = BSP_GetSpeedRMS(fft_instance.mag_pbuf,4096);
+	trans485data.speed_peak = trans485data.speed_peak * 9.8f * 1000; // * 1000 -> m/s to cm/s;
+	
 	// --------------------------------------------
 	// ----------Get max displacement------------------
 	BSP_FrqDomain_Integral(2,fft_instance.fft_pbuf, ad7988_intrgralValue_space);
@@ -221,10 +223,10 @@ void AD7988_Calc_Process(void)
 	// ---------------------------------------------
 	
 	// -------------- check trans485data.base_frequency----------
-	if(trans485data.base_frequency >= 1000)
+	if( trans485data.acc_peak  <= 0.005)
 	{
 		trans485data.acc_peak = 0;
-		trans485data.base_frequency = 0;
+		trans485data.base_frequency = 1;
 		trans485data.harmonic_peak_0_5 = 0;
 		trans485data.harmonic_peak_1 = 0;
 		trans485data.harmonic_peak_1_5 = 0;

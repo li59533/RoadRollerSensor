@@ -120,6 +120,9 @@ int BSP_FrqDomain_Integral(uint8_t integral_time,float  * fft_buf, float* output
 float BSP_GetHarmonicPeak(uint16_t base_freq , float harmonic,float * fft_buf);
 
 int8_t BSP_FFT_Mag_Calc(float * inputbuf, float * outputbuf, uint16_t bufsize);
+
+float BSP_GetSpeedRMS(float * mag_buf,uint16_t len);
+
 /**
  * @}
  */

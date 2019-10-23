@@ -189,7 +189,7 @@ int8_t BSP_FFT_Calc(float *inputbuf,fft_instance_t * fft_instance)
 		*/
 		
 		integ.fft_buf[2*i]   = inputbuf[i];		//real part
-		//integ.fft_buf[2*i] = arm_sin_f32(2*3.1415926f*160*i/4096);
+		//integ.fft_buf[2*i] = arm_sin_f32(2*3.1415926f*160*i/4096) *    (0.5f - 0.5f * arm_cos_f32(2.0f * 3.14159265f * i / 4096.0f));;
 		integ.fft_buf[2*i+1] = 0;				//imaginary part
 		
 		if(fft_instance->tim_domain_peak <  inputbuf[i])   // get the acc peak
@@ -206,7 +206,12 @@ int8_t BSP_FFT_Calc(float *inputbuf,fft_instance_t * fft_instance)
 	arm_cmplx_mag_f32(integ.fft_buf ,integ.mag_buf , integ.fft_len);
 	fft_instance->mag_pbuf = integ.mag_buf;
 	// ----------------------------------------------------------
-	
+	// ------------- recover ---------
+	for(i = 1 ;i < (uint16_t)(integ.fft_len) ; i ++)
+	{
+		integ.mag_buf[i] = integ.mag_buf[i] /(DATA_LEN/2);
+	}	
+	// -------------------------------
 	// -------------- Get Base Freq -------------------------
 	
 	for(i = 1 ;i < (uint16_t)(integ.fft_len/2) ; i ++)
@@ -305,10 +310,22 @@ float BSP_GetHarmonicPeak(uint16_t base_freq , float harmonic,float * mag_buf)
 	uint16_t index = 0;
 	index = (uint16_t ) (base_freq * harmonic);
 	
-	return mag_buf[index] / (DATA_LEN/2) ;
-
-
+	return mag_buf[index] * 2.0f;
 }
+
+float BSP_GetSpeedRMS(float * mag_buf,uint16_t len)
+{
+	float sum_temp = 0.0f; 
+	for(uint16_t i = 1 ; i <=  2048 ; i ++)
+	{
+		sum_temp +=(mag_buf[i]  * 1.633f / ( 2.0f * 3.14159265f * i) )* (mag_buf[i] * 1.633f / ( 2.0f * 3.14159265f * i));
+	}
+	sum_temp /= 2.0f;
+	arm_sqrt_f32(sum_temp,&sum_temp);
+	return sum_temp;
+}
+
+
 
 /**
  * @}
