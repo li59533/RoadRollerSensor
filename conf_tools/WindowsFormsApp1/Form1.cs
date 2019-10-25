@@ -67,27 +67,30 @@ namespace WindowsFormsApp1
 
             string parity;
             string stopBits;
-            _serialPort = new SerialPort();
-            parity = cbx_paritybit.SelectedItem.ToString();
-            stopBits = cbx_stopbit.SelectedItem.ToString();
-            //Console.WriteLine("_serialPort.PortName : %s", _serialPort.PortName.ToString());
-            string test_str;
-            test_str = _serialPort.PortName.ToString();
-            Console.Write("%s", test_str);
-            _serialPort.PortName = cbx_comx.SelectedItem.ToString();
-            _serialPort.BaudRate = Convert.ToInt32( tbx_baud.Text.ToString());
-            _serialPort.Parity = (Parity)Enum.Parse(typeof(Parity), parity, true);
-            _serialPort.DataBits = Convert.ToInt32(tbx_databit.Text.ToString());
-            _serialPort.StopBits = (StopBits)Enum.Parse(typeof(StopBits), stopBits, true);
-            //_serialPort.Handshake = ;
-
-            // Set the read/write timeouts
-            _serialPort.ReadTimeout = 500;
-            _serialPort.WriteTimeout = 500;
+           
+           
 
 
             if (serial_status == false)
             {
+
+                 _serialPort = new SerialPort();
+                parity = cbx_paritybit.SelectedItem.ToString();
+                stopBits = cbx_stopbit.SelectedItem.ToString();
+                //Console.WriteLine("_serialPort.PortName : %s", _serialPort.PortName.ToString());
+                string test_str;
+                test_str = _serialPort.PortName.ToString();
+                Console.Write("%s", test_str);
+                _serialPort.PortName = cbx_comx.SelectedItem.ToString();
+                _serialPort.BaudRate = Convert.ToInt32( tbx_baud.Text.ToString());
+                _serialPort.Parity = (Parity)Enum.Parse(typeof(Parity), parity, true);
+                _serialPort.DataBits = Convert.ToInt32(tbx_databit.Text.ToString());
+                _serialPort.StopBits = (StopBits)Enum.Parse(typeof(StopBits), stopBits, true);
+                //_serialPort.Handshake = ;
+
+                // Set the read/write timeouts
+                _serialPort.ReadTimeout = 500;
+                _serialPort.WriteTimeout = 500;
                 serial_status = true;
                 btn_serial_switch.Text = "Close";
                 _serialPort.Open();
