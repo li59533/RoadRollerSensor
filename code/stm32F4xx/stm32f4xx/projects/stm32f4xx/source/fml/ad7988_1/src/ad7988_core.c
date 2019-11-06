@@ -223,7 +223,7 @@ void AD7988_Calc_Process(void)
 	// ---------------------------------------------
 	
 	// -------------- check trans485data.base_frequency----------
-	if( trans485data.acc_peak  <= 0.005)
+	if( (trans485data.acc_peak * g_SystemParam_Config.AD7988_VolACC_p)  <= 4.0)
 	{
 		trans485data.acc_peak = 0;
 		trans485data.base_frequency = 1;

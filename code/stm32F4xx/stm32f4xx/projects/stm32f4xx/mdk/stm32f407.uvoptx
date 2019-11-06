@@ -147,46 +147,62 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>213</LineNumber>
+          <LineNumber>145</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134227674</Address>
+          <Address>134240490</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\source\fml\ad7988_1\src\ad7988_core.c</Filename>
+          <Filename>..\source\fml\system\system_param.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\YLJ\../source/fml/ad7988_1/src/ad7988_core.c\213</Expression>
+          <Expression>\\master_firmware_YLJ_V1_0\../source/fml/system/system_param.c\145</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>197</LineNumber>
+          <LineNumber>221</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134227438</Address>
+          <Address>134247502</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\source\fml\ad7988_1\src\ad7988_core.c</Filename>
+          <Filename>..\source\fml\conf\app_conf.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\YLJ\../source/fml/ad7988_1/src/ad7988_core.c\197</Expression>
+          <Expression>\\master_firmware_YLJ_V1_0\../source/fml/conf/app_conf.c\221</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>250</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134247628</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\source\fml\conf\app_conf.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\master_firmware_YLJ_V1_0\../source/fml/conf/app_conf.c\250</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>fft_instance</ItemText>
+          <ItemText>g_SystemParam_Config</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>integ.mag_buf</ItemText>
+          <ItemText>payload_ptr - payload</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>

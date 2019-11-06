@@ -54,22 +54,22 @@
             this.har_peak4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.har_peak5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.har_peak6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.speed_peak = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.speed_RMS = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.dis_peak = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.temperature = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.power = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btn_clear = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_SetConf = new System.Windows.Forms.Button();
             this.btn_GetConf = new System.Windows.Forms.Button();
             this.tbx_mvToacc_p = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.lab_version = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.btn_getversion = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.lab_version = new System.Windows.Forms.Label();
             this.Serial_Conf.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -217,11 +217,12 @@
             this.har_peak4,
             this.har_peak5,
             this.har_peak6,
-            this.speed_peak,
+            this.speed_RMS,
             this.dis_peak,
             this.temperature,
             this.power});
             this.lvw_DataValue.GridLines = true;
+            this.lvw_DataValue.HideSelection = false;
             this.lvw_DataValue.Location = new System.Drawing.Point(6, 137);
             this.lvw_DataValue.Name = "lvw_DataValue";
             this.lvw_DataValue.Size = new System.Drawing.Size(1097, 425);
@@ -280,9 +281,9 @@
             // 
             this.har_peak6.Text = "har_peak6";
             // 
-            // speed_peak
+            // speed_RMS
             // 
-            this.speed_peak.Text = "speed_peak";
+            this.speed_RMS.Text = "speed_RMS";
             // 
             // dis_peak
             // 
@@ -322,6 +323,15 @@
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Conf";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(142, 28);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(29, 12);
+            this.label8.TabIndex = 4;
+            this.label8.Text = "mv/g";
             // 
             // label2
             // 
@@ -387,24 +397,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Version";
             // 
-            // lab_version
-            // 
-            this.lab_version.AutoSize = true;
-            this.lab_version.Location = new System.Drawing.Point(35, 18);
-            this.lab_version.Name = "lab_version";
-            this.lab_version.Size = new System.Drawing.Size(35, 12);
-            this.lab_version.TabIndex = 0;
-            this.lab_version.Text = "_._._";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(24, 19);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(11, 12);
-            this.label7.TabIndex = 1;
-            this.label7.Text = "V";
-            // 
             // btn_getversion
             // 
             this.btn_getversion.Location = new System.Drawing.Point(21, 35);
@@ -415,14 +407,23 @@
             this.btn_getversion.UseVisualStyleBackColor = true;
             this.btn_getversion.Click += new System.EventHandler(this.btn_getversion_Click);
             // 
-            // label8
+            // label7
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(142, 28);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(29, 12);
-            this.label8.TabIndex = 4;
-            this.label8.Text = "mv/g";
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(24, 19);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(11, 12);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "V";
+            // 
+            // lab_version
+            // 
+            this.lab_version.AutoSize = true;
+            this.lab_version.Location = new System.Drawing.Point(35, 18);
+            this.lab_version.Name = "lab_version";
+            this.lab_version.Size = new System.Drawing.Size(35, 12);
+            this.lab_version.TabIndex = 0;
+            this.lab_version.Text = "_._._";
             // 
             // YLJtools
             // 
@@ -476,7 +477,7 @@
         private System.Windows.Forms.ColumnHeader har_peak4;
         private System.Windows.Forms.ColumnHeader har_peak5;
         private System.Windows.Forms.ColumnHeader har_peak6;
-        private System.Windows.Forms.ColumnHeader speed_peak;
+        private System.Windows.Forms.ColumnHeader speed_RMS;
         private System.Windows.Forms.ColumnHeader dis_peak;
         private System.Windows.Forms.ColumnHeader temperature;
         private System.Windows.Forms.ColumnHeader power;

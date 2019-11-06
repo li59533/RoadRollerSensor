@@ -105,6 +105,7 @@ namespace WindowsFormsApp1
                 serial_status = false;
                 btn_serial_switch.Text = "Open";
                 _serialPort.Close();
+            
 
             }
             
@@ -266,6 +267,7 @@ namespace WindowsFormsApp1
         {
             tbx_revdata.Text = "";
             lab_version.Text = "-.-.-";
+            tbx_mvToacc_p.Text = "";
             lvw_DataValue.Items.Clear();
         }
 

@@ -125,7 +125,7 @@ void T_4_20mv_CalcProcess(void)   // 600mV -> 0C , 3000mV -> 500C   so the K = 0
 
 float T_4_20mv_GetTemperatureValue(void)
 {
-	return t_4_20mvValue.tvalue;
+	return t_4_20mvValue.tvalue + 3.0f;
 }
 /**
  * @}

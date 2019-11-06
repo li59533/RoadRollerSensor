@@ -249,7 +249,7 @@ static void app_setconfreq_process(uint8_t *payload,uint16_t len)
 		
 		payload_ptr = payload_ptr + tlv_buf->Len + 2 ;
 		
-		if((payload_ptr - payload)>= len)
+		if((payload_ptr - payload)>= (len - 2))
 		{
 			break;
 		}
