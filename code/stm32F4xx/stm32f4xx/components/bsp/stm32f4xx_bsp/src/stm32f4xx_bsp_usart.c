@@ -657,10 +657,10 @@ void BSP_USART_IRQHandler(uint8_t BSP_USARTx)
 				//DEBUG("IDEL:%d\r\n",DMA_GetCurrDataCounter(DMA2_Stream5));
 				
 				STM32F4xxUSART_Instance[BSP_USART1].RxBuf.Count += BSP_USART1_RXBUF_SIZE - DMA2_Stream5->NDTR;
-				
-				
-				
 				DMA_Cmd(DMA2_Stream5,DISABLE);
+				
+				App_RevBufToQueue(USART1_Rx_Buf,BSP_USART1_RXBUF_SIZE - DMA2_Stream5->NDTR);
+
 				DMA2_Stream5->M0AR = (uint32_t)USART1_Rx_Buf;
 				DMA2_Stream5->NDTR = BSP_USART1_RXBUF_SIZE;
 				DMA_Cmd(DMA2_Stream5,ENABLE);

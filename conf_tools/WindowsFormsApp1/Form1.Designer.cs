@@ -70,6 +70,8 @@
             this.btn_getversion = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.lab_version = new System.Windows.Forms.Label();
+            this.btn_get = new System.Windows.Forms.Button();
+            this.cbx_autoreport = new System.Windows.Forms.CheckBox();
             this.Serial_Conf.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -78,9 +80,9 @@
             // 
             // btn_serial_switch
             // 
-            this.btn_serial_switch.Location = new System.Drawing.Point(584, 20);
+            this.btn_serial_switch.Location = new System.Drawing.Point(143, 18);
             this.btn_serial_switch.Name = "btn_serial_switch";
-            this.btn_serial_switch.Size = new System.Drawing.Size(75, 23);
+            this.btn_serial_switch.Size = new System.Drawing.Size(76, 116);
             this.btn_serial_switch.TabIndex = 0;
             this.btn_serial_switch.Text = "打开";
             this.btn_serial_switch.UseVisualStyleBackColor = true;
@@ -98,7 +100,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(461, 25);
+            this.label3.Location = new System.Drawing.Point(12, 117);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(41, 12);
             this.label3.TabIndex = 3;
@@ -107,7 +109,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(363, 25);
+            this.label4.Location = new System.Drawing.Point(12, 94);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 12);
             this.label4.TabIndex = 4;
@@ -116,7 +118,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(265, 25);
+            this.label5.Location = new System.Drawing.Point(12, 71);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 5;
@@ -125,7 +127,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(134, 25);
+            this.label6.Location = new System.Drawing.Point(12, 48);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(53, 12);
             this.label6.TabIndex = 6;
@@ -146,15 +148,16 @@
             this.Serial_Conf.Controls.Add(this.label4);
             this.Serial_Conf.Location = new System.Drawing.Point(12, 12);
             this.Serial_Conf.Name = "Serial_Conf";
-            this.Serial_Conf.Size = new System.Drawing.Size(667, 61);
+            this.Serial_Conf.Size = new System.Drawing.Size(243, 154);
             this.Serial_Conf.TabIndex = 7;
             this.Serial_Conf.TabStop = false;
             this.Serial_Conf.Text = "Serial_Conf";
+            this.Serial_Conf.Enter += new System.EventHandler(this.Serial_Conf_Enter);
             // 
             // cbx_stopbit
             // 
             this.cbx_stopbit.FormattingEnabled = true;
-            this.cbx_stopbit.Location = new System.Drawing.Point(409, 21);
+            this.cbx_stopbit.Location = new System.Drawing.Point(62, 88);
             this.cbx_stopbit.Name = "cbx_stopbit";
             this.cbx_stopbit.Size = new System.Drawing.Size(46, 20);
             this.cbx_stopbit.TabIndex = 12;
@@ -162,21 +165,21 @@
             // cbx_paritybit
             // 
             this.cbx_paritybit.FormattingEnabled = true;
-            this.cbx_paritybit.Location = new System.Drawing.Point(508, 21);
+            this.cbx_paritybit.Location = new System.Drawing.Point(62, 114);
             this.cbx_paritybit.Name = "cbx_paritybit";
             this.cbx_paritybit.Size = new System.Drawing.Size(59, 20);
             this.cbx_paritybit.TabIndex = 11;
             // 
             // tbx_databit
             // 
-            this.tbx_databit.Location = new System.Drawing.Point(320, 21);
+            this.tbx_databit.Location = new System.Drawing.Point(62, 68);
             this.tbx_databit.Name = "tbx_databit";
             this.tbx_databit.Size = new System.Drawing.Size(37, 21);
             this.tbx_databit.TabIndex = 9;
             // 
             // tbx_baud
             // 
-            this.tbx_baud.Location = new System.Drawing.Point(193, 21);
+            this.tbx_baud.Location = new System.Drawing.Point(62, 45);
             this.tbx_baud.Name = "tbx_baud";
             this.tbx_baud.Size = new System.Drawing.Size(65, 21);
             this.tbx_baud.TabIndex = 8;
@@ -184,7 +187,7 @@
             // cbx_comx
             // 
             this.cbx_comx.FormattingEnabled = true;
-            this.cbx_comx.Location = new System.Drawing.Point(53, 21);
+            this.cbx_comx.Location = new System.Drawing.Point(62, 21);
             this.cbx_comx.Name = "cbx_comx";
             this.cbx_comx.Size = new System.Drawing.Size(75, 20);
             this.cbx_comx.TabIndex = 7;
@@ -196,7 +199,7 @@
             this.tbx_revdata.Location = new System.Drawing.Point(6, 20);
             this.tbx_revdata.Multiline = true;
             this.tbx_revdata.Name = "tbx_revdata";
-            this.tbx_revdata.Size = new System.Drawing.Size(963, 106);
+            this.tbx_revdata.Size = new System.Drawing.Size(1029, 106);
             this.tbx_revdata.TabIndex = 8;
             // 
             // lvw_DataValue
@@ -225,7 +228,7 @@
             this.lvw_DataValue.HideSelection = false;
             this.lvw_DataValue.Location = new System.Drawing.Point(6, 137);
             this.lvw_DataValue.Name = "lvw_DataValue";
-            this.lvw_DataValue.Size = new System.Drawing.Size(1097, 425);
+            this.lvw_DataValue.Size = new System.Drawing.Size(1163, 431);
             this.lvw_DataValue.TabIndex = 9;
             this.lvw_DataValue.UseCompatibleStateImageBehavior = false;
             this.lvw_DataValue.View = System.Windows.Forms.View.Details;
@@ -300,9 +303,9 @@
             // btn_clear
             // 
             this.btn_clear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_clear.Location = new System.Drawing.Point(975, 20);
+            this.btn_clear.Location = new System.Drawing.Point(1041, 20);
             this.btn_clear.Name = "btn_clear";
-            this.btn_clear.Size = new System.Drawing.Size(128, 106);
+            this.btn_clear.Size = new System.Drawing.Size(64, 106);
             this.btn_clear.TabIndex = 10;
             this.btn_clear.Text = "Clear";
             this.btn_clear.UseVisualStyleBackColor = true;
@@ -312,14 +315,15 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.cbx_autoreport);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.btn_SetConf);
             this.groupBox1.Controls.Add(this.btn_GetConf);
             this.groupBox1.Controls.Add(this.tbx_mvToacc_p);
-            this.groupBox1.Location = new System.Drawing.Point(685, 13);
+            this.groupBox1.Location = new System.Drawing.Point(261, 18);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(334, 60);
+            this.groupBox1.Size = new System.Drawing.Size(402, 148);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Conf";
@@ -344,9 +348,9 @@
             // 
             // btn_SetConf
             // 
-            this.btn_SetConf.Location = new System.Drawing.Point(249, 18);
+            this.btn_SetConf.Location = new System.Drawing.Point(336, 18);
             this.btn_SetConf.Name = "btn_SetConf";
-            this.btn_SetConf.Size = new System.Drawing.Size(60, 30);
+            this.btn_SetConf.Size = new System.Drawing.Size(60, 110);
             this.btn_SetConf.TabIndex = 2;
             this.btn_SetConf.Text = "SetConf";
             this.btn_SetConf.UseVisualStyleBackColor = true;
@@ -354,9 +358,9 @@
             // 
             // btn_GetConf
             // 
-            this.btn_GetConf.Location = new System.Drawing.Point(182, 18);
+            this.btn_GetConf.Location = new System.Drawing.Point(270, 19);
             this.btn_GetConf.Name = "btn_GetConf";
-            this.btn_GetConf.Size = new System.Drawing.Size(60, 30);
+            this.btn_GetConf.Size = new System.Drawing.Size(60, 109);
             this.btn_GetConf.TabIndex = 1;
             this.btn_GetConf.Text = "GetConf";
             this.btn_GetConf.UseVisualStyleBackColor = true;
@@ -374,12 +378,13 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.btn_get);
             this.groupBox2.Controls.Add(this.tbx_revdata);
             this.groupBox2.Controls.Add(this.lvw_DataValue);
             this.groupBox2.Controls.Add(this.btn_clear);
-            this.groupBox2.Location = new System.Drawing.Point(12, 79);
+            this.groupBox2.Location = new System.Drawing.Point(12, 172);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1109, 568);
+            this.groupBox2.Size = new System.Drawing.Size(1175, 574);
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "data_show";
@@ -390,7 +395,7 @@
             this.groupBox3.Controls.Add(this.btn_getversion);
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.lab_version);
-            this.groupBox3.Location = new System.Drawing.Point(1025, 13);
+            this.groupBox3.Location = new System.Drawing.Point(1091, 13);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(96, 60);
             this.groupBox3.TabIndex = 13;
@@ -425,11 +430,33 @@
             this.lab_version.TabIndex = 0;
             this.lab_version.Text = "_._._";
             // 
+            // btn_get
+            // 
+            this.btn_get.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_get.Location = new System.Drawing.Point(1105, 20);
+            this.btn_get.Name = "btn_get";
+            this.btn_get.Size = new System.Drawing.Size(64, 106);
+            this.btn_get.TabIndex = 11;
+            this.btn_get.Text = "GetValue";
+            this.btn_get.UseVisualStyleBackColor = true;
+            this.btn_get.Click += new System.EventHandler(this.btn_get_Click);
+            // 
+            // cbx_autoreport
+            // 
+            this.cbx_autoreport.AutoSize = true;
+            this.cbx_autoreport.BackColor = System.Drawing.SystemColors.Control;
+            this.cbx_autoreport.Location = new System.Drawing.Point(13, 51);
+            this.cbx_autoreport.Name = "cbx_autoreport";
+            this.cbx_autoreport.Size = new System.Drawing.Size(84, 16);
+            this.cbx_autoreport.TabIndex = 5;
+            this.cbx_autoreport.Text = "AutoReport";
+            this.cbx_autoreport.UseVisualStyleBackColor = false;
+            // 
             // YLJtools
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1133, 659);
+            this.ClientSize = new System.Drawing.Size(1199, 758);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -493,6 +520,8 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label lab_version;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button btn_get;
+        private System.Windows.Forms.CheckBox cbx_autoreport;
     }
 }
 

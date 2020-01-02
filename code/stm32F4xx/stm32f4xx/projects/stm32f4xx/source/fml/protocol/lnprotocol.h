@@ -53,6 +53,8 @@ typedef enum
 {
 	TAG_UPDATA	= 0x42,
 	TAG_7988MVTOACC_P = 0x44,
+	TAG_AUTO_REPORT_FALG = 0x45,
+	
 }LN_Protocol_Tag_e;
 
 typedef enum
@@ -71,6 +73,9 @@ typedef enum
 	
 	CMD_GetVersion_Req = 0x80,
 	CMD_GetVersion_Resp = 0x81,
+	CMD_GetValue_Req = 0xD0,
+	CMD_GetValue_Resp = 0xD1,
+	
 }LN_Protocol_Cmd_e;
 
 

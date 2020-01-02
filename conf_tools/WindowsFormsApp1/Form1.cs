@@ -224,13 +224,13 @@ namespace WindowsFormsApp1
                         {
                             case 0x04:
                                 {
-                                    byte[] confbuf = buf.Skip(6).Take(6).ToArray();
+                                    byte[] confbuf = buf.Skip(6).Take(len - 8).ToArray();
                                     getconf_resp_process(confbuf,(UInt16) confbuf.Length);
                                 }
                                 break;
                             case 0x81:
                                 {
-                                    byte[] version = buf.Skip(6).Take(4).ToArray();
+                                    byte[] version = buf.Skip(6).Take(len - 8).ToArray();
                                     getversion_resp_process(version, (UInt16)version.Length);
                                 }
                                 break;
@@ -244,17 +244,42 @@ namespace WindowsFormsApp1
 
         public void getconf_resp_process(byte[] buf, UInt16 len)
         {
-            switch (buf[0])
+            UInt16 ptr_count = 0;
+            while (true)
             {
-                case 0x44:
+                switch (buf[ptr_count])
+                {
+                    case 0x44:
                     {
                         float mv_to_Acc_p;
-                        mv_to_Acc_p = BitConverter.ToSingle(buf, 2);
+                        mv_to_Acc_p = BitConverter.ToSingle(buf, ptr_count + 2);
                         tbx_mvToacc_p.Text = mv_to_Acc_p.ToString();
+                        ptr_count += 6; 
                     }
                     break;
-                default:break;
+                    case 0x45:
+                        {
+                            if (buf[ptr_count + 2] == 1)
+                            {
+                                cbx_autoreport.Checked = true;
+                            }
+                            else if(buf[ptr_count + 2] == 0)
+                            {
+                                cbx_autoreport.Checked = false;
+                            }
+
+                            ptr_count += 3;
+                        }
+                        break;
+                    default:break;
+                }
+
+                if (ptr_count >= len - 1)
+                {
+                    break;
+                }
             }
+ 
             
         }
         public void getversion_resp_process(byte[] buf, UInt16 len)
@@ -292,7 +317,7 @@ namespace WindowsFormsApp1
             float mv_to_acc_p = 0.0f;
             setconf_buf[0] = 0x7E;
 
-            setconf_buf[1] = 14;
+            setconf_buf[1] = 17;
             setconf_buf[2] = 0;
 
             setconf_buf[3] = 0;
@@ -309,18 +334,31 @@ namespace WindowsFormsApp1
             setconf_buf[9] = float_temp[1];
             setconf_buf[10] = float_temp[2];
             setconf_buf[11] = float_temp[3];
-            setconf_buf[12] = 0x7E;
+
+            setconf_buf[12] = 0x45;
+            setconf_buf[13] = 0x01;
+            if (cbx_autoreport.Checked == true)
+            {
+                setconf_buf[14] = 1;
+            }
+            else 
+            {
+                setconf_buf[14] = 0;
+            }
+
+
+            setconf_buf[15] = 0x7E;
 
             byte check_sum = 0;
 
-            for (uint i = 0; i < 13; i++)
+            for (uint i = 0; i < 16; i++)
             {
                 check_sum += setconf_buf[i];
             }
-            setconf_buf[13] = check_sum;
+            setconf_buf[16] = check_sum;
 
 
-            _serialPort.Write( setconf_buf,0,14);
+            _serialPort.Write( setconf_buf,0,17);
 
         }
 
@@ -365,6 +403,39 @@ namespace WindowsFormsApp1
 
 
             setconf_buf[5] = 0x80; //cmd
+
+            setconf_buf[6] = 0x7E;
+
+            byte check_sum = 0;
+
+            for (uint i = 0; i < 7; i++)
+            {
+                check_sum += setconf_buf[i];
+            }
+            setconf_buf[7] = check_sum;
+
+
+            _serialPort.Write(setconf_buf, 0, 8);
+        }
+
+        private void Serial_Conf_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_get_Click(object sender, EventArgs e)
+        {
+            byte[] setconf_buf = new byte[100];
+            setconf_buf[0] = 0x7E;
+
+            setconf_buf[1] = 8;
+            setconf_buf[2] = 0;
+
+            setconf_buf[3] = 0;
+            setconf_buf[4] = 0;
+
+
+            setconf_buf[5] = 0xD0; //cmd
 
             setconf_buf[6] = 0x7E;
 

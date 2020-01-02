@@ -21,6 +21,7 @@
 #include "system_param.h"
 #include "transfor_makepackage.h"
 #include "version.h"
+#include "ad7988.h"
 
 /**
  * @addtogroup    app_conf_Modules 
@@ -42,7 +43,7 @@
  * @brief         
  * @{  
  */
-#define APP_CONF_DATASPACE_LEN 		100
+#define APP_CONF_DATASPACE_LEN 		500
 /**
  * @}
  */
@@ -82,8 +83,7 @@ App_ConfQueue_t App_ConfQueue = {
 	.size = 3,
 };
 
-
-static uint8_t  app_conf_dataspace[] = { 0 };
+static uint8_t  app_conf_dataspace[APP_CONF_DATASPACE_LEN] = { 0 };
 /**
  * @}
  */
@@ -108,6 +108,7 @@ static void app_getconfreq_process(uint8_t *payload,uint16_t len);
 static void app_setconfreq_process(uint8_t *payload,uint16_t len);
 static void app_lnswitch_cmd(uint8_t * buf,uint16_t len);
 static void app_getversionreq_process(uint8_t *payload,uint16_t len);
+static void app_getvalue_process(uint8_t * payload , uint16_t len);
 /**
  * @}
  */
@@ -135,7 +136,6 @@ void App_RevProcess(void)
 	if(App_ConfQueue.count > 0)
 	{
 		DEBUG("App_Rev Something len : %d\r\n",App_ConfQueue.value[App_ConfQueue.out].len  );
-		
 		app_lnprotocol_process(App_ConfQueue.value[App_ConfQueue.out].buf , App_ConfQueue.value[App_ConfQueue.out].len  );
 		App_ConfQueue.out ++;
 		App_ConfQueue.out %= App_ConfQueue.size;
@@ -193,11 +193,21 @@ static void app_lnswitch_cmd(uint8_t * buf,uint16_t len)
 	
 	switch(cmd)
 	{
-		case CMD_SetConf_Req:app_setconfreq_process(buf + 1, len -1 );break;
-		case CMD_GetConf_Req:app_getconfreq_process(buf + 1, len -1 ) ;break;
-		case CMD_GetVersion_Req: app_getversionreq_process(buf + 1, len -1 );break;
+		case CMD_SetConf_Req:app_setconfreq_process(buf + 1, len -1 ) ; break;
+		case CMD_GetConf_Req:app_getconfreq_process(buf + 1, len -1 ) ; break;
+		case CMD_GetVersion_Req: app_getversionreq_process(buf + 1, len -1 ) ; break;
+		case CMD_GetValue_Req: app_getvalue_process(buf + 1, len -1) ; break;
 		default:break;
 	}
+}
+
+
+
+static void app_getvalue_process(uint8_t * payload , uint16_t len)
+{
+	uint8_t * buf_ptr = 0;
+	buf_ptr = Transfor_MakePackage(&len,AD7988_GetValue());
+	Transfor_Send(buf_ptr,len);	
 }
 
 static void app_setconfreq_process(uint8_t *payload,uint16_t len)
@@ -219,7 +229,7 @@ static void app_setconfreq_process(uint8_t *payload,uint16_t len)
 			case TAG_7988MVTOACC_P:
 			{
 				float float_temp = 0.0f;
-				
+
 				memcpy(&float_temp,tlv_buf->Value.Array ,tlv_buf->Len);
 				// ---------DEBUG-------------------
 				char test_buf[30];
@@ -237,6 +247,19 @@ static void app_setconfreq_process(uint8_t *payload,uint16_t len)
 					DEBUG("APP_Conf AD7988_VolACC_p is False\r\n");
 				}
 				
+			}
+			break;
+			case TAG_AUTO_REPORT_FALG:
+			{
+				if(tlv_buf->Value.BIT_8 == 1 || tlv_buf->Value.BIT_8 == 0)
+				{
+					g_SystemParam_Config.Auto_Report_Flag = tlv_buf->Value.BIT_8;
+				}
+				else
+				{
+					result = CONF_ERROR;
+					DEBUG("TAG_AUTO_REPORT_FALG is False\r\n");
+				}
 			}
 			break;
 			default:
@@ -271,7 +294,6 @@ static void app_setconfreq_process(uint8_t *payload,uint16_t len)
 
 static void app_getconfreq_process(uint8_t *payload,uint16_t len)
 {
-	
 	ln_protocolintance_t *ln_protocolintance = (ln_protocolintance_t * )app_conf_dataspace;
 	LN_Tlv_t tlv_value = { 0 };
 	uint8_t  * payload_ptr = 0;
@@ -290,10 +312,16 @@ static void app_getconfreq_process(uint8_t *payload,uint16_t len)
 	memcpy(tlv_value.Value.Array, &float_temp , 4);
 	payload_ptr += LN_AddTlv(payload_ptr, &tlv_value);
 	// --------------------------------
+	// ------- AutoReport Flag---------------
+	tlv_value.Tag = TAG_AUTO_REPORT_FALG;
+	tlv_value.Len = 1;
+	tlv_value.Value.BIT_8 = g_SystemParam_Config.Auto_Report_Flag;
+	payload_ptr += LN_AddTlv(payload_ptr, &tlv_value);
+	// --------------------------------
+	
 	ln_protocolintance->len = (payload_ptr - &ln_protocolintance->head) + 1;
 	*payload_ptr = LNPROTOCOL_FOOT;
 	*(payload_ptr + 1) =  LNprotocol_AddChecksum((uint8_t * )&ln_protocolintance,ln_protocolintance->len - 1);
-	
 	Transfor_Send(app_conf_dataspace,ln_protocolintance->len);
 	
 }

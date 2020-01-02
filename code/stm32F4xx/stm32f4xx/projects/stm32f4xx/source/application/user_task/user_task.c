@@ -127,7 +127,6 @@ osal_event_t UserTask_Process(uint8_t taskid,osal_event_t events)
 
 	if (events & USER_TASK_CONF_EVENT)
     {			
-		
 		App_RevProcess();
         return events ^ USER_TASK_CONF_EVENT;
     }	

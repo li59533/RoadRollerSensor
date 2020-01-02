@@ -110,6 +110,8 @@ static uint8_t ad7988_valueIndex = 0;
 static float ad7988_intrgralValue_space[AD7988_SAMPLE_LEN] = { 0 };
 static uint16_t ad7988_fftbuf[2][AD7988_FFT_LENGTH] = { 0 };
 static float ad7988_float_accbuf[AD7988_SAMPLE_LEN];
+Trans485_datavalue_t trans485data = { 0 };
+
 
 void AD7988_ParamInit(void)
 {
@@ -150,7 +152,6 @@ void AD7988_Calc_Process(void)
 	uint16_t i = 0;
 	uint8_t * buf_ptr = 0;
 	uint16_t len = 0;
-	Trans485_datavalue_t trans485data = { 0 };
 	fft_instance_t fft_instance = { 0 };
 	uint16_t *pread;
 	int16_t * real_signal;
@@ -275,11 +276,24 @@ void AD7988_Calc_Process(void)
 	
 	
 		 // --------------	
-	buf_ptr = Transfor_MakePackage(&len,&trans485data);
-	Transfor_Send(buf_ptr,len);	
+	if(g_SystemParam_Config.Auto_Report_Flag == 1)
+	{
+		buf_ptr = Transfor_MakePackage(&len,&trans485data);
+		Transfor_Send(buf_ptr,len);			
+	}
+	else
+	{
+		
+	}
+
 	// -----------------Start Sample--------- 
 	BSP_Tim_Start(BSP_TIM1);
 	// --------------------------------------
+}
+
+Trans485_datavalue_t * AD7988_GetValue(void)
+{
+	return &trans485data;
 }
 
 void AD7988_Status_CheckProcess(void)
@@ -304,9 +318,6 @@ void AD7988_Status_CheckProcess(void)
 		ad7988_status = AD7988_Normal;
 		BSP_LED_Open(BSP_LED_VIBRATOR);
 	}
-	
-	
-	
 	
 }
 

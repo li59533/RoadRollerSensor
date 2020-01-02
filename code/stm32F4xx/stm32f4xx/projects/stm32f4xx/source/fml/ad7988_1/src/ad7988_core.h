@@ -18,6 +18,7 @@
  * @{ 
  */
 #include "self_def.h"
+#include "transfor_makepackage.h"
 /**
  * @addtogroup    ad7988_core_Modules 
  * @{  
@@ -83,7 +84,7 @@ void AD7988_ParamInit(void);
 void AD7988_CollectOriginalData(uint16_t *buf);
 void AD7988_Calc_Process(void)  ;
 void AD7988_Status_CheckProcess(void);
-
+Trans485_datavalue_t * AD7988_GetValue(void);
 /**
  * @}
  */
