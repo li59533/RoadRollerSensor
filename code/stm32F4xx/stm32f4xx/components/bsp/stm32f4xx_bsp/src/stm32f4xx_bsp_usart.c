@@ -412,6 +412,7 @@ void BSP_USART_Close(uint8_t BSP_USARTx)
 
 void BSP_USART_WriteBytes_DMA(uint8_t BSP_USARTx,uint8_t* pbuf,uint16_t len)
 {
+	bsp_usart_485en_T(BSP_USARTx);
 	switch(BSP_USARTx)
 	{
 		case BSP_USART1:
@@ -420,7 +421,7 @@ void BSP_USART_WriteBytes_DMA(uint8_t BSP_USARTx,uint8_t* pbuf,uint16_t len)
 			if(bsp_getusartTx_count(BSP_USART1) > 0)
 			{
 				DMA_Cmd(DMA2_Stream7,DISABLE);	
-				bsp_usart_485en_T(BSP_USART1);				
+				//bsp_usart_485en_T(BSP_USART1);				
 				if(STM32F4xxUSART_Instance[BSP_USART1].TxBuf.In < STM32F4xxUSART_Instance[BSP_USART1].TxBuf.Out)
 				{
 					DMA2_Stream7->NDTR = STM32F4xxUSART_Instance[BSP_USART1].TxBuf.Size - STM32F4xxUSART_Instance[BSP_USART1].TxBuf.Out;					
@@ -445,7 +446,7 @@ void BSP_USART_WriteBytes_DMA(uint8_t BSP_USARTx,uint8_t* pbuf,uint16_t len)
 			if(bsp_getusartTx_count(BSP_USART6) > 0)
 			{
 				DMA_Cmd(DMA2_Stream6,DISABLE);	
-				bsp_usart_485en_T(BSP_USART6);					
+				//bsp_usart_485en_T(BSP_USART6);					
 				if(STM32F4xxUSART_Instance[BSP_USART6].TxBuf.In < STM32F4xxUSART_Instance[BSP_USART6].TxBuf.Out)
 				{
 					DMA2_Stream6->NDTR = STM32F4xxUSART_Instance[BSP_USART6].TxBuf.Size - STM32F4xxUSART_Instance[BSP_USART6].TxBuf.Out;
