@@ -224,13 +224,13 @@ namespace WindowsFormsApp1
                         {
                             case 0x04:
                                 {
-                                    byte[] confbuf = buf.Skip(6).Take(len - 8).ToArray();
+                                    byte[] confbuf = buf.Skip(6).Take(len - 7).ToArray();
                                     getconf_resp_process(confbuf,(UInt16) confbuf.Length);
                                 }
                                 break;
                             case 0x81:
                                 {
-                                    byte[] version = buf.Skip(6).Take(len - 8).ToArray();
+                                    byte[] version = buf.Skip(6).Take(len - 7).ToArray();
                                     getversion_resp_process(version, (UInt16)version.Length);
                                 }
                                 break;

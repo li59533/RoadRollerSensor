@@ -229,9 +229,10 @@ int8_t BSP_FFT_Calc(float *inputbuf,fft_instance_t * fft_instance)
 }
 
 
-float fft_buf_temp[DATA_LEN * 2] = {0.0f}; 
+
 int BSP_FrqDomain_Integral(uint8_t integral_time,float  * fft_buf, float* outputbuf)
 {		
+	float fft_buf_temp[DATA_LEN * 2] = {0.0f}; 
 	memcpy(fft_buf_temp,fft_buf,sizeof(fft_buf_temp));
 	float df = (float)integ.smple_frq / (float)integ.fft_len;			//计算频率间隔（Hz/s）
 	integ.high_pass = round(integ.frq_min/df);						//高通频率截止点

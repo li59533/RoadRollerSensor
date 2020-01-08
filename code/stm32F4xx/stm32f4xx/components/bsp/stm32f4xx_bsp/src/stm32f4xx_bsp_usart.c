@@ -379,8 +379,8 @@ static void bsp_usart_485en_init(void)  // init the 485 EN pin
 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_Init(GPIOC,&GPIO_InitStruct);	
 	
-	GPIO_ResetBits( GPIOA, GPIO_Pin_11);	
-	GPIO_ResetBits( GPIOC, GPIO_Pin_8);	
+	GPIO_SetBits( GPIOA, GPIO_Pin_11);	
+	GPIO_SetBits( GPIOC, GPIO_Pin_8);	
 }
 
 static void bsp_usart_485en_R(uint8_t BSP_USARTx)
