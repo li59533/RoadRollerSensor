@@ -65,7 +65,7 @@
  * @defgroup      bsp_fft_integral_Exported_Types 
  * @{  
  */
-typedef struct dou_integ
+typedef struct 
 {
 	uint8_t 	integ_time;							//积分次数，1为速度，2为距离
 	uint16_t 	fft_len;							//FFT数组长度，为2的整数幂次

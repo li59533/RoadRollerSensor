@@ -60,18 +60,18 @@
             this.power = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btn_clear = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbx_autoreport = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_SetConf = new System.Windows.Forms.Button();
             this.btn_GetConf = new System.Windows.Forms.Button();
             this.tbx_mvToacc_p = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btn_get = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btn_getversion = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.lab_version = new System.Windows.Forms.Label();
-            this.btn_get = new System.Windows.Forms.Button();
-            this.cbx_autoreport = new System.Windows.Forms.CheckBox();
             this.Serial_Conf.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -328,6 +328,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Conf";
             // 
+            // cbx_autoreport
+            // 
+            this.cbx_autoreport.AutoSize = true;
+            this.cbx_autoreport.BackColor = System.Drawing.SystemColors.Control;
+            this.cbx_autoreport.Location = new System.Drawing.Point(13, 51);
+            this.cbx_autoreport.Name = "cbx_autoreport";
+            this.cbx_autoreport.Size = new System.Drawing.Size(84, 16);
+            this.cbx_autoreport.TabIndex = 5;
+            this.cbx_autoreport.Text = "AutoReport";
+            this.cbx_autoreport.UseVisualStyleBackColor = false;
+            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -389,6 +400,17 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "data_show";
             // 
+            // btn_get
+            // 
+            this.btn_get.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_get.Location = new System.Drawing.Point(1105, 20);
+            this.btn_get.Name = "btn_get";
+            this.btn_get.Size = new System.Drawing.Size(64, 106);
+            this.btn_get.TabIndex = 11;
+            this.btn_get.Text = "GetValue";
+            this.btn_get.UseVisualStyleBackColor = true;
+            this.btn_get.Click += new System.EventHandler(this.btn_get_Click);
+            // 
             // groupBox3
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -429,28 +451,6 @@
             this.lab_version.Size = new System.Drawing.Size(35, 12);
             this.lab_version.TabIndex = 0;
             this.lab_version.Text = "_._._";
-            // 
-            // btn_get
-            // 
-            this.btn_get.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_get.Location = new System.Drawing.Point(1105, 20);
-            this.btn_get.Name = "btn_get";
-            this.btn_get.Size = new System.Drawing.Size(64, 106);
-            this.btn_get.TabIndex = 11;
-            this.btn_get.Text = "GetValue";
-            this.btn_get.UseVisualStyleBackColor = true;
-            this.btn_get.Click += new System.EventHandler(this.btn_get_Click);
-            // 
-            // cbx_autoreport
-            // 
-            this.cbx_autoreport.AutoSize = true;
-            this.cbx_autoreport.BackColor = System.Drawing.SystemColors.Control;
-            this.cbx_autoreport.Location = new System.Drawing.Point(13, 51);
-            this.cbx_autoreport.Name = "cbx_autoreport";
-            this.cbx_autoreport.Size = new System.Drawing.Size(84, 16);
-            this.cbx_autoreport.TabIndex = 5;
-            this.cbx_autoreport.Text = "AutoReport";
-            this.cbx_autoreport.UseVisualStyleBackColor = false;
             // 
             // YLJtools
             // 

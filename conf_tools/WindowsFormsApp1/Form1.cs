@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Data.SQLite;
+using System.IO;
 
 namespace WindowsFormsApp1
 {
@@ -59,6 +61,9 @@ namespace WindowsFormsApp1
             {
                 btn_serial_switch.Text = "Open";
             }
+
+
+            check_sqlite();
 
         }
 
@@ -124,12 +129,13 @@ namespace WindowsFormsApp1
                 }
                 
 
-                
+                /*
                 for (int i = 0; i < revdatabuf.Length; i++)
                 {
                     tbx_revdata.Text += revdatabuf[i].ToString("X2") + " ";
                 }
                 tbx_revdata.Text += "\r\n";
+                */
                 _serialPort.DiscardInBuffer();
             }
                 ));
@@ -147,7 +153,7 @@ namespace WindowsFormsApp1
             return sum;
         }
 
-
+        TimeSpan ts_temp;
         public void rev_process(Byte[] buf,UInt16 len)
         {
             if (buf[0] == 0x7E)
@@ -174,6 +180,7 @@ namespace WindowsFormsApp1
                             float offset_peak;
                             float temperature;
                             byte power;
+
                             acc_peak = BitConverter.ToSingle(buf, 4);
                             base_frequency = BitConverter.ToSingle(buf, 4 * 2);
                             harmonic_peak_0_5 = BitConverter.ToSingle(buf, 4 * 3);
@@ -190,7 +197,43 @@ namespace WindowsFormsApp1
                             temperature = BitConverter.ToSingle(buf, 4 * 14);
                             power = buf[4 * 15];  //BitConverter.ToSingle(buf, 4*15);
 
+                            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+                            //string path = "E://holiday.json";
+                           // path = Path.Combine(path + "\\holiday.json");
 
+                            string sql_path = "data source=" + path + "\\sql.db";
+                            using (SQLiteConnection conn = new SQLiteConnection(sql_path))
+                            {
+                                using (SQLiteCommand cmd = new SQLiteCommand())
+                                {
+                                    cmd.Connection = conn;
+                                    conn.Open();
+
+                                    SQLiteHelper sh = new SQLiteHelper(cmd);
+
+                                    // do something...
+                                    DateTime.Now.ToString("hh:mm:ss");
+
+                                    TimeSpan ts = DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+
+                                    var dic = new Dictionary<string, object>();
+                                    dic["time"] = DateTime.Now.ToString("hh:mm:ss.fff");
+                                    dic["acc_peak"] = acc_peak.ToString();
+                                    dic["speed"] = speed_peak.ToString();
+                                    dic["displacement"] = offset_peak.ToString();
+                                    dic["base_freq"] = base_frequency.ToString();
+                                    dic["time_dif"] = (ts - ts_temp).ToString();
+                                    sh.Insert("normal_data", dic);
+
+                                    conn.Close();
+                                }
+                            }
+
+                            ts_temp = DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+
+
+
+                            lvw_DataValue.Items.Clear();
                             ListViewItem lvi = new ListViewItem(rev_count.ToString());
                             lvi.SubItems.Add(acc_peak.ToString());
                             lvi.SubItems.Add(base_frequency.ToString());
@@ -208,7 +251,6 @@ namespace WindowsFormsApp1
                             lvi.SubItems.Add(temperature.ToString());
                             lvi.SubItems.Add(power.ToString("D"));
                             lvw_DataValue.Items.Add(lvi);
-
 
                             lvw_DataValue.Items[lvw_DataValue.Items.Count - 1].EnsureVisible();
                         }
@@ -450,5 +492,66 @@ namespace WindowsFormsApp1
 
             _serialPort.Write(setconf_buf, 0, 8);
         }
+
+        private void check_sqlite()
+        {
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+            //string path = "E://holiday.json";
+
+            string sql_path;
+            sql_path = path + "\\sql.db";
+
+            //判断文件的存在
+            if (System.IO.File.Exists(sql_path))
+            {
+                //存在文件
+            }
+            else
+            {
+                //不存在文件
+                SQLiteConnection.CreateFile(sql_path);
+
+                sql_path = "data source=" + path + "\\sql.db";
+                using (SQLiteConnection conn = new SQLiteConnection(sql_path))
+                {
+
+
+                    using (SQLiteCommand cmd = new SQLiteCommand())
+                    {
+                        cmd.Connection = conn;
+                        conn.Open();
+
+                        SQLiteHelper sh = new SQLiteHelper(cmd);
+
+                        SQLiteTable tb = new SQLiteTable("normal_data");
+                        tb.Columns.Add(new SQLiteColumn("id", true));
+                        tb.Columns.Add(new SQLiteColumn("time"));
+                        tb.Columns.Add(new SQLiteColumn("acc_peak"));
+                        tb.Columns.Add(new SQLiteColumn("base_freq"));
+                        tb.Columns.Add(new SQLiteColumn("speed"));
+                        tb.Columns.Add(new SQLiteColumn("displacement"));
+                        tb.Columns.Add(new SQLiteColumn("time_dif"));
+                        sh.CreateTable(tb);
+
+                        SQLiteTable tb2 = new SQLiteTable("abnormal_data");
+                        tb2.Columns.Add(new SQLiteColumn("id", true));
+                        tb2.Columns.Add(new SQLiteColumn("time"));
+                        tb2.Columns.Add(new SQLiteColumn("acc_peak"));
+                        tb2.Columns.Add(new SQLiteColumn("base_freq"));
+                        tb2.Columns.Add(new SQLiteColumn("speed"));
+                        tb2.Columns.Add(new SQLiteColumn("displacement"));
+                        tb2.Columns.Add(new SQLiteColumn("time_dif"));
+                        sh.CreateTable(tb2);
+
+                        conn.Close();
+                    }
+                }
+
+            }
+        }
+
+
+
+
     }
 }

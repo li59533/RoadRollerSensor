@@ -69,7 +69,7 @@
  * @brief         
  * @{  
  */
-struct dou_integ integ;
+static dou_integ_t integ;
 /**
  * @}
  */
@@ -189,7 +189,7 @@ int8_t BSP_FFT_Calc(float *inputbuf,fft_instance_t * fft_instance)
 		*/
 		
 		integ.fft_buf[2*i]   = inputbuf[i];		//real part
-		//integ.fft_buf[2*i] = arm_sin_f32(2*3.1415926f*160*i/4096) *    (0.5f - 0.5f * arm_cos_f32(2.0f * 3.14159265f * i / 4096.0f));;
+		//integ.fft_buf[2*i] = arm_sin_f32(2*3.1415926f*160*i/4096) * (0.5f - 0.5f * arm_cos_f32(2.0f * 3.14159265f * i / 4096.0f));;
 		integ.fft_buf[2*i+1] = 0;				//imaginary part
 		
 		if(fft_instance->tim_domain_peak <  inputbuf[i])   // get the acc peak

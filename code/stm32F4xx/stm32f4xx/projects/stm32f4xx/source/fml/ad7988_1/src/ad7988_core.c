@@ -107,11 +107,11 @@ static uint8_t ad7988_valueIndex = 0;
  * @brief         
  * @{  
  */
-static float ad7988_intrgralValue_space[AD7988_SAMPLE_LEN] = { 0 };
-static uint16_t ad7988_fftbuf[AD7988_FFT_LENGTH] = { 0 };
+//static float ad7988_intrgralValue_space[AD7988_SAMPLE_LEN] = { 0 };
+static uint16_t ad7988_fftbuf[2][AD7988_FFT_LENGTH] = { 0 };
 static float ad7988_float_accbuf[AD7988_SAMPLE_LEN];
-
-
+static uint8_t ad7688_fftbuf_sw = 0;
+static uint8_t ad7688_fftbuf_calc = 0;
 
 void AD7988_ParamInit(void)
 {
@@ -128,11 +128,13 @@ void AD7988_CollectOriginalData(uint16_t *buf) // this add fftbuf, when the fftb
 	static uint16_t ad_position = 0;
 	static uint8_t current_read_buffer = 0;
 	
-	ad7988_fftbuf[ad_position ++] = *buf;
+	ad7988_fftbuf[ad7688_fftbuf_sw][ad_position ++] = *buf;
 	if(ad_position >= AD7988_SAMPLE_RATE)
 	{
+		ad7688_fftbuf_sw = !ad7688_fftbuf_sw;
+		ad7688_fftbuf_calc = !ad7688_fftbuf_sw;
 		// ----------Stop Sample----------------------
-		BSP_Tim_Stop(BSP_TIM1);
+		//BSP_Tim_Stop(BSP_TIM1);
 		ad_position = 0;
 		VibrateTask_Send_Event(VIBRATE_TASK_CALC_EVENT);// this place to triger some event
 	}
@@ -159,7 +161,7 @@ void AD7988_Calc_Process(void)
 	float mvtoacc_p = 1.0f;
 	
 	
-	pread = ad7988_fftbuf;
+	pread = ad7988_fftbuf[ad7688_fftbuf_calc];
 
 	if((g_SystemParam_Config.AD7988_VolACC_p <= 1000.0f)&&(g_SystemParam_Config.AD7988_VolACC_p > 0.0f))
 	{
@@ -215,9 +217,9 @@ void AD7988_Calc_Process(void)
 	
 	// --------------------------------------------
 	// ----------Get max displacement------------------
-	BSP_FrqDomain_Integral(2,fft_instance.fft_pbuf, ad7988_intrgralValue_space);
+	BSP_FrqDomain_Integral(2,fft_instance.fft_pbuf, ad7988_float_accbuf);
 	trans485data.offset_peak = 0;
-	arm_max_f32( ad7988_intrgralValue_space + 1024,2048,&trans485data.offset_peak,&temp_1);
+	arm_max_f32( ad7988_float_accbuf + 1024,2048,&trans485data.offset_peak,&temp_1);
 	trans485data.offset_peak = trans485data.offset_peak * 9.8f;
 
 	// ---------------------------------------------
@@ -286,7 +288,7 @@ void AD7988_Calc_Process(void)
 	}
 
 	// -----------------Start Sample--------- 
-	BSP_Tim_Start(BSP_TIM1);
+	//BSP_Tim_Start(BSP_TIM1);
 	// --------------------------------------
 }
 

@@ -119,6 +119,11 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
+          <Key>DLGUARM</Key>
+          <Name>d</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
           <Key>UL2CM3</Key>
           <Name>UL2CM3(-S0 -C0 -P0 )  -FN1 -FC1000 -FD20000000 -FF0STM32F4xx_512 -FL080000 -FS08000000 -FP0($$Device:STM32F407VETx$CMSIS\Flash\STM32F4xx_512.FLM)</Name>
         </SetRegEntry>
@@ -147,50 +152,66 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>145</LineNumber>
+          <LineNumber>221</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134240490</Address>
+          <Address>134247654</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\source\fml\system\system_param.c</Filename>
+          <Filename>..\source\fml\conf\app_conf.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\master_firmware_YLJ_V1_0\../source/fml/system/system_param.c\145</Expression>
+          <Expression>\\master_firmware\../source/fml/conf/app_conf.c\221</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>221</LineNumber>
+          <LineNumber>202</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134247502</Address>
+          <Address>134230764</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\source\fml\conf\app_conf.c</Filename>
+          <Filename>..\..\..\components\bsp\bsp_fft_integral.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\master_firmware_YLJ_V1_0\../source/fml/conf/app_conf.c\221</Expression>
+          <Expression>\\master_firmware\../../../components/bsp/bsp_fft_integral.c\202</Expression>
         </Bp>
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>250</LineNumber>
+          <LineNumber>222</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134247628</Address>
+          <Address>134230880</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\source\fml\conf\app_conf.c</Filename>
+          <Filename>..\..\..\components\bsp\bsp_fft_integral.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\master_firmware_YLJ_V1_0\../source/fml/conf/app_conf.c\250</Expression>
+          <Expression>\\master_firmware\../../../components/bsp/bsp_fft_integral.c\222</Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>134</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134228790</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\source\fml\ad7988_1\src\ad7988_core.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\master_firmware\../source/fml/ad7988_1/src/ad7988_core.c\134</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -203,6 +224,11 @@
           <count>1</count>
           <WinNumber>1</WinNumber>
           <ItemText>payload_ptr - payload</ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>integ.fft_buf</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>
