@@ -180,6 +180,9 @@ namespace WindowsFormsApp1
                             float offset_peak;
                             float temperature;
                             byte power;
+                            float acc_mean;
+                            float acc_min;
+                            float displace_min;
 
                             acc_peak = BitConverter.ToSingle(buf, 4);
                             base_frequency = BitConverter.ToSingle(buf, 4 * 2);
@@ -196,6 +199,9 @@ namespace WindowsFormsApp1
                             offset_peak = BitConverter.ToSingle(buf, 4 * 13);
                             temperature = BitConverter.ToSingle(buf, 4 * 14);
                             power = buf[4 * 15];  //BitConverter.ToSingle(buf, 4*15);
+                            acc_mean = BitConverter.ToSingle(buf, 4 * 16 - 3);
+                            acc_min = BitConverter.ToSingle(buf, 4 * 17 - 3);
+                            displace_min = BitConverter.ToSingle(buf, 4 * 18 - 3);
 
                             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
                             //string path = "E://holiday.json";
@@ -218,12 +224,37 @@ namespace WindowsFormsApp1
 
                                     var dic = new Dictionary<string, object>();
                                     dic["time"] = DateTime.Now.ToString("hh:mm:ss.fff");
-                                    dic["acc_peak"] = acc_peak.ToString();
-                                    dic["speed"] = speed_peak.ToString();
-                                    dic["displacement"] = offset_peak.ToString();
+                                    dic["acc_uppeak"] = acc_peak.ToString();
+                                    dic["acc_downpeak"] = acc_min.ToString();
+                                    dic["acc_mean"] = acc_mean.ToString();
+                                    dic["acc_05"] = harmonic_peak_0_5.ToString();
+                                    dic["acc_1"] = harmonic_peak_1.ToString();
+                                    dic["acc_15"] = harmonic_peak_1_5.ToString();
+                                    dic["speedRMS"] = speed_peak.ToString();
+                                    dic["dis_uppeak"] = offset_peak.ToString();
+                                    dic["dis_downpeak"] = displace_min.ToString();
                                     dic["base_freq"] = base_frequency.ToString();
                                     dic["time_dif"] = (ts - ts_temp).ToString();
                                     sh.Insert("normal_data", dic);
+
+/*
+                                    SQLiteTable tb = new SQLiteTable("normal_data");
+                                    tb.Columns.Add(new SQLiteColumn("id", true));
+                                    tb.Columns.Add(new SQLiteColumn("time"));
+                                    tb.Columns.Add(new SQLiteColumn("acc_max"));
+                                    tb.Columns.Add(new SQLiteColumn("acc_min"));
+                                    tb.Columns.Add(new SQLiteColumn("acc_mean"));
+                                    tb.Columns.Add(new SQLiteColumn("acc_05"));
+                                    tb.Columns.Add(new SQLiteColumn("acc_1"));
+                                    tb.Columns.Add(new SQLiteColumn("acc_15"));
+                                    tb.Columns.Add(new SQLiteColumn("base_freq"));
+                                    tb.Columns.Add(new SQLiteColumn("speedRMS"));
+                                    tb.Columns.Add(new SQLiteColumn("dis_max"));
+                                    tb.Columns.Add(new SQLiteColumn("dis_min"));
+                                    tb.Columns.Add(new SQLiteColumn("time_dif"));
+*/
+
+
 
                                     conn.Close();
                                 }
@@ -250,6 +281,10 @@ namespace WindowsFormsApp1
                             lvi.SubItems.Add(offset_peak.ToString());
                             lvi.SubItems.Add(temperature.ToString());
                             lvi.SubItems.Add(power.ToString("D"));
+                            lvi.SubItems.Add(acc_mean.ToString());
+                            lvi.SubItems.Add(acc_min.ToString());
+                            lvi.SubItems.Add(displace_min.ToString());
+
                             lvw_DataValue.Items.Add(lvi);
 
                             lvw_DataValue.Items[lvw_DataValue.Items.Count - 1].EnsureVisible();
@@ -313,6 +348,24 @@ namespace WindowsFormsApp1
                             ptr_count += 3;
                         }
                         break;
+                    case 0x46:
+                        {
+                            byte dis_freq_low;
+                            dis_freq_low = buf[ptr_count + 2];
+                            tbx_disfreq_low.Text = dis_freq_low.ToString();
+
+                            ptr_count += 3;
+                        }
+                        break;
+                    case 0x47:
+                        {
+                            byte dis_freq_high;
+                            dis_freq_high = buf[ptr_count + 2];
+                            tbx_disfreq_high.Text = dis_freq_high.ToString();
+
+                            ptr_count += 3;
+                        }
+                        break;
                     default:break;
                 }
 
@@ -340,6 +393,15 @@ namespace WindowsFormsApp1
 
         private void btn_SetConf_Click(object sender, EventArgs e)
         {
+
+            if (tbx_disfreq_high.Text == "" || tbx_disfreq_low.Text == "" || tbx_mvToacc_p.Text == "")
+            {
+                MessageBox.Show("有空值");
+                return;
+            }
+
+
+
             // head len inf cmd tlv foot sum
             /*
              * typedef struct
@@ -356,7 +418,13 @@ namespace WindowsFormsApp1
 
             byte[] float_temp = new byte[4];
             byte[] setconf_buf = new byte[100];
+            byte dis_freq_low;
+            byte dis_freq_high;
             float mv_to_acc_p = 0.0f;
+
+            dis_freq_low = Convert.ToByte(tbx_disfreq_low.Text.ToString());
+            dis_freq_high = Convert.ToByte(tbx_disfreq_high.Text.ToString());
+
             setconf_buf[0] = 0x7E;
 
             setconf_buf[1] = 17;
@@ -388,19 +456,27 @@ namespace WindowsFormsApp1
                 setconf_buf[14] = 0;
             }
 
+            setconf_buf[15] = 0x46;
+            setconf_buf[16] = 0x01;
+            setconf_buf[17] = dis_freq_low;
 
-            setconf_buf[15] = 0x7E;
+            setconf_buf[18] = 0x46;
+            setconf_buf[19] = 0x01;
+            setconf_buf[20] = dis_freq_high;
+
+
+            setconf_buf[21] = 0x7E;
 
             byte check_sum = 0;
 
-            for (uint i = 0; i < 16; i++)
+            for (uint i = 0; i < 22; i++)
             {
                 check_sum += setconf_buf[i];
             }
-            setconf_buf[16] = check_sum;
+            setconf_buf[22] = check_sum;
 
 
-            _serialPort.Write( setconf_buf,0,17);
+            _serialPort.Write( setconf_buf,0,23);
 
         }
 
@@ -526,17 +602,23 @@ namespace WindowsFormsApp1
                         SQLiteTable tb = new SQLiteTable("normal_data");
                         tb.Columns.Add(new SQLiteColumn("id", true));
                         tb.Columns.Add(new SQLiteColumn("time"));
-                        tb.Columns.Add(new SQLiteColumn("acc_peak"));
+                        tb.Columns.Add(new SQLiteColumn("acc_uppeak"));
+                        tb.Columns.Add(new SQLiteColumn("acc_downpeak"));
+                        tb.Columns.Add(new SQLiteColumn("acc_mean"));
+                        tb.Columns.Add(new SQLiteColumn("acc_05"));
+                        tb.Columns.Add(new SQLiteColumn("acc_1"));
+                        tb.Columns.Add(new SQLiteColumn("acc_15"));
                         tb.Columns.Add(new SQLiteColumn("base_freq"));
-                        tb.Columns.Add(new SQLiteColumn("speed"));
-                        tb.Columns.Add(new SQLiteColumn("displacement"));
+                        tb.Columns.Add(new SQLiteColumn("speedRMS"));
+                        tb.Columns.Add(new SQLiteColumn("dis_uppeak"));
+                        tb.Columns.Add(new SQLiteColumn("dis_downpeak"));
                         tb.Columns.Add(new SQLiteColumn("time_dif"));
                         sh.CreateTable(tb);
 
                         SQLiteTable tb2 = new SQLiteTable("abnormal_data");
                         tb2.Columns.Add(new SQLiteColumn("id", true));
                         tb2.Columns.Add(new SQLiteColumn("time"));
-                        tb2.Columns.Add(new SQLiteColumn("acc_peak"));
+                        tb2.Columns.Add(new SQLiteColumn("acc_max"));
                         tb2.Columns.Add(new SQLiteColumn("base_freq"));
                         tb2.Columns.Add(new SQLiteColumn("speed"));
                         tb2.Columns.Add(new SQLiteColumn("displacement"));
@@ -549,9 +631,5 @@ namespace WindowsFormsApp1
 
             }
         }
-
-
-
-
     }
 }

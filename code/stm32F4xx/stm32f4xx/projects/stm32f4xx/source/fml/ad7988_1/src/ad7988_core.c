@@ -189,12 +189,14 @@ void AD7988_Calc_Process(void)
 	
 	// ---------- fft calc------------------------
 
-	BSP_FFT_IntegInit(AD7988_SAMPLE_LEN,AD7988_SAMPLE_RATE,AD7988_GRAVITY,AD7988_FRQ_MIN,AD7988_FRQ_MAX); // integral conf	
-
+	//BSP_FFT_IntegInit(AD7988_SAMPLE_LEN,AD7988_SAMPLE_RATE,AD7988_GRAVITY,AD7988_FRQ_MIN,AD7988_FRQ_MAX); // integral conf	
+	BSP_FFT_IntegInit(AD7988_SAMPLE_LEN,AD7988_SAMPLE_RATE,AD7988_GRAVITY,g_SystemParam_Config.integ_freq_min,g_SystemParam_Config.integ_freq_max); // integral conf
+	
 	BSP_FFT_Calc(ad7988_float_accbuf, &fft_instance);
 	trans485data.base_frequency = fft_instance.base_freq;
 	trans485data.acc_peak = fft_instance.tim_domain_peak ;//* 0.0763f - 2500.0f;
-	
+	trans485data.acc_min =  fft_instance.tim_domain_min;
+	trans485data.acc_mean = fft_instance.tim_domain_mean;
 	trans485data.harmonic_peak_0_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 0.5,fft_instance.mag_pbuf) ; 
 	trans485data.harmonic_peak_1 = BSP_GetHarmonicPeak(trans485data.base_frequency, 1,fft_instance.mag_pbuf) ;
 	trans485data.harmonic_peak_1_5 = BSP_GetHarmonicPeak(trans485data.base_frequency, 1.5,fft_instance.mag_pbuf) ;
@@ -206,25 +208,42 @@ void AD7988_Calc_Process(void)
 	trans485data.harmonic_peak_6 = BSP_GetHarmonicPeak(trans485data.base_frequency, 6,fft_instance.mag_pbuf) ;
 	
 	
-	// -----------Get max speed -----------------------
+	// -----------Get RMS speed -----------------------
 	//BSP_FrqDomain_Integral(1,fft_instance.fft_pbuf, ad7988_intrgralValue_space);
 	trans485data.speed_peak = 0;
 	
 	uint32_t temp_1 = 0;
 	//arm_max_f32( ad7988_intrgralValue_space + 1024,2048,&trans485data.speed_peak,&temp_1);
 	trans485data.speed_peak = BSP_GetSpeedRMS(fft_instance.mag_pbuf,4096);
-	trans485data.speed_peak = trans485data.speed_peak * 9.8f * 1000; // * 1000 -> m/s to cm/s;
+	trans485data.speed_peak = trans485data.speed_peak * 9.8f * 1000; // * 1000 -> m/s to mm/s;
 	
 	// --------------------------------------------
 	// ----------Get max displacement------------------
-	BSP_FrqDomain_Integral(2,fft_instance.fft_pbuf, ad7988_float_accbuf);
-	trans485data.offset_peak = 0;
-	arm_max_f32( ad7988_float_accbuf + 1024,2048,&trans485data.offset_peak,&temp_1);
-	trans485data.offset_peak = trans485data.offset_peak * 9.8f;
-
+	
+	BSP_FrqDomain_Integral( 2 , fft_instance.fft_pbuf, ad7988_float_accbuf);
+	float displace_temp_min = 0;
+	float displace_temp_max = 0;
+	for(uint16_t i  = 1024; i < 3072 ; i ++)
+	{
+		if(displace_temp_min > ad7988_float_accbuf[i])
+		{
+			displace_temp_min = ad7988_float_accbuf[i];
+		}
+		if(displace_temp_max < ad7988_float_accbuf[i])
+		{
+			displace_temp_max = ad7988_float_accbuf[i];
+		}
+	}
+	
+	//trans485data.displace_peak = 0;
+	//arm_max_f32( ad7988_float_accbuf + 1024,2048,&trans485data.displace_peak,&temp_1);
+	trans485data.displace_peak = displace_temp_max * 9.8f;
+	//arm_max_f32( ad7988_float_accbuf + 1024,2048,&trans485data.displace_min,&temp_1);
+	trans485data.displace_min = displace_temp_min * 9.8f;
 	// ---------------------------------------------
 	
 	// -------------- check trans485data.base_frequency----------
+
 	if( (trans485data.acc_peak * g_SystemParam_Config.AD7988_VolACC_p)  <= 4.0)
 	{
 		trans485data.acc_peak = 0;
@@ -238,11 +257,14 @@ void AD7988_Calc_Process(void)
 		trans485data.harmonic_peak_4 = 0;
 		trans485data.harmonic_peak_5 = 0;
 		trans485data.harmonic_peak_6 = 0;
-		trans485data.offset_peak = 0;
+		trans485data.displace_peak = 0;
 		trans485data.speed_peak = 0;
 		
+		trans485data.acc_mean = 0;
+		trans485data.acc_min = 0;
+		trans485data.displace_min = 0;
 	}
-	
+
 	// ----------------------------------------------------------
 	
 	
@@ -258,7 +280,7 @@ void AD7988_Calc_Process(void)
 	DEBUG("acc_peak:%s\r\n",rtt_buf);
 	snprintf(rtt_buf,40,"%f",trans485data.base_frequency);
 	DEBUG("base_frequency:%s\r\n",rtt_buf);	
-	snprintf(rtt_buf,40,"%f",trans485data.offset_peak);
+	snprintf(rtt_buf,40,"%f",trans485data.displace_peak);
 	DEBUG("offset_peak:%s\r\n",rtt_buf);	
 	snprintf(rtt_buf,40,"%f",trans485data.speed_peak);
 	DEBUG("speed_peak:%s\r\n",rtt_buf);	

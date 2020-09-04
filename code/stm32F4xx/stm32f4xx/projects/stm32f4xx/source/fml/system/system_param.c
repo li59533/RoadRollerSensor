@@ -71,7 +71,7 @@
  */
 const SystemParam_Config_t SystemParam_Config_Default = 
 {
-
+	
 };
 /**
  * @}
@@ -114,8 +114,10 @@ void SystemParam_Init(void)
 	}
 	else
 	{
-		g_SystemParam_Config.AD7988_VolACC_p = 500.0f;
+		g_SystemParam_Config.AD7988_VolACC_p = 50.0f;
 		g_SystemParam_Config.Auto_Report_Flag = 1;
+		g_SystemParam_Config.integ_freq_max = 60;
+		g_SystemParam_Config.integ_freq_min = 5;
 		g_SystemParam_Config.crc = CRC16_Modbus((uint8_t*)&g_SystemParam_Config, sizeof(g_SystemParam_Config) - sizeof(g_SystemParam_Config.crc));
 		BSP_Flash_WriteBytes(SYS_PARAM_SAVE_FLASH_FIRSTHEAD,(uint8_t *)&g_SystemParam_Config,sizeof(g_SystemParam_Config));
 	}

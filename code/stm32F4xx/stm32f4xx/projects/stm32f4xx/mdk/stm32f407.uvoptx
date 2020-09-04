@@ -152,57 +152,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>221</LineNumber>
+          <LineNumber>193</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134247654</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\source\fml\conf\app_conf.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\master_firmware\../source/fml/conf/app_conf.c\221</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>202</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134230764</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\..\..\components\bsp\bsp_fft_integral.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\master_firmware\../../../components/bsp/bsp_fft_integral.c\202</Expression>
-        </Bp>
-        <Bp>
-          <Number>2</Number>
-          <Type>0</Type>
-          <LineNumber>222</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134230880</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\..\..\components\bsp\bsp_fft_integral.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\master_firmware\../../../components/bsp/bsp_fft_integral.c\222</Expression>
-        </Bp>
-        <Bp>
-          <Number>3</Number>
-          <Type>0</Type>
-          <LineNumber>134</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134228790</Address>
+          <Address>134227218</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -211,7 +163,39 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\source\fml\ad7988_1\src\ad7988_core.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\master_firmware\../source/fml/ad7988_1/src/ad7988_core.c\134</Expression>
+          <Expression>\\master_firmware\../source/fml/ad7988_1/src/ad7988_core.c\193</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>228</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134227728</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\source\fml\ad7988_1\src\ad7988_core.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\master_firmware\../source/fml/ad7988_1/src/ad7988_core.c\228</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>310</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134228386</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\source\fml\ad7988_1\src\ad7988_core.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\master_firmware\../source/fml/ad7988_1/src/ad7988_core.c\310</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -229,6 +213,16 @@
           <count>2</count>
           <WinNumber>1</WinNumber>
           <ItemText>integ.fft_buf</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>trans485data</ItemText>
+        </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>trans485data.displace_min</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>

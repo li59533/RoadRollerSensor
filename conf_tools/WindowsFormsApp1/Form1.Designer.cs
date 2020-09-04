@@ -72,6 +72,14 @@
             this.btn_getversion = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.lab_version = new System.Windows.Forms.Label();
+            this.acc_mean = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.acc_min = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.displace_min = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tbx_disfreq_low = new System.Windows.Forms.TextBox();
+            this.tbx_disfreq_high = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.Serial_Conf.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -223,7 +231,10 @@
             this.speed_RMS,
             this.dis_peak,
             this.temperature,
-            this.power});
+            this.power,
+            this.acc_mean,
+            this.acc_min,
+            this.displace_min});
             this.lvw_DataValue.GridLines = true;
             this.lvw_DataValue.HideSelection = false;
             this.lvw_DataValue.Location = new System.Drawing.Point(6, 137);
@@ -315,6 +326,11 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.tbx_disfreq_high);
+            this.groupBox1.Controls.Add(this.tbx_disfreq_low);
             this.groupBox1.Controls.Add(this.cbx_autoreport);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label2);
@@ -323,7 +339,7 @@
             this.groupBox1.Controls.Add(this.tbx_mvToacc_p);
             this.groupBox1.Location = new System.Drawing.Point(261, 18);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(402, 148);
+            this.groupBox1.Size = new System.Drawing.Size(541, 148);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Conf";
@@ -359,9 +375,9 @@
             // 
             // btn_SetConf
             // 
-            this.btn_SetConf.Location = new System.Drawing.Point(336, 18);
+            this.btn_SetConf.Location = new System.Drawing.Point(294, 20);
             this.btn_SetConf.Name = "btn_SetConf";
-            this.btn_SetConf.Size = new System.Drawing.Size(60, 110);
+            this.btn_SetConf.Size = new System.Drawing.Size(60, 108);
             this.btn_SetConf.TabIndex = 2;
             this.btn_SetConf.Text = "SetConf";
             this.btn_SetConf.UseVisualStyleBackColor = true;
@@ -369,7 +385,7 @@
             // 
             // btn_GetConf
             // 
-            this.btn_GetConf.Location = new System.Drawing.Point(270, 19);
+            this.btn_GetConf.Location = new System.Drawing.Point(228, 20);
             this.btn_GetConf.Name = "btn_GetConf";
             this.btn_GetConf.Size = new System.Drawing.Size(60, 109);
             this.btn_GetConf.TabIndex = 1;
@@ -452,6 +468,59 @@
             this.lab_version.TabIndex = 0;
             this.lab_version.Text = "_._._";
             // 
+            // acc_mean
+            // 
+            this.acc_mean.Text = "acc_mean";
+            // 
+            // acc_min
+            // 
+            this.acc_min.Text = "acc_min";
+            // 
+            // displace_min
+            // 
+            this.displace_min.Text = "displace_min";
+            // 
+            // tbx_disfreq_low
+            // 
+            this.tbx_disfreq_low.Location = new System.Drawing.Point(100, 82);
+            this.tbx_disfreq_low.Name = "tbx_disfreq_low";
+            this.tbx_disfreq_low.Size = new System.Drawing.Size(100, 21);
+            this.tbx_disfreq_low.TabIndex = 6;
+            // 
+            // tbx_disfreq_high
+            // 
+            this.tbx_disfreq_high.Location = new System.Drawing.Point(100, 107);
+            this.tbx_disfreq_high.Name = "tbx_disfreq_high";
+            this.tbx_disfreq_high.Size = new System.Drawing.Size(100, 21);
+            this.tbx_disfreq_high.TabIndex = 7;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(11, 85);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(83, 12);
+            this.label9.TabIndex = 8;
+            this.label9.Text = "Dis_Freq_LOW:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(11, 108);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(89, 12);
+            this.label10.TabIndex = 9;
+            this.label10.Text = "Dis_Freq_HIGH:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(371, 23);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(41, 12);
+            this.label11.TabIndex = 3;
+            this.label11.Text = "V0.0.3";
+            // 
             // YLJtools
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -522,6 +591,14 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btn_get;
         private System.Windows.Forms.CheckBox cbx_autoreport;
+        private System.Windows.Forms.ColumnHeader acc_mean;
+        private System.Windows.Forms.ColumnHeader acc_min;
+        private System.Windows.Forms.ColumnHeader displace_min;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox tbx_disfreq_high;
+        private System.Windows.Forms.TextBox tbx_disfreq_low;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
     }
 }
 

@@ -67,6 +67,9 @@ typedef struct
 	float offset_peak;
 	float temperature;
 	uint8_t  power;
+	float acc_mean;
+	float acc_min;
+	float displace_min;	
 	uint8_t sum_check;
 	uint8_t foot;
 }Trans485_dataform_t;
@@ -88,9 +91,12 @@ typedef struct
 	float harmonic_peak_5;
 	float harmonic_peak_6;
 	float speed_peak;
-	float offset_peak;
+	float displace_peak;
 	float temperature;
 	uint8_t  power;
+	float acc_mean;
+	float acc_min;
+	float displace_min;
 }Trans485_datavalue_t;
 
 #pragma pack() 

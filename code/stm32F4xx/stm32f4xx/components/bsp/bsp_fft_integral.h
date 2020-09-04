@@ -88,6 +88,8 @@ typedef struct
 	float * fft_pbuf;
 	float * mag_pbuf;
 	float tim_domain_peak;
+	float tim_domain_min;
+	float tim_domain_mean;
 	uint16_t base_freq;
 }fft_instance_t;
 

@@ -262,6 +262,16 @@ static void app_setconfreq_process(uint8_t *payload,uint16_t len)
 				}
 			}
 			break;
+			case TAG_INTEG_FREQ_MIN:
+			{
+				g_SystemParam_Config.integ_freq_min = tlv_buf->Value.BIT_8;
+			}
+			break;
+			case TAG_INTEG_FREQ_MAX:
+			{
+				g_SystemParam_Config.integ_freq_max = tlv_buf->Value.BIT_8;
+			}
+			break;			
 			default:
 			{
 				result = CONF_ERROR;
@@ -317,6 +327,17 @@ static void app_getconfreq_process(uint8_t *payload,uint16_t len)
 	tlv_value.Len = 1;
 	tlv_value.Value.BIT_8 = g_SystemParam_Config.Auto_Report_Flag;
 	payload_ptr += LN_AddTlv(payload_ptr, &tlv_value);
+	// ------- TAG_INTEG_FREQ_MIN---------------
+	tlv_value.Tag = TAG_INTEG_FREQ_MIN;
+	tlv_value.Len = 1;
+	tlv_value.Value.BIT_8 = g_SystemParam_Config.integ_freq_min;
+	payload_ptr += LN_AddTlv(payload_ptr, &tlv_value);	
+	// --------------------------------
+	// ------- TAG_INTEG_FREQ_MAX---------------
+	tlv_value.Tag = TAG_INTEG_FREQ_MAX;
+	tlv_value.Len = 1;
+	tlv_value.Value.BIT_8 = g_SystemParam_Config.integ_freq_max;
+	payload_ptr += LN_AddTlv(payload_ptr, &tlv_value);	
 	// --------------------------------
 	
 	ln_protocolintance->len = (payload_ptr - &ln_protocolintance->head) + 1;

@@ -54,6 +54,8 @@ typedef enum
 	TAG_UPDATA	= 0x42,
 	TAG_7988MVTOACC_P = 0x44,
 	TAG_AUTO_REPORT_FALG = 0x45,
+	TAG_INTEG_FREQ_MIN = 0X46 , 
+	TAG_INTEG_FREQ_MAX = 0X47 , 
 	
 }LN_Protocol_Tag_e;
 

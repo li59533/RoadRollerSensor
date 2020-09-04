@@ -173,6 +173,7 @@ int8_t BSP_FFT_Calc(float *inputbuf,fft_instance_t * fft_instance)
 {
 	uint16_t i =0 ;
 	float peak_max = 0.0f;
+	float mean_temp = 0;
 	//float peak_calc_temp = 0.0f;
 	//-------------- make fft array and get acc_peak------------
 	
@@ -189,14 +190,23 @@ int8_t BSP_FFT_Calc(float *inputbuf,fft_instance_t * fft_instance)
 		*/
 		
 		integ.fft_buf[2*i]   = inputbuf[i];		//real part
-		//integ.fft_buf[2*i] = arm_sin_f32(2*3.1415926f*160*i/4096) * (0.5f - 0.5f * arm_cos_f32(2.0f * 3.14159265f * i / 4096.0f));;
+		//integ.fft_buf[2*i] = 1.414f * arm_sin_f32(2*3.1415926f*50*i/4096) ;//* (0.5f - 0.5f * arm_cos_f32(2.0f * 3.14159265f * i / 4096.0f));;
 		integ.fft_buf[2*i+1] = 0;				//imaginary part
 		
 		if(fft_instance->tim_domain_peak <  inputbuf[i])   // get the acc peak
 		{
 			fft_instance->tim_domain_peak = inputbuf[i];
 		}
+		if(fft_instance->tim_domain_min >  inputbuf[i])   // get the acc min
+		{
+			fft_instance->tim_domain_min = inputbuf[i];
+		}		
+		
+		mean_temp += inputbuf[i];
+		
 	}
+	fft_instance->tim_domain_mean = mean_temp / integ.fft_len;
+	mean_temp = 0;
 	// ----------------------------------------------------------
 	// -------------- fft calc-----------------------------------
 	arm_cfft_f32(&integ.S, integ.fft_buf, 0, 1);
@@ -214,7 +224,8 @@ int8_t BSP_FFT_Calc(float *inputbuf,fft_instance_t * fft_instance)
 	// -------------------------------
 	// -------------- Get Base Freq -------------------------
 	
-	for(i = 1 ;i < (uint16_t)(integ.fft_len/2) ; i ++)
+	//for(i = 1 ;i < (uint16_t)(integ.fft_len/2) ; i ++)
+	for(i = 1 ;i < 200 ; i ++)
 	{
 		if(peak_max < integ.mag_buf[i])
 		{
@@ -229,10 +240,11 @@ int8_t BSP_FFT_Calc(float *inputbuf,fft_instance_t * fft_instance)
 }
 
 
+float fft_buf_temp[DATA_LEN * 2] = {0.0f}; 
 
 int BSP_FrqDomain_Integral(uint8_t integral_time,float  * fft_buf, float* outputbuf)
 {		
-	float fft_buf_temp[DATA_LEN * 2] = {0.0f}; 
+	
 	memcpy(fft_buf_temp,fft_buf,sizeof(fft_buf_temp));
 	float df = (float)integ.smple_frq / (float)integ.fft_len;			//计算频率间隔（Hz/s）
 	integ.high_pass = round(integ.frq_min/df);						//高通频率截止点
@@ -307,8 +319,8 @@ int BSP_FrqDomain_Integral(uint8_t integral_time,float  * fft_buf, float* output
 	arm_cfft_f32(&integ.S, fft_buf_temp, 1, 1);							//计算IFFT,结果保存在fft_buf中
 	
 	for(int i=0; i<integ.fft_len; i++){
-		outputbuf[i] =fft_buf_temp[2*i]*integ.gravity*2;					//乘以一个2，才是正常数据，取逆变换的实部并乘以单位变换系数为积分结果
-	}
+		outputbuf[i] =fft_buf_temp[2*i] * integ.gravity * 2;					//乘以一个2，才是正常数据，取逆变换的实部并乘以单位变换系数为积分结果
+	} 
 	
 	return 0;
 }
@@ -317,9 +329,21 @@ int BSP_FrqDomain_Integral(uint8_t integral_time,float  * fft_buf, float* output
 float BSP_GetHarmonicPeak(uint16_t base_freq , float harmonic,float * mag_buf)
 {
 	uint16_t index = 0;
+	float har_peak = 0;
 	index = (uint16_t ) (base_freq * harmonic);
 	
-	return mag_buf[index] * 2.0f;
+	if(index >= 3)
+	{
+		for(uint16_t i = index - 2 ; i < index + 2; i ++)
+		{
+			if(har_peak < mag_buf[i])
+			{
+				har_peak = mag_buf[i];
+			}
+		}
+	}
+	
+	return har_peak * 2.0f;
 }
 
 float BSP_GetSpeedRMS(float * mag_buf,uint16_t len)

@@ -121,9 +121,12 @@ uint8_t * Transfor_MakePackage(uint16_t * len, Trans485_datavalue_t * data)
 	buf_ptr->harmonic_peak_5 = data->harmonic_peak_5;
 	buf_ptr->harmonic_peak_6 = data->harmonic_peak_6;
 	buf_ptr->speed_peak = data->speed_peak;
-	buf_ptr->offset_peak = data->offset_peak;
+	buf_ptr->offset_peak = data->displace_peak;
 	buf_ptr->temperature = data->temperature;
 	buf_ptr->power = data->power;
+	buf_ptr->acc_mean = data->acc_mean;
+	buf_ptr->acc_min = data->acc_min;
+	buf_ptr->displace_min = data->displace_min;
 	
 	buf_ptr->sum_check = 0;
 	for(i = 1; i <( sizeof(Trans485_datavalue_t) + 3); i ++)

@@ -16,7 +16,6 @@ E:\github_project\RoadRollerSensor\conf_tools\WindowsFormsApp1\obj\Release\Windo
 E:\github_project\RoadRollerSensor\conf_tools\WindowsFormsApp1\obj\Release\WindowsFormsApp1.pdb
 D:\github_project\RoadRollerSensor\conf_tools\WindowsFormsApp1\bin\Release\WindowsFormsApp1.exe
 D:\github_project\RoadRollerSensor\conf_tools\WindowsFormsApp1\bin\Release\WindowsFormsApp1.pdb
-D:\github_project\RoadRollerSensor\conf_tools\WindowsFormsApp1\obj\Release\WindowsFormsApp1.csprojAssemblyReference.cache
 D:\github_project\RoadRollerSensor\conf_tools\WindowsFormsApp1\obj\Release\WindowsFormsApp1.YLJtools.resources
 D:\github_project\RoadRollerSensor\conf_tools\WindowsFormsApp1\obj\Release\WindowsFormsApp1.Properties.Resources.resources
 D:\github_project\RoadRollerSensor\conf_tools\WindowsFormsApp1\obj\Release\WindowsFormsApp1.csproj.GenerateResource.cache
@@ -33,3 +32,4 @@ D:\github_project\RoadRollerSensor\conf_tools\WindowsFormsApp1\bin\Release\Entit
 D:\github_project\RoadRollerSensor\conf_tools\WindowsFormsApp1\bin\Release\EntityFramework.SqlServer.xml
 D:\github_project\RoadRollerSensor\conf_tools\WindowsFormsApp1\bin\Release\System.Data.SQLite.xml
 D:\github_project\RoadRollerSensor\conf_tools\WindowsFormsApp1\obj\Release\WindowsFormsApp1.csproj.CopyComplete
+D:\github_project\RoadRollerSensor\conf_tools\WindowsFormsApp1\obj\Release\WindowsFormsApp1.csprojAssemblyReference.cache
