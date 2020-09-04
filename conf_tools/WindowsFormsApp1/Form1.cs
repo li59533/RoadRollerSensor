@@ -427,7 +427,7 @@ namespace WindowsFormsApp1
 
             setconf_buf[0] = 0x7E;
 
-            setconf_buf[1] = 17;
+            setconf_buf[1] = 23;
             setconf_buf[2] = 0;
 
             setconf_buf[3] = 0;
@@ -460,7 +460,7 @@ namespace WindowsFormsApp1
             setconf_buf[16] = 0x01;
             setconf_buf[17] = dis_freq_low;
 
-            setconf_buf[18] = 0x46;
+            setconf_buf[18] = 0x47;
             setconf_buf[19] = 0x01;
             setconf_buf[20] = dis_freq_high;
 
