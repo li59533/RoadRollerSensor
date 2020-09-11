@@ -202,7 +202,7 @@ int8_t BSP_FFT_Calc(float *inputbuf,fft_instance_t * fft_instance)
 			fft_instance->tim_domain_min = inputbuf[i];
 		}		
 		
-		mean_temp += inputbuf[i];
+		mean_temp += fabs(inputbuf[i]);
 		
 	}
 	fft_instance->tim_domain_mean = mean_temp / integ.fft_len;

@@ -25,6 +25,7 @@
 #include "t_4_20mv.h"
 #include "bsp_fft_integral.h"
 #include "system_param.h"
+
 /**
  * @addtogroup    ad7988_core_Modules 
  * @{  
@@ -244,7 +245,7 @@ void AD7988_Calc_Process(void)
 	
 	// -------------- check trans485data.base_frequency----------
 
-	if( (trans485data.acc_peak * g_SystemParam_Config.AD7988_VolACC_p)  <= 4.0)
+	if( (trans485data.acc_peak * g_SystemParam_Config.AD7988_VolACC_p)  <= 4.0f)
 	{
 		trans485data.acc_peak = 0;
 		trans485data.base_frequency = 1;
